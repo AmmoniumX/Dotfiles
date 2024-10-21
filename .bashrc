@@ -30,19 +30,12 @@ alias ipv6='curl -6 ip.me'
 
 # Functions
 function mkcd() { mkdir "$1" && cd "$1"; }
-function cdls() {
-  # Check if no arguments are passed (cd to home)
-  if [ $# -eq 0 ]; then
-    builtin cd ~ && ls
-  # If "cd -" is used (switch to previous directory)
-  elif [ "$1" == "-" ]; then
-    builtin cd - && ls
-  else
-    # Pass all arguments to the built-in cd to support options (-L, -P, etc.)
-    builtin cd "$@" && ls
+function cd() {
+  # Use the builtin `cd` to handle directory change and check if successful
+  if builtin cd "$@"; then
+    ls
   fi
 }
-alias cd='cdls'
 function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
 
 # Get local IP address, given interface name
