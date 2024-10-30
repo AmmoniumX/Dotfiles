@@ -1,7 +1,9 @@
 #!/usr/bin/bash
 
-for file in ./* ./.*; do
-    [ -e "$file" ] || continue
+for f in ./* ./.*; do
+    [ -e "$f" ] || continue
+    file="$(realpath "$f")"
+
     [ "$(basename "$file")" == "install.sh" ] && continue
     [ "$(basename "$file")" == ".git" ] && continue
 
