@@ -7,9 +7,9 @@
 
 # Aliases
 alias ls='eza --color=auto'
-alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
+alias ll='eza -l'
+alias la='eza -a'
+alias lla='eza -la'
 alias mv='mv -nv'
 alias cp='cp -rnv'
 alias grep='grep --color=auto'
