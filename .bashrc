@@ -6,8 +6,7 @@
 [[ $- != *i* ]] && return
 
 # Aliases
-alias ls='eza'
-alias ls='ls --color=auto'
+alias ls='eza --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'

@@ -8,5 +8,5 @@ for f in ./* ./.*; do
     [ "$(basename "$file")" == ".git" ] && continue
 
     echo "Installing $file -> $HOME/$(basename "$file")"
-    ln -s "$file" "$HOME/$(basename "$file")"
+    ln -sf "$file" "$HOME/$(basename "$file")"
 done
