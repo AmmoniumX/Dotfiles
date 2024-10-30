@@ -55,3 +55,4 @@ PS1='[\u@\h \W]\$ '
 export EDITOR=nano
 
 eval "$(starship init bash)"
+eval "$(fzf --bash)"
