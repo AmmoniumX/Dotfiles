@@ -6,20 +6,19 @@
 [[ $- != *i* ]] && return
 
 # Aliases
-alias ls='eza --color=auto'
-alias ll='eza -l'
-alias la='eza -a'
-alias lla='eza -la'
-alias cat='bat -p'
+command -v eza &> /dev/null && alias ls='eza --color=auto' || alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+command -v bat &> /dev/null && alias cat='bat -p' || alias cat='cat'
 alias mv='mv -nv'
 alias cp='cp -rnv'
 alias grep='grep --color=auto'
 alias more='LESS_IS_MORE=1 less'
-alias pacman='aura'
+command -v aura &> /dev/null && alias pacman='aura'
 alias sys-upgrade='aura -Syu && aura -Ayu'
 alias sourcerc='source ~/.bashrc'
 alias nanorc='nano ~/.bashrc'
-alias track='tail -f'
 alias pgrep='pgrep -a'
 alias pkill='pkill -e'
 alias make='make -j$(nproc)'
@@ -30,13 +29,13 @@ alias ipv4='curl -4 ip.me'
 alias ipv6='curl -6 ip.me'
 
 # Functions
-function mkcd() { mkdir "$1" && cd "$1"; }
 function cd() {
   # Use the builtin `cd` to handle directory change and check if successful
   if builtin cd "$@"; then
     ls
   fi
 }
+function mkcd() { mkdir "$1" && cd "$1"; }
 function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
 
 # Get local IP address, given interface name
@@ -55,5 +54,5 @@ PS1='[\u@\h \W]\$ '
 
 export EDITOR=nano
 
-eval "$(starship init bash)"
-eval "$(fzf --bash)"
+command -v starship &>/dev/null && eval "$(starship init bash)"
+command -v fzf &>/dev/null && eval "$(fzf --bash)"
