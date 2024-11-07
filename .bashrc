@@ -37,6 +37,17 @@ function cd() {
 }
 function mkcd() { mkdir "$1" && cd "$1"; }
 function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
+function lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            cd "$dir"
+        fi
+    fi
+}
 
 # Get local IP address, given interface name
 function ipv4-dev() { 
