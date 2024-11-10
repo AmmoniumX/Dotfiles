@@ -1,0 +1,17 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$all\
+$env_var\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$os\
+$container\
+$shell\
+$character"""
+
+[env_var._ls_output]
+format = "\n$env_value"

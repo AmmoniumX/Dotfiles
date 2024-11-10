@@ -5,12 +5,22 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Load other scripts
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+#if [[ ! -f ~/.local/share/blesh/ble.sh ]]; then
+#    echo "ble.sh not found, Installing"
+#    git clone --recursive https://github.com/akinomyoga/ble.sh.git /tmp/ble.sh > /dev/null
+#    (cd /tmp/ble.sh && make install PREFIX=~/.local > /dev/null)
+#    rm -rf /tmp/ble.sh
+#fi
+#source ~/.local/share/blesh/ble.sh
+
 # Aliases
 command -v eza &> /dev/null && alias ls='eza --color=auto' || alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
-command -v bat &> /dev/null && alias cat='bat -p' || alias cat='cat'
+command -v bat &> /dev/null && alias cat='bat -pp' || alias cat='cat'
 alias mv='mv -nv'
 alias cp='cp -rnv'
 alias grep='grep --color=auto'
@@ -18,7 +28,6 @@ alias more='LESS_IS_MORE=1 less'
 command -v aura &> /dev/null && alias pacman='aura' || alias pacman='pacman'
 alias sys-upgrade='aura -Syu && aura -Ayu'
 alias sourcerc='source ~/.bashrc'
-alias nanorc='nano ~/.bashrc'
 alias pgrep='pgrep -a'
 alias pkill='pkill -e'
 alias make='make -j$(nproc)'
@@ -29,12 +38,29 @@ alias ipv4='curl -4 ip.me'
 alias ipv6='curl -6 ip.me'
 
 # Functions
+
+# Print ls after cd on Starship
+export _ls_counter=0
 function cd() {
-  # Use the builtin `cd` to handle directory change and check if successful
   if builtin cd "$@"; then
-    ls
+    # ls
+    export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
+    # Reset the counter every time we cd
+    _ls_counter=0
   fi
 }
+# Register preexec hook
+preexec() {
+  # Increment the command counter
+  (( _ls_counter++ ))
+  # Only unset _ls_output if this is the second command
+  if [[ $_ls_counter -eq 1 ]]; then
+    unset _ls_output
+    # Reset the counter after unsetting
+    _ls_counter=0
+  fi
+}
+
 function mkcd() { mkdir "$1" && cd "$1"; }
 function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
 function lfcd () {
