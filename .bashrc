@@ -40,25 +40,15 @@ alias ipv6='curl -6 ip.me'
 # Functions
 
 # Print ls after cd on Starship
-export _ls_counter=0
 function cd() {
   if builtin cd "$@"; then
-    # ls
+    # Capture ls output
     export _ls_output=$(script -q -c "eza --color=always" /dev/null)
-    # Reset the counter every time we cd
-    _ls_counter=0
   fi
 }
 # Register preexec hook
 preexec() {
-  # Increment the command counter
-  (( _ls_counter++ ))
-  # Only unset _ls_output if this is the second command
-  if [[ $_ls_counter -eq 1 ]]; then
-    unset _ls_output
-    # Reset the counter after unsetting
-    _ls_counter=0
-  fi
+  unset _ls_output
 }
 
 function mkcd() { mkdir "$1" && cd "$1"; }
