@@ -44,7 +44,7 @@ export _ls_counter=0
 function cd() {
   if builtin cd "$@"; then
     # ls
-    export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
+    export _ls_output=$(script -q -c "eza --color=always" /dev/null)
     # Reset the counter every time we cd
     _ls_counter=0
   fi
