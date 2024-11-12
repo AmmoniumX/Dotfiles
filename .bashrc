@@ -20,7 +20,7 @@ command -v eza &> /dev/null && alias ls='eza --color=auto' || alias ls='ls --col
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
-command -v bat &> /dev/null && alias cat='bat -pp' || alias cat='cat'
+command -v bat &> /dev/null && alias cat='bat --style=plain --paging=never' || alias cat='cat'
 command -v bat &> /dev/null && alias pcat='bat --style=plain --paging=always' || alias pcat='less'
 alias mv='mv -nv'
 alias cp='cp -rnv'
