@@ -55,7 +55,7 @@ preexec() {
   unset _ls_output
 }
 
-function mkcd() { mkdir "$1" && cd "$1"; }
+function mkcd() { mkdir -p "$1" && cd "$1"; }
 function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
 function lfcd () {
     tmp="$(mktemp)"
