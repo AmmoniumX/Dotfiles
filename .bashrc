@@ -34,6 +34,9 @@ if command -v aura &> /dev/null; then
     alias pacman='aura'
     alias sys-upgrade='aura -Syu && aura -Ayu'
 fi
+if command -v apt &> /dev/null; then
+    alias sys-upgrade='sudo apt update && sudo apt upgrade'
+fi
 alias sourcerc='source ~/.bashrc'
 alias pgrep='pgrep -a'
 alias pkill='pkill -e'
