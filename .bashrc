@@ -87,3 +87,5 @@ export EDITOR=nano
 
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
+# Show current working directory on login
+export _ls_output=$(script -q -c "eza --color=always" /dev/null)
