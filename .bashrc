@@ -6,7 +6,11 @@
 [[ $- != *i* ]] && return
 
 # Load other scripts
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+if [[ ! -f ~/.bash-preexec.sh ]]; then
+    echo ".bash-preexec.sh not found, installing"
+    curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o ~/.bash-preexec.sh
+fi
+source ~/.bash-preexec.sh
 #if [[ ! -f ~/.local/share/blesh/ble.sh ]]; then
 #    echo "ble.sh not found, Installing"
 #    git clone --recursive https://github.com/akinomyoga/ble.sh.git /tmp/ble.sh > /dev/null
