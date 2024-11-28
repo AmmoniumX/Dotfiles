@@ -2,7 +2,7 @@
 
 _root_dir="$(dirname "$(realpath "$0")")"
 DRY_RUN=false
-EXCLUDE_LIST=(".git" "install.sh")
+EXCLUDE_LIST=(".git" "install.sh" "README.md")
 
 is_excluded() {
     local item="$1"
