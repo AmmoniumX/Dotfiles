@@ -89,6 +89,12 @@ function ipv6-dev() {
     ip addr show "$1" | grep 'inet6 ' | cut -d' ' -f6 | sed -n '1p' | cut -d/ -f1; 
 }
 
+# Pretty print json
+function cat-json() {
+    [[ -z "$1" ]] && { echo "Usage: cat-json <json file>"; return 1; }
+    python -m json.tool ~/.cache/aura/snapshots/2024.12\(Dec\).09.18.08.32.json
+}
+
 
 PS1='[\u@\h \W]\$ '
 
