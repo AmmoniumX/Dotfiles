@@ -92,7 +92,7 @@ function ipv6-dev() {
 # Pretty print json
 function cat-json() {
     [[ -z "$1" ]] && { echo "Usage: cat-json <json file>"; return 1; }
-    python -m json.tool ~/.cache/aura/snapshots/2024.12\(Dec\).09.18.08.32.json
+    python -m json.tool "$1"
 }
 
 
