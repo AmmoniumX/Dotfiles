@@ -2,6 +2,14 @@
 # ~/.bashrc
 #
 
+# ~/.bash-history settings
+export HISTFILE=~/.bash_history
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoredups:erasedups
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+shopt -s histappend
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -11,13 +19,6 @@ if [[ ! -f ~/.bash-preexec.sh ]]; then
     curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o ~/.bash-preexec.sh
 fi
 source ~/.bash-preexec.sh
-#if [[ ! -f ~/.local/share/blesh/ble.sh ]]; then
-#    echo "ble.sh not found, Installing"
-#    git clone --recursive https://github.com/akinomyoga/ble.sh.git /tmp/ble.sh > /dev/null
-#    (cd /tmp/ble.sh && make install PREFIX=~/.local > /dev/null)
-#    rm -rf /tmp/ble.sh
-#fi
-#source ~/.local/share/blesh/ble.sh
 
 # Aliases
 command -v eza &> /dev/null && alias ls='eza --color=auto' || alias ls='ls --color=auto'
@@ -52,16 +53,24 @@ alias ipv6='curl -6 ip.me'
 
 # Functions
 
+# bash-preexec hook
+preexec() {
+  # For ls-after-cd
+  unset _ls_output
+
+  # Log time, working directory, and command to a custom file
+  local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+  local working_dir=$(pwd)
+  local command="$1"
+  echo "$timestamp $working_dir $command" >> ~/.bash_full_history
+}
+
 # Print ls after cd on Starship
 function cd() {
   if builtin cd "$@"; then
     # Capture ls output
     export _ls_output=$(script -q -c "eza --color=always" /dev/null)
   fi
-}
-# Register preexec hook
-preexec() {
-  unset _ls_output
 }
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
