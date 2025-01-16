@@ -60,10 +60,7 @@ function cat-json() {
 # Sudo with custom aliases and functions
 function mysudo() {
   # Check if a command is provided
-  if [[ -z "$1" ]]; then
-    echo "Usage: mysudo <command>"
-    return 1
-  fi
+  [[ -z "$1" ]] && { echo "Usage: mysudo <command>"; return 1; }
 
   # Paths to your bash files
   local functs="$HOME/.bash-functions.sh"
