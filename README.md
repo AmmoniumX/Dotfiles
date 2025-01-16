@@ -7,3 +7,9 @@ The following programs are recommended to be installed on the system:
 - bat
 - fzf
 - starship prompt
+
+## Installation
+```
+git clone https://github.com/AmmoniumX/Dotfiles.git && cd ./Dotfiles
+./install.sh && source ~/.bashrc
+```
