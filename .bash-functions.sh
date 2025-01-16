@@ -56,3 +56,30 @@ function cat-json() {
     [[ -z "$1" ]] && { echo "Usage: cat-json <json file>"; return 1; }
     python -m json.tool "$1"
 }
+
+# Sudo with custom aliases and functions
+function mysudo() {
+  # Check if a command is provided
+  if [[ -z "$1" ]]; then
+    echo "Usage: mysudo <command>"
+    return 1
+  fi
+
+  # Paths to your bash files
+  local functs="$HOME/.bash-functions.sh"
+  local aliases="$HOME/.bash-aliases.sh"
+
+  # Check if files exist before sourcing
+  [[ ! -f "$functs" || ! -f "$aliases" ]] && { echo "Error: one or multiple bash files not found"; return 1; }
+
+  # Build the command
+  local command="$*"
+
+  # Use sudo to execute the command in a new bash shell with sourced files
+  sudo bash -c "
+    source '$functs';
+    source '$aliases';
+    $command
+  "
+}
+
