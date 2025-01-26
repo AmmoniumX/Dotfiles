@@ -1,9 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = """
-$all\
+format = """$all\
 $env_var\
-$line_break\
 $jobs\
 $battery\
 $time\
@@ -14,4 +12,4 @@ $shell\
 $character"""
 
 [env_var._ls_output]
-format = "\n$env_value"
+format = "$env_value\n"
