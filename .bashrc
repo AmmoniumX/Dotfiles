@@ -18,7 +18,8 @@ source ~/.bash-aliases.sh
 source ~/.bash-functions.sh
 
 # Show current working directory on login
-export _ls_output=$(script -q -c "eza --color=always" /dev/null)
+# export _ls_output=$(script -q -c "eza --color=always" /dev/null)
+export _ls_output=$(eza --color=always)
 
 # Finish tty init
 PS1='[\u@\h \W]\$ '
