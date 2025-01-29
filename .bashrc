@@ -19,7 +19,7 @@ source ~/.bash-functions.sh
 
 # Show current working directory on login
 # export _ls_output=$(script -q -c "eza --color=always" /dev/null)
-export _ls_output=$(eza --color=always)
+export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
 
 # Finish tty init
 PS1='[\u@\h \W]\$ '
