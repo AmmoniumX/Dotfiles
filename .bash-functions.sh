@@ -56,12 +56,6 @@ function ipv6-dev() {
     ip addr show "$1" | grep 'inet6 ' | cut -d' ' -f6 | sed -n '1p' | cut -d/ -f1;
 }
 
-# Pretty print json
-function cat-json() {
-    [[ -z "$1" ]] && { echo "Usage: cat-json <json file>"; return 1; }
-    python -m json.tool "$1"
-}
-
 # Sudo with custom aliases and functions
 function mysudo() {
   # Check if a command is provided
