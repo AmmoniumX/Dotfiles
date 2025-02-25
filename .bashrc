@@ -17,6 +17,9 @@ shopt -s histappend
 source ~/.bash-aliases.sh
 source ~/.bash-functions.sh
 
+# Append to PATH
+export PATH="$PATH:$HOME/.cargo/bin"
+
 # Show current working directory on login
 # export _ls_output=$(script -q -c "eza --color=always" /dev/null)
 export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
