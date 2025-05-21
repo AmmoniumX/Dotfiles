@@ -73,6 +73,7 @@ function mysudo() {
 
   # Use sudo to execute the command in a new bash shell with sourced files
   sudo bash -c "
+    shopt -s expand_aliases;
     source '$functs';
     source '$aliases';
     $command
