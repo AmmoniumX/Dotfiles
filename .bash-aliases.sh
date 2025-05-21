@@ -9,9 +9,9 @@ command -v bat &> /dev/null && alias less='bat --style=plain --paging=always'
 alias mv='mv -iv'
 alias cp='cp -riv'
 alias grep='grep --color=auto'
-if command -v aura &> /dev/null; then
-    alias pacman='aura'
-    alias sys-upgrade='aura -Syu && aura -Ayu'
+if command -v paru &> /dev/null; then
+    alias pacman='paru'
+    alias sys-upgrade='paru -Syu'
 fi
 if command -v apt &> /dev/null; then
     alias sys-upgrade='sudo apt update && sudo apt upgrade'
