@@ -21,11 +21,12 @@ source ~/.bash-functions.sh
 export PATH="$PATH:$HOME/.cargo/bin"
 
 # Show current working directory on login
-# export _ls_output=$(script -q -c "eza --color=always" /dev/null)
-export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
+export _ls_output=$(script -q -c "eza --color=always" /dev/null)
+# export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
 
 # Finish tty init
-PS1='[\u@\h \W]\$ '
+# PS1='[\u@\h \W]\$ '
 export EDITOR=nano
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
+. "$HOME/.cargo/env"
