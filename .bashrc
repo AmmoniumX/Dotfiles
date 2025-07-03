@@ -29,4 +29,5 @@ export _ls_output=$(script -q -c "eza --color=always" /dev/null)
 export EDITOR=nano
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
+command -v direnv &>/dev/null && eval "$(direnv hook bash)"
 . "$HOME/.cargo/env"
