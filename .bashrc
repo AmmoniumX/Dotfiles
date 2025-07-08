@@ -25,7 +25,7 @@ export _ls_output=$(script -q -c "eza --color=always" /dev/null)
 # export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
 
 # Finish tty init
-# PS1='[\u@\h \W]\$ '
+echo -e '\e[6 q'
 export EDITOR=nano
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
