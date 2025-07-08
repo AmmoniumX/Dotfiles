@@ -26,7 +26,6 @@ export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
 
 # Finish tty init
 echo -e '\e[6 q'
-export EDITOR=nvim
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
 command -v direnv &>/dev/null && eval "$(direnv hook bash)"
