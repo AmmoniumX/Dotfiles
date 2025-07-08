@@ -21,8 +21,8 @@ source ~/.bash-functions.sh
 export PATH="$PATH:$HOME/.cargo/bin"
 
 # Show current working directory on login
-export _ls_output=$(script -q -c "eza --color=always" /dev/null)
-# export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
+export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
+# export _ls_output=$(eza --color=always --grid | sed ':a;N;$!ba;s/\n/  /g')
 
 # Finish tty init
 echo -e '\e[6 q'
