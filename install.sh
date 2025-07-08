@@ -5,7 +5,7 @@ set -euo pipefail
 _root_dir="$(dirname "$(realpath "$0")")"
 DRY_RUN=false
 BACKUP_DIR=${_root_dir}"/.backups/$(date +%Y-%m-%d_%H-%M-%S)"
-EXCLUDE_LIST=(".git" ".gitignore" "install.sh" "README.md")
+EXCLUDE_LIST=(".git" ".gitignore" "install.sh" "README.md" ".backups" "GEMINI.md")
 
 usage() {
     echo "Usage: $0 [-d]"
