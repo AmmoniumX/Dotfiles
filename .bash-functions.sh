@@ -22,8 +22,8 @@ preexec() {
 function cd() {
   if builtin cd "$@"; then
     # Capture ls output
-    # export _ls_output=$(script -q -c "eza --color=always" /dev/null)
-    export _ls_output=$(eza --color=always | sed ':a;N;$!ba;s/\n/  /g')
+    export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
+    # export _ls_output=$(eza --color=always --grid | sed ':a;N;$!ba;s/\n/  /g')
   fi
 }
 
