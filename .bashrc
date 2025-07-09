@@ -25,8 +25,7 @@ export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
 # export _ls_output=$(eza --color=always --grid | sed ':a;N;$!ba;s/\n/  /g')
 
 # Finish tty init
-export EDITOR=nano
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
 command -v direnv &>/dev/null && eval "$(direnv hook bash)"
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
