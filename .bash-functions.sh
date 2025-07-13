@@ -23,7 +23,7 @@ function cd() {
   if builtin cd "$@"; then
     # Capture ls output
     # export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
-    export _ls_output=$(eza --color=always --grid -w $(tput cols))
+    export _ls_output=$(eza --color=always --grid -w $COLUMNS)
   fi
 }
 

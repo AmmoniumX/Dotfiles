@@ -8,7 +8,7 @@ export HISTSIZE=10000
 export HISTFILESIZE=20000
 export HISTCONTROL=ignoredups:erasedups
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-shopt -s histappend
+shopt -s histappend checkwinsize
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -22,7 +22,7 @@ export PATH="$PATH:$HOME/.cargo/bin"
 
 # Show current working directory on login
 # export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
-export _ls_output=$(eza --color=always --grid -w $(tput cols))
+export _ls_output=$(eza --color=always --grid -w $COLUMNS)
 
 # Finish tty init
 command -v starship &>/dev/null && eval "$(starship init bash)"
