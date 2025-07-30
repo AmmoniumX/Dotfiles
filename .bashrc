@@ -13,15 +13,15 @@ shopt -s histappend checkwinsize
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Append to PATH
+export PATH="$PATH:$HOME/.cargo/bin"
+
 # Load other scripts
 source ~/.bash-aliases.sh
 source ~/.bash-functions.sh
 
-# Append to PATH
-export PATH="$PATH:$HOME/.cargo/bin"
-
 # Show current working directory on login
-export _ls_output=$(env eza --color=always --grid) # Works since eza v0.23.0
+export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
 
 # Finish tty init
 command -v starship &>/dev/null && eval "$(starship init bash)"
