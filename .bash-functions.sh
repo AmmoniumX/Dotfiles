@@ -22,7 +22,7 @@ preexec() {
 function cd() {
   if builtin cd "$@"; then
     # Capture ls output
-    export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
+    export _ls_output=$(env eza --color=always --grid) # Works since eza v0.23.0
   fi
 }
 
