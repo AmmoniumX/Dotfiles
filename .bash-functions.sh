@@ -22,8 +22,7 @@ preexec() {
 function cd() {
   if builtin cd "$@"; then
     # Capture ls output
-    # export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
-    export _ls_output=$(eza --color=always --grid -w $COLUMNS)
+    export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
   fi
 }
 

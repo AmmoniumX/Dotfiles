@@ -21,8 +21,7 @@ source ~/.bash-functions.sh
 export PATH="$PATH:$HOME/.cargo/bin"
 
 # Show current working directory on login
-# export _ls_output=$(script -q -c "eza --color=always --grid" /dev/null)
-export _ls_output=$(eza --color=always --grid -w $COLUMNS)
+export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
 
 # Finish tty init
 command -v starship &>/dev/null && eval "$(starship init bash)"
