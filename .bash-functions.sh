@@ -18,9 +18,16 @@ preexec() {
   unset _ls_output
 }
 
-# Print ls after cd on Starship
+# Print ls after cd and clear
 function cd() {
   if builtin cd "$@"; then
+    # Capture ls output
+    export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
+  fi
+}
+
+function clear() {
+  if $(which clear); then
     # Capture ls output
     export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
   fi
