@@ -135,9 +135,30 @@ ForegroundVisited=155,89,182
 [General]
 ColorSchemeHash=8ff306d9a93379c74540e00506966df24df1798b
 TerminalApplication=kitty
+UseSystemBell=true
 
 [KDE]
 LookAndFeelPackage=org.kde.breezedark.desktop
+
+[KFileDialog Settings]
+Allow Expansion=false
+Automatically select filename extension=true
+Breadcrumb Navigation=true
+Decoration position=2
+LocationCombo Completionmode=5
+PathCombo Completionmode=5
+Show Bookmarks=false
+Show Full Path=false
+Show Inline Previews=true
+Show Preview=false
+Show Speedbar=true
+Show hidden files=false
+Sort by=Name
+Sort directories first=true
+Sort hidden files last=false
+Sort reversed=false
+Speedbar Width=140
+View Style=DetailTree
 
 [PreviewSettings]
 EnableRemoteFolderThumbnail=false
