@@ -10,8 +10,10 @@ alias mv='mv -iv'
 alias cp='cp -riv'
 alias grep='grep --color=auto'
 if command -v paru &> /dev/null; then
-    alias pacman='paru'
-    alias sys-upgrade='paru -Syu'
+    alias sys-upgrade='echo "!! Upgrading core repos" && paru -Syu --repo && \
+        echo "!! Upgrading chaotic-aur" && paru -Sy --needed --config /etc/pacman-chaotic.conf -- $(cat ~/.config/chaotic-aur.pkg) && \
+        echo "!! Ugrading AUR" && paru -Syu --aur --ignore $(paste -s -d, ~/.config/chaotic-aur.pkg)'
+    alias pkg-rm='paru -Rns'
 fi
 if command -v apt &> /dev/null; then
     alias sys-upgrade='sudo apt update && sudo apt upgrade'
