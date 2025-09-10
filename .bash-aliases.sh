@@ -11,9 +11,16 @@ alias cp='cp -riv'
 alias grep='grep --color=auto'
 if command -v paru &> /dev/null; then
     function sys-upgrade {
-        echo "!! Upgrading core repos" && paru -Syu --repo && \
-        echo "!! Upgrading chaotic-aur" && paru -Sy --needed --config /etc/pacman-chaotic.conf -- $(cat ~/.config/chaotic-aur.pkg) && \
-        echo "!! Ugrading AUR" && paru -Syu --aur --ignore $(paste -s -d, ~/.config/chaotic-aur.pkg)
+        local IGNORE_TAG=""
+        echo "!! Upgrading core repos" 
+        paru -Syu --repo
+        if [ -e "~/.config/chaotic-aur" ] && [ ! -s "~/.config/chaotic-aur" ]; then
+            echo "!! Upgrading chaotic-aur"
+            IGNORE_TAG="--ignore $(paste -s -d, ~/.config/chaotic-aur.pkg)"
+            paru -Sy --needed --config /etc/pacman-chaotic.conf -- $(cat ~/.config/chaotic-aur.pkg)
+        fi
+        echo "!! Ugrading AUR"
+        paru -Syu --aur $IGNORE_TAG
     }
 fi
 if command -v apt &> /dev/null; then
