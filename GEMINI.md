@@ -4,10 +4,11 @@ This document outlines the structure of this Dotfiles repository, explaining the
 
 ## Files
 
-- **`.bash-aliases.sh`**: Contains custom command aliases for the Bash shell.
-- **`.bash-functions.sh`**: Holds custom functions for the Bash shell.
-- **`.bash-preexec.sh`**: A script for pre-execution hooks in Bash.
-- **`.bashrc`**: The main configuration file for the Bash shell. It sources the other `.bash*` files.
+- **`.aliases.sh`**: Contains custom command aliases for both Bash and Zsh.
+- **`.functions.sh`**: Holds custom functions for both Bash and Zsh.
+
+- **`.bashrc`**: The main configuration file for the Bash shell. It sources `.aliases.sh` and `.functions.sh`.
+- **`.zshrc`**: The main configuration file for the Zsh shell. It sources `.aliases.sh` and `.functions.sh`.
 - **`.gitignore`**: Specifies files and directories that Git should ignore.
 - **`.nanorc`**: Configuration file for the `nano` text editor.
 - **`install.sh`**: A script to set up the dotfiles on a new system.
