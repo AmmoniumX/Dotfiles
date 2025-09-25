@@ -5,16 +5,29 @@ SAVEHIST=1000
 EDITOR=nvim
 setopt autocd beep extendedglob nomatch
 bindkey -e
+
 # End of lines configured by zsh-newuser-install
 # # The following lines were added by compinstall
 # zstyle :compinstall filename '/home/ammonium/.zshrc'
-# 
-# autoload -Uz compinit
-# compinit
+
+autoload -Uz compinit
+compinit
 # # End of lines added by compinstall
 
-# If not running interactively, don't do anything
-# [[ $- != *i* ]] && return
+# 1. Home and End Keys (Go to beginning/end of line)
+# These are often bound to ^[[H and ^[[F respectively, but can vary by terminal.
+# The standard functions are beginning-of-line and end-of-line.
+# Try these first (common for many terminals):
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line
+
+# 2. Ctrl-Left and Ctrl-Right (Word navigation)
+# These are often bound to ^[[1;5D and ^[[1;5C respectively, but can vary.
+# The standard functions are backward-word and forward-word.
+# Try these first (common for many terminals):
+bindkey '\e[1;5D' backward-word  # Ctrl-Left
+bindkey '\e[1;5C' forward-word   # Ctrl-Right
+
 
 # Append to PATH
 export PATH="$PATH:$HOME/.cargo/bin"
