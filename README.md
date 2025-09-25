@@ -9,7 +9,10 @@ The following programs are recommended to be installed on the system:
 - starship prompt
 
 ## Installation
-```
+
+```bash
 git clone https://github.com/AmmoniumX/Dotfiles.git && cd ./Dotfiles
-./install.sh && source ~/.bashrc
+./install.sh
 ```
+
+Then, restart your shell or source the appropriate file (`.bashrc` or `.zshrc`).

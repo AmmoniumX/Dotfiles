@@ -132,11 +132,20 @@ ForegroundNormal=252,252,252
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
+[DirSelect Dialog]
+DirSelectDialog Size=845,592
+History Items[$e]=file:///data/arch/SteamLibrary,file:///data/shared/SteamLibrary/steamapps,file:///data/shared/SteamLibrary,file:///data/shared,file:///mnt/data/SteamLibrary,file:///mnt/data/SteamLibrary/steamapps
+Splitter State=\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\xa5\x00\x00\x02\xa8\x00\xff\xff\xff\xff\x01\x00\x00\x00\x01\x00
+
 [General]
 BrowserApplication=firefox.desktop
-ColorSchemeHash=8ff306d9a93379c74540e00506966df24df1798b
+ColorSchemeHash=2c3f86428c11011a7c64ee1e7f47c274d498ff10
 TerminalApplication=kitty
 UseSystemBell=true
+XftHintStyle=hintslight
+XftSubPixel=rgb
+fixed=Noto Sans Mono,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+font=Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 [KDE]
 LookAndFeelPackage=org.kde.breezedark.desktop
@@ -148,7 +157,6 @@ Breadcrumb Navigation=true
 Decoration position=2
 LocationCombo Completionmode=5
 PathCombo Completionmode=5
-Show Bookmarks=false
 Show Full Path=false
 Show Inline Previews=true
 Show Preview=false
