@@ -51,9 +51,17 @@ fi
 
 # Print ls after cd and clear
 function cd() {
-  if builtin cd "$@"; then
-    # Capture ls output
-    export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
+  # Check if the 'z' command is available/exists
+  if command -v z &> /dev/null; then
+    if z "$@"; then
+      # Capture ls output only if z was successful (returned 0)
+      export _ls_output=$(eza --color=always --grid)
+    fi
+  else
+    if builtin cd "$@"; then
+      # Capture ls output only if z was successful (returned 0)
+      export _ls_output=$(eza --color=always --grid)
+    fi
   fi
 }
 
