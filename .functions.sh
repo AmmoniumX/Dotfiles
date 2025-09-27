@@ -135,7 +135,7 @@ function mysudo() {
 
 # Fuzzy package search and install (source: https://github.com/basecamp/omarchy/blob/master/bin/omarchy-pkg-install)
 if command -v paru &> /dev/null; then
-  function paru-install() {
+  function paru-fzf() {
     local fzf_args=(
       --multi
       --preview 'paru -Sii {1}'
