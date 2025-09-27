@@ -28,4 +28,5 @@ export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
 command -v direnv &>/dev/null && eval "$(direnv hook bash)"
+command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
