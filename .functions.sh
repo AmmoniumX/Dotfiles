@@ -152,7 +152,7 @@ if command -v paru &> /dev/null; then
     
     if [[ -n "$pkg_names" ]]; then
       # Convert newline-separated selections to space-separated for yay
-      echo "$pkg_names" | tr '\n' ' ' | xargs paru -S
+      paru -S $(echo "$pkg_names" | tr '\n' ' ')
     fi
   }
 fi
