@@ -45,4 +45,5 @@ command -v fzf &>/dev/null && eval "$(fzf --zsh)"
 command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.env" ] && source "$HOME/.env"
 
