@@ -5,7 +5,8 @@ set -euo pipefail
 _root_dir="$(dirname "$(realpath "$0")")"
 DRY_RUN=false
 BACKUP_DIR=${_root_dir}"/.backups/$(date +%Y-%m-%d_%H-%M-%S)"
-EXCLUDE_LIST=(".git" ".gitignore" "install.sh" "README.md" ".backups" "GEMINI.md")
+EXCLUDE_FILES=(".gitignore" "install.sh" "README.md" "GEMINI.md")
+EXCLUDE_DIRS=(".git" ".backups")
 
 usage() {
     echo "Usage: $0 [-d]"
@@ -24,63 +25,59 @@ while getopts ":d" opt; do
   esac
 done
 
-is_excluded() {
-    local item="$1"
-    for exclude in "${EXCLUDE_LIST[@]}"; do
-        if [[ "$item" == "$exclude" ]]; then
-            return 0
-        fi
-    done
-    return 1
-}
+# Colors
+COLOR_RESET=$(tput sgr0)
+COLOR_GREEN=$(tput setaf 2)
+COLOR_YELLOW=$(tput setaf 3)
+COLOR_CYAN=$(tput setaf 6)
 
 _install() {
     local src_path
     src_path="$(realpath "$1")"
+    if [ "$src_path" == "$_root_dir" ]; then
+        return
+    fi
     local relative_path="${src_path#$_root_dir}"
     local target_path="$HOME$relative_path"
 
-    if [ -d "$src_path" ]; then
-        if [ ! -d "$target_path" ]; then
-            echo "CREATE_DIR: $target_path"
+    if [ -L "$target_path" ] && [ "$(readlink "$target_path")" == "$src_path" ]; then
+        echo "${COLOR_GREEN}EXISTING LINK:${COLOR_RESET} $target_path"
+    else
+        if [ -e "$target_path" ]; then
+            echo "${COLOR_YELLOW}BACKUP:${COLOR_RESET} $target_path -> $BACKUP_DIR"
             if ! $DRY_RUN; then
-                mkdir -p "$target_path" || { echo "Error: Failed to create directory $target_path" >&2; exit 1; }
+                mkdir -p "$BACKUP_DIR"
+                mv "$target_path" "$BACKUP_DIR" || { echo "Error: Failed to back up $target_path" >&2; exit 1; }
             fi
         fi
-        for f in "$src_path"/* "$src_path"/.*; do
-            [ -e "$f" ] || continue
-            [ -L "$f" ] && continue
-            local _basename
-            _basename=$(basename "$f")
-            [[ "$_basename" == "." || "$_basename" == ".." ]] && continue
-            _install "$f"
-        done
-    elif [ -f "$src_path" ]; then
-        if [ -L "$target_path" ] && [ "$(readlink "$target_path")" == "$src_path" ]; then
-            echo "EXISTING LINK: $target_path"
-        else
-            if [ -e "$target_path" ]; then
-                echo "BACKUP: $target_path -> $BACKUP_DIR"
-                if ! $DRY_RUN; then
-                    mkdir -p "$BACKUP_DIR"
-                    mv "$target_path" "$BACKUP_DIR" || { echo "Error: Failed to back up $target_path" >&2; exit 1; }
-                fi
-            fi
-            echo "LINK: $src_path -> $target_path"
-            if ! $DRY_RUN; then
-                ln -sf "$src_path" "$target_path" || { echo "Error: Failed to create symlink $target_path" >&2; exit 1; }
-            fi
+        local target_dir="$(dirname "$target_path")"
+        if [ ! -d "$target_dir" ]; then
+          echo "${COLOR_CYAN}CREATE DIRECTORY:${COLOR_RESET} $target_dir"
+          if ! $DRY_RUN; then
+            mkdir -p "$target_dir" || { echo "Error: Failed to create directory for $target_path" >&2; exit 1; }
+          fi
+        fi
+        echo "${COLOR_CYAN}LINK:${COLOR_RESET} $src_path -> $target_path"
+        if ! $DRY_RUN; then
+            ln -sf "$src_path" "$target_path" || { echo "Error: Failed to create symlink $target_path" >&2; exit 1; }
         fi
     fi
 }
 
-for f in ./* ./.*; do
-    [ -e "$f" ] || continue
-    [ -L "$f" ] && continue
-    _basename=$(basename "$f")
-    is_excluded "$_basename" && continue
+find_excludes_dirs=()
+for item in "${EXCLUDE_DIRS[@]}"; do
+    find_excludes_dirs+=(-path "./$item/*" -o)
+done
+
+find_excludes_files=()
+for item in "${EXCLUDE_FILES[@]}"; do
+    find_excludes_files+=(-name "$item" -o)
+done
+
+find . \( "${find_excludes_dirs[@]:0:${#find_excludes_dirs[@]}-1}" \) -prune -o \( "${find_excludes_files[@]:0:${#find_excludes_files[@]}-1}" \) -prune -o -type f -print | while read -r f; do
     _install "$f"
 done
+
 
 echo "Installation complete."
 if $DRY_RUN; then
