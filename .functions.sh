@@ -15,16 +15,19 @@ if [[ -n "$BASH_VERSION" ]]; then
     local working_dir=$(pwd)
     local command="$1"
     echo "$timestamp $working_dir $command" >> ~/.bash_full_history
+
+    # Reset ls-after-cd    
+    unset _ls_output
   }
 
   # bash-precmd hook
-  precmd() {
-    if [[ -n "$_ls_output" ]]; then
-      echo "$_ls_output"
-      unset _ls_output
-    fi
-  }
-  precmd_functions+=(precmd)
+  # precmd() {
+  #   if [[ -n "$_ls_output" ]]; then
+  #     echo "$_ls_output"
+  #     unset _ls_output
+  #   fi
+  # }
+  # precmd_functions+=(precmd)
 
 elif [[ -n "$ZSH_VERSION" ]]; then
   # Zsh-specific setup
@@ -34,6 +37,9 @@ elif [[ -n "$ZSH_VERSION" ]]; then
     local working_dir=$(pwd)
     local command="$1"
     echo "$timestamp $working_dir $command" >> ~/.zsh_full_history
+
+    # Reset ls-after-cd    
+    unset _ls_output
   }
 
   chpwd() {
@@ -41,12 +47,12 @@ elif [[ -n "$ZSH_VERSION" ]]; then
     export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
   }
 
-  precmd() {
-    if [[ -n "$_ls_output" ]]; then
-      print -P "%{%}"$_ls_output
-      unset _ls_output
-    fi
-  }
+  # precmd() {
+  #   if [[ -n "$_ls_output" ]]; then
+  #     print -P "%{%}"$_ls_output
+  #     unset _ls_output
+  #   fi
+  # }
 fi
 
 # Print ls after cd and clear
