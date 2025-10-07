@@ -282,10 +282,10 @@
     // "device": "acpi_video1",
     "format": "{icon} {percent: >3}%",
     "format-icons": ["", ""],
-    // "on-scroll-down": "brightnessctl -c backlight set 5%-",
-    "on-scroll-down": "~/.config/hypr/scripts/brightness --dec",
-    // "on-scroll-up": "brightnessctl -c backlight set +5%"
-    "on-scroll-up": "~/.config/hypr/scripts/brightness --inc",
+    "on-scroll-down": "brightnessctl -c backlight set 5%-",
+    // "on-scroll-down": "~/.config/hypr/scripts/brightness --dec",
+    "on-scroll-up": "brightnessctl -c backlight set +5%"
+    // "on-scroll-up": "~/.config/hypr/scripts/brightness --inc",
     //"on-click": "ags -t energymenu"
   },
   "battery": {
