@@ -256,7 +256,7 @@
   },
   "custom/power": {
     "format": "⏻",
-    "on-click": "nwgbar",
+    "on-click": "$HOME/.config/hypr/scripts/rofi_powermenu",
     "tooltip": false
   },
   "custom/keyboard-layout": {
