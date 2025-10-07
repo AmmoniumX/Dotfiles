@@ -34,6 +34,7 @@ alias sctl='systemctl'
 alias sctlu='systemctl --user'
 alias jctl='journalctl'
 alias jctlu='journalctl --user'
+alias paru-fzf=$HOME'/Scripts/paru-fzf'
 
 # Get public IP address
 alias ipv4='curl -4 ip.me'

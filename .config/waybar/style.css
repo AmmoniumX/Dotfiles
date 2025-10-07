@@ -129,6 +129,7 @@ window#waybar {
 #custom-power,
 #custom-pacman,
 #custom-launcher,
+#bluetooth,
 #mpd {
     padding: 5px 8px;
     border-style: solid;
@@ -253,8 +254,8 @@ window#waybar {
 #network {
     color: @green;
     /* border-bottom: 2px solid @green; */
-    border-radius: 10px;
-    margin-right: 5px;
+    border-radius: 0 10px 10px 0;
+    margin-right: 10px;
 }
 
 #network.disconnected {
@@ -330,7 +331,9 @@ window#waybar {
     margin-right: 10px;
 }
 
-
+#bluetooth {
+    border-radius: 10px 0 0 10px;
+}
 
 /* window#waybar {
      background: #2d2a2e;

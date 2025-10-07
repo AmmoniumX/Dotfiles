@@ -14,7 +14,7 @@
 # Rofi
 - SUPER + D: Launch Rofi launcher
 - SUPER + R: Launch Rofi runner
-- SUPER + M: Launch Rofi music
+// - SUPER + M: Launch Rofi music
 - SUPER + X: Open Rofi power menu
 - SUPER + A: Take a screenshot with Rofi
 
@@ -30,7 +30,10 @@
 - SUPER + EQUAL: Toggle special workspace
 
 # Cheatsheet
-- SUPER + SHIFT + I: Open cheatsheet
+- SUPER + SHIFT + H: Open cheatsheet
+
+# Installer
+- SUPER + SHIFT + I: Open package installer (Pacman/AUR)
 
 # Function keys
 - XF86MonBrightnessUp: Increase brightness
