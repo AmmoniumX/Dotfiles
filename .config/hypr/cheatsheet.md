@@ -23,7 +23,7 @@
 - SUPER + E: Open emoji picker
 - CTRL + ALT + L: Lock the screen
 - SUPER + SHIFT + B: Toggle between wallpapers
-- SUPER + SHIFT + T: Launch waybar themes change script
+- SUPER + SHIFT + T: Toggle waybar
 
 # Scratchpad
 - SUPER + SHIFT + EQUAL: Move window to a special workspace
