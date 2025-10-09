@@ -310,7 +310,7 @@ window#waybar {
     color: @base;
     background-color: @red;
     border-radius: 10px;
-    margin-left: 5px;
+    /* margin-left: 5px; */
     margin-right: 15px;
     padding: 5px 10px;
 }
