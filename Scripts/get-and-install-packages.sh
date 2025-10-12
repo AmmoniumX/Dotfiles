@@ -54,3 +54,8 @@ echo "Installing packages from official repos..."
 paru -S --repo --needed -- $(cat pacman-list.pkg) 
 echo "Installing packages from AUR..."
 paru -S --aur --needed -- $(cat aur-list.pkg)
+
+echo "Removing temporary package files..."
+rm pacman-list.pkg aur-list.pkg
+
+echo "Installation Complete!"
