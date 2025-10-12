@@ -14,15 +14,15 @@ mesg="Uptime : `uptime -p | sed -e 's/up //g'`"
 
 # Options
 layout=`cat ${RASI} | grep 'USE_ICON' | cut -d'=' -f2`
-title_option_1=" Lock"
-title_option_2=" Logout"
-title_option_3=" Suspend"
-title_option_4=" Hibernate"
-title_option_5=" Reboot"
-title_option_6=" Shutdown"
+title_option_1="  Lock         "
+title_option_2=" 󰍃 Log Out      "
+title_option_3="  Suspend      "
+title_option_4="  Hibernate    "
+title_option_5="  Reboot       "
+title_option_6="  Shutdown     "
 if [[ "$layout" == 'NO' ]]; then
 	option_1=" Lock"
-	option_2=" Logout"
+	option_2="󰍃 Logout"
 	option_3=" Suspend"
 	option_4=" Hibernate"
 	option_5=" Reboot"
@@ -87,7 +87,7 @@ run_cmd() {
 		sleep 0.5 && hyprlock
 	elif [[ "$1" == "$option_2" ]]; then
 		confirm_run "$title_option_2" 'hyprctl dispatch exit 0'
-	elif [[ "$1" == "$option_2" ]]; then
+	elif [[ "$1" == "$option_3" ]]; then
 		confirm_run "$title_option_3" 'mpc -q pause' 'pulsemixer --mute' "hyprlock" 'systemctl suspend'
 	elif [[ "$1" == "$option_4" ]]; then
 		confirm_run "$title_option_4" 'systemctl hibernate'
@@ -105,7 +105,7 @@ case ${chosen} in
 		run_cmd "$option_1"
         ;;
     $option_2)
-		run_cmd "$option_1"
+		run_cmd "$option_2"
         ;;
     $option_3)
 		run_cmd "$option_3"
