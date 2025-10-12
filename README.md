@@ -1,12 +1,6 @@
-# Linux Dotfiles
+# Arch Linux Dotfiles
 
-A collection of personal linux dotfiles, comes with an `install.sh` script.
-
-The following programs are recommended to be installed on the system:
-- eza
-- bat
-- fzf
-- starship prompt
+A collection of Arch Linux dotfiles, packages, and scripts. For personal use. Installs NVIDIA packages, may not work with AMD/Intel GPUs.
 
 ## Installation
 
@@ -15,10 +9,11 @@ The following programs are recommended to be installed on the system:
 git clone https://github.com/AmmoniumX/Dotfiles.git && cd ./Dotfiles
 ```
 
-2. Download and installed required packages:
+2. Download and installed packages:
 ```bash
 ./Scripts/get-and-install-packages.sh
 ```
+(Note: this installs *all* official repository and AUR packages, including apps and NVIDIA drives. TODO: Create a separate list of required dependencies only)
 
 3. Install dotfiles
 ```bash
