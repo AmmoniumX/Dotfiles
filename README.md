@@ -10,8 +10,18 @@ The following programs are recommended to be installed on the system:
 
 ## Installation
 
+1. Clone the repository:
 ```bash
 git clone https://github.com/AmmoniumX/Dotfiles.git && cd ./Dotfiles
+```
+
+2. Download and installed required packages:
+```bash
+./Scripts/get-and-install-packages.sh
+```
+
+3. Install dotfiles
+```bash
 ./install.sh
 ```
 
