@@ -55,7 +55,7 @@ elif [[ -n "$ZSH_VERSION" ]]; then
   # }
 fi
 
-# Print ls after cd and clear
+# Print ls after cd
 function cd() {
   # Check if the 'z' command is available/exists
   if command -v z &> /dev/null; then
@@ -68,13 +68,6 @@ function cd() {
       # Capture ls output only if z was successful (returned 0)
       export _ls_output=$(eza --color=always --grid)
     fi
-  fi
-}
-
-function clear() {
-  if $(which clear); then
-    # Capture ls output
-    export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
   fi
 }
 
