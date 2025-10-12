@@ -21,3 +21,4 @@ Then, restart your shell or source the appropriate file (`.bashrc` or `.zshrc`).
 
 - [yurihikari/garuda-hyprdots](https://github.com/yurihikari/garuda-hyprdots): Dotfiles and scripts for hyprland, waybar, and rofi
 - [basecamp/omarchy](https://github.com/basecamp/omarchy): Fuzzy package install script
+- [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbittorrent): Qbittorrent dracula theme
