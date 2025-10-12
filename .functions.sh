@@ -77,10 +77,6 @@ function lfcd () {
     cd "$(lf --print-last-dir)"
 }
 
-function gcam() {
-    git commit -am "$@"
-}
-
 # Get local IP address, given interface name
 function ipv4-dev() {
     [[ -z "$1" ]] && { echo "Usage: ipv4-dev <interface>"; return 1; }

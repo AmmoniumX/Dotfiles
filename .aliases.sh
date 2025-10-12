@@ -23,6 +23,8 @@ alias sctl='systemctl'
 alias sctlu='systemctl --user'
 alias jctl='journalctl'
 alias jctlu='journalctl --user'
+alias gcam='git commit -am'
+alias gs='git status'
 alias paru-fzf=$HOME'/Scripts/paru-fzf'
 
 # Get public IP address
