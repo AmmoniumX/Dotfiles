@@ -19,7 +19,7 @@ title_option_2=" 󰍃 Log Out      "
 title_option_3="  Suspend      "
 title_option_4="  Hibernate    "
 title_option_5="  Reboot       "
-title_option_6="  Shutdown     "
+title_option_6="  Shut Down    "
 if [[ "$layout" == 'NO' ]]; then
 	option_1=" Lock"
 	option_2="󰍃 Logout"
