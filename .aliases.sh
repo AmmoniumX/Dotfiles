@@ -15,14 +15,14 @@ fi
 if command -v apt &> /dev/null; then
     alias sys-upgrade='sudo apt update && sudo apt upgrade'
 fi
-alias sourcerc='source ~/.bashrc'
+if [ -n "$BASH_VERSION" ]; then
+    alias sourcerc='source ~/.bashrc'
+elif [ -n "$ZSH_VERSION" ]; then
+    alias sourcerc='source ~/.zshrc'
+fi
 alias pgrep='pgrep -a'
 alias pkill='pkill -e'
 alias make='make -j$(nproc)'
-alias sctl='systemctl'
-alias sctlu='systemctl --user'
-alias jctl='journalctl'
-alias jctlu='journalctl --user'
 alias gcam='git commit -am'
 alias gs='git status'
 alias paru-fzf=$HOME'/Scripts/paru-fzf'
