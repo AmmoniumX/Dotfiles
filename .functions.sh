@@ -74,7 +74,7 @@ function cd() {
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
 function lfcd () {
-    cd "$(lf --print-last-dir)"
+    cd "$(lf --print-last-dir "$@")"
 }
 
 # Get local IP address, given interface name
