@@ -14,9 +14,7 @@
 # Rofi
 - SUPER + D: Launch Rofi launcher
 - SUPER + R: Launch Rofi runner
-// - SUPER + M: Launch Rofi music
-- SUPER + X: Open Rofi power menu
-- SUPER + A: Take a screenshot with Rofi
+- SUPER + X: Launch Power Menu
 
 # Misc
 - SUPER + P: Open color picker
