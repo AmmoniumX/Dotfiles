@@ -64,9 +64,8 @@ listbox {
 inputbar {
     enabled:                     true;
     spacing:                     10px;
-    padding:                     80px 60px;
+    padding:                     30px 10px 10px 20px;
     background-color:            transparent;
-    background-image:            url("~/.config/backgrounds/wp6374897.webp", width);
     text-color:                  @foreground;
     orientation:                 horizontal;
     children:                    [ "textbox-prompt-colon", "entry", "dummy", "mode-switcher" ];
@@ -101,6 +100,7 @@ dummy {
 mode-switcher{
     enabled:                     true;
     spacing:                     10px;
+    padding:                     0px 20px;
     background-color:            transparent;
     text-color:                  @foreground;
 }
