@@ -16,3 +16,4 @@ exec-once = [workspace 1 silent] firefox
 exec-once = [workspace 2 silent] discord
 exec-once = [workspace 2 silent] zapzap
 exec-once = [workspace 3 silent] thunderbird
+exec-once = [workspace 3 silent] steam
