@@ -277,8 +277,11 @@
   "bluetooth": {
   	// "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
   	"format": " {status}",
-  	"format-disabled": "", // an empty format will hide the module
-  	"format-connected": " {num_connections} connected",
+  	"format-disabled": " (off)", // an empty format will hide the module
+  	"format-off": " off",
+  	"format-on": " on",
+  	"format-connected": " ({num_connections}) on",
+  	"format-no-controller": " ERR",
   	"tooltip-format": "{controller_alias}\t{controller_address}",
   	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
   	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
