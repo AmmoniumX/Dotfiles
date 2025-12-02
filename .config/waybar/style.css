@@ -130,7 +130,18 @@ window#waybar {
 #custom-pacman,
 #custom-launcher,
 #bluetooth,
+#language,
 #mpd {
+    padding: 5px 8px;
+    border-style: solid;
+    background-color: shade(@base, 1);
+    opacity: 1;
+    margin: 8px 0;
+}
+
+
+#network {
+    color: @green;
     padding: 5px 8px;
     border-style: solid;
     background-color: shade(@base, 1);
@@ -251,9 +262,9 @@ window#waybar {
     /* border-bottom: 2px solid #bf616a; */
 }
 
-#network {
-    color: @green;
+#language {
     /* border-bottom: 2px solid @green; */
+    color: @flamingo;
     border-radius: 0 10px 10px 0;
     margin-right: 10px;
 }
