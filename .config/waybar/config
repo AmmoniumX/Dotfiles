@@ -225,6 +225,7 @@
     "format-ethernet": "  Wired",
     "format-disconnected": "⚠  Disconnected",
     // "on-click": "kitty nmtui"
+    "max-length": 15,
     "on-click": "nm-connection-editor"
   },
   "pulseaudio": {
@@ -278,10 +279,10 @@
   "bluetooth": {
   	// "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
   	"format": " {status}",
-  	"format-disabled": " (off)", // an empty format will hide the module
+  	"format-disabled": " off", // an empty format will hide the module
   	"format-off": " off",
   	"format-on": " on",
-  	"format-connected": " ({num_connections}) on",
+  	"format-connected": " on",
   	"format-no-controller": " ERR",
   	"tooltip-format": "{controller_alias}\t{controller_address}",
   	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
