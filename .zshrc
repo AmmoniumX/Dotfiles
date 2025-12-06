@@ -3,7 +3,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 EDITOR=nvim
-setopt autocd beep extendedglob nomatch
+setopt autocd beep extendedglob nomatch interactivecomments
 bindkey -e
 
 # End of lines configured by zsh-newuser-install
