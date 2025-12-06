@@ -147,9 +147,11 @@
       "on-scroll-up": "shift_up",
       "on-scroll-down": "shift_down"
     },
-    "format": "  {:%a %d %b  %I:%M %p}", //12 hour format
-    // "format": " {:%d %m %Y  %H:%M}",	//24 hour format
-    "format-alt": "  {:%d/%m/%Y  %H:%M:%S}",
+    // "format": "  {:%a %d %b  %I:%M %p}", //12 hour format
+    //"format": " {:%d %m %Y  %H:%M}",	//24 hour format
+    "format": " {:%H:%M}",	//24 hour format, time only
+    "format-alt": " {:%a %d %b  %H:%M}",	//24 hour format
+    // "format-alt": "  {:%d/%m/%Y  %H:%M:%S}",
     // //"timezones": [ "Kolkata" ],
     // //"max-length": 200
     "interval": 1
