@@ -22,7 +22,8 @@
 - CTRL + ALT + L: Lock the screen
 - SUPER + SHIFT + B: Toggle between wallpapers
 - SUPER + SHIFT + T: Toggle waybar
-- SUPER + SHIFT + COMMA: Toggle keyboard layout
+- SUPER + SHIFT + Comma: Toggle keyboard layout
+- SUPER + Period: Open emoji picker 
 
 # Scratchpad
 - SUPER + SHIFT + EQUAL: Move window to a special workspace
