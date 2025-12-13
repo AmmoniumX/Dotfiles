@@ -274,9 +274,9 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "kwalletd6"
+spawn-at-startup "hyprpaper"
 spawn-at-startup "hyprlock"
 spawn-at-startup "waybar"
-spawn-at-startup "hyprpaper"
 spawn-at-startup "mako"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
