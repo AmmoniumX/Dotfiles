@@ -26,7 +26,15 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+# if running zsh
+if [ -n "$ZSH_VERSION" ]; then
+    # include .zshrc if it exists
+    if [ -f "$HOME/.zshrc" ]; then
+        . "$HOME/.zshrc"
+    fi
+fi
+
 # . "$HOME/.local/bin/env"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-EDITOR=nvim
-QT_QPA_PLATFORMTHEME=qt6ct
+export EDITOR=nvim
+export QT_QPA_PLATFORMTHEME=qt6ct
