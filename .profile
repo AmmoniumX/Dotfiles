@@ -27,5 +27,6 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 # . "$HOME/.local/bin/env"
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 EDITOR=nvim
+QT_QPA_PLATFORMTHEME=qt6ct

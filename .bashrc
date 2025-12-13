@@ -8,7 +8,6 @@ export HISTSIZE=10000
 export HISTFILESIZE=20000
 export HISTCONTROL=ignoredups:erasedups
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-EDITOR=nvim
 shopt -s histappend checkwinsize
 
 # If not running interactively, don't do anything
