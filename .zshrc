@@ -2,7 +2,6 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-EDITOR=nvim
 setopt autocd beep extendedglob nomatch interactivecomments
 bindkey -e
 
