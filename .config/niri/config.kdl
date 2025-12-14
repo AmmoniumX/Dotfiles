@@ -278,6 +278,7 @@ spawn-at-startup "hyprpaper"
 spawn-at-startup "hyprlock"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
+spawn-at-startup "wl-paste --watch cliphist store"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -377,6 +378,8 @@ binds {
     Mod+X hotkey-overlay-title="Log out: wlogout" { spawn "wlogout"; }
 
     Mod+Shift+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
+
+    Mod+V hotkey-overlay-title="Show clipboard history" { spawn-sh "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -595,7 +598,7 @@ binds {
     Mod+Shift+Equal { set-window-height "+10%"; }
 
     // Move the focused window between the floating and the tiling layout.
-    Mod+V       { toggle-window-floating; }
+    Mod+Ctrl+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
     // Toggle tabbed column display mode.
