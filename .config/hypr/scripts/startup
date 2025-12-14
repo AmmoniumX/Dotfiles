@@ -2,6 +2,7 @@
 exec-once = kstart5 kwalletd6
 exec-once = hyprlock
 exec-once = systemctl --user start hyprpolkitagent
+exec-once = wl-paste --watch cliphist store
 # exec-once = mpd
 
 # Start user desktop services
