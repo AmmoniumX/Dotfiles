@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
 set -euo pipefail
 
 _root_dir="$(dirname "$(realpath "$0")")"
@@ -66,7 +65,7 @@ _install() {
 
 find_excludes_dirs=()
 for item in "${EXCLUDE_DIRS[@]}"; do
-    find_excludes_dirs+=(-path "./$item/*" -o)
+    find_excludes_dirs+=(-path "$_root_dir/$item/*" -o)
 done
 
 find_excludes_files=()
@@ -74,7 +73,7 @@ for item in "${EXCLUDE_FILES[@]}"; do
     find_excludes_files+=(-name "$item" -o)
 done
 
-find . \( "${find_excludes_dirs[@]:0:${#find_excludes_dirs[@]}-1}" \) -prune -o \( "${find_excludes_files[@]:0:${#find_excludes_files[@]}-1}" \) -prune -o -type f -print | while read -r f; do
+find "$_root_dir" \( "${find_excludes_dirs[@]:0:${#find_excludes_dirs[@]}-1}" \) -prune -o \( "${find_excludes_files[@]:0:${#find_excludes_files[@]}-1}" \) -prune -o -type f -print | while read -r f; do
     _install "$f"
 done
 
