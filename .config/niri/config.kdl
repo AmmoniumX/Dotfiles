@@ -13,7 +13,7 @@ input {
             // For more information, see xkeyboard-config(7).
 
             // For example:
-            layout "gb"
+            layout "gb,latam"
             // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
 
             // If this section is empty, niri will fetch xkb settings
@@ -276,7 +276,7 @@ layout {
 spawn-at-startup "kwalletd6"
 spawn-at-startup "hyprpaper"
 spawn-at-startup "hyprlock"
-spawn-at-startup "waybar"
+spawn-sh-at-startup "waybar -c $HOME/.config/niri/waybar/config -s $HOME/.config/niri/waybar/style.css"
 spawn-at-startup "mako"
 spawn-at-startup "wl-paste --watch cliphist store"
 

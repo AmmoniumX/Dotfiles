@@ -27,8 +27,8 @@
     "battery",
     "bluetooth",
     "network",
-    "hyprland/language",
-    "custom/power"
+    "hyprland/language"
+    // "custom/power"
   ],
 
   // Modules configuration
@@ -260,7 +260,7 @@
   },
   "custom/power": {
     "format": "⏻",
-    "on-click": "$HOME/.config/hypr/scripts/rofi_powermenu",
+    "on-click": "$HOME/.config/scripts/rofi_powermenu",
     "tooltip": false
   },
   "custom/keyboard-layout": {
@@ -275,7 +275,7 @@
   },
   "custom/launcher": {
     "format": " ",
-    "on-click": "exec $HOME/.config/hypr/scripts/rofi_launcher",
+    "on-click": "exec $HOME/.config/scripts/rofi_launcher",
     "tooltip": false
   },
   "bluetooth": {

@@ -8,9 +8,9 @@ exec-once = wl-paste --watch cliphist store
 # Start user desktop services
 exec-once = hyprpaper
 exec-once = nm-applet --indicator
-exec-once = waybar
+exec-once = waybar -c ~/.config/hypr/waybar/config -s ~/.config/hypr/waybar/style.css
 exec-once = mako
-exec-once=~/.config/hypr/scripts/gtkthemes
+exec-once = ~/.config/hypr/scripts/gtkthemes
 
 # Start default apps
 exec-once = [workspace 1 silent] firefox

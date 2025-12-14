@@ -45,9 +45,9 @@
     color: @lavender;
     border: 0;
     padding: 0 0;
-    font-family: UbuntuMono;
+    /* font-family: UbuntuMono; */
     /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
-    /* font-family: "Hack Nerd Font"; */
+    font-family: "Hack Nerd Font";
     font-size: 18px;
     font-weight: bold;
     /* padding-bottom:4px;
@@ -55,12 +55,12 @@
 }
 
 window#waybar {
-    border-bottom: 2px solid @mauve;
+    border: 0px solid rgba(0, 0, 0, 0);
     /* border-radius: 10px; */
     /* background:#2d2a2e; */
     /* background-color: rgba(36, 39, 58, 0.85); */
-    /* background-color: rgba(0, 0, 0, 0); */
-    background-color: shade(#1e1e2e, 0.95);
+    background-color: rgba(0, 0, 0, 0);
+    /* background-color: shade(#1e1e2e, 0.95); */
 }
 
 #workspaces button {
@@ -68,7 +68,22 @@ window#waybar {
     border-radius: 50%;
     /* background-color: @base; */
     margin: 0px 0px;
-    padding: 2 3 2 3;
+    padding: 4 6 2 0;
+}
+
+#workspaces button:hover {
+    color: @mauve;
+    box-shadow: none;
+    /* Remove predefined box-shadow */
+    text-shadow: none;
+    /* Remove predefined text-shadow */
+    border: 0px;
+    background: none;
+}
+
+#workspaces button:hover * {
+    color: @mauve;
+    background-color: @base;
 }
 
 #workspaces * {
@@ -80,18 +95,17 @@ window#waybar {
     background-color: @base;
     opacity: 1;
     border-radius: 10px;
-    margin: 8px 0px;
-
+    margin: 8px 0px 8px 8px;
 }
 
 #workspaces button.focused {
-    color: @flamingo;
+    color: @mauve;
     border-radius: 20px;
     /* background-color: @flamingo; */
 }
 
 #workspaces button.focused * {
-    color: @flamingo;
+    color: @mauve;
 }
 
 #mode {
@@ -100,7 +114,6 @@ window#waybar {
 
 #clock,
 #custom-swap,
-#custom-background,
 #custom-cava-internal,
 #battery,
 #cpu,
@@ -114,10 +127,25 @@ window#waybar {
 #mode,
 #tray,
 #custom-power,
-#custom-pacman {
-    padding: 5px 14px;
+#custom-pacman,
+#custom-launcher,
+#bluetooth,
+#language,
+#custom-niri-keyboard,
+#mpd {
+    padding: 5px 8px;
     border-style: solid;
-    background-color: shade(@base, 1.1);
+    background-color: shade(@base, 1);
+    opacity: 1;
+    margin: 8px 0;
+}
+
+
+#network {
+    color: @green;
+    padding: 5px 8px;
+    border-style: solid;
+    background-color: shade(@base, 1);
     opacity: 1;
     margin: 8px 0;
 }
@@ -125,6 +153,44 @@ window#waybar {
 /* -----------------------------------------------------------------------------
   * Module styles
   * -------------------------------------------------------------------------- */
+#mpd {
+    border-radius: 10px;
+    color: @mauve;
+    margin-left: 5px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#mpd.2 {
+    border-radius: 10px 0px 0px 10px;
+    margin: 8px 0px 8px 6px;
+    padding: 4px 12px 4px 10px;
+}
+
+#mpd.3 {
+    border-radius: 0px 0px 0px 0px;
+    margin: 8px 0px 8px 0px;
+    padding: 4px;
+}
+
+#mpd.4 {
+    border-radius: 0px 10px 10px 0px;
+    margin: 8px 0px 8px 0px;
+    padding: 4px 10px 4px 14px;
+}
+
+#mpd.2,
+#mpd.3,
+#mpd.4 {
+    background-color: @base;
+    font-size: 14px;
+}
+
+#mode {
+    border-radius: 10px;
+    color: @mauve;
+    margin-right: 5px;
+}
+
 #custom-cava-internal {
     border-radius: 10px;
     color: @mauve;
@@ -132,15 +198,9 @@ window#waybar {
 
 #custom-swap {
     border-radius: 10px;
-    color: white;
+    color: @base;
     margin-left: 15px;
-}
-
-#custom-background {
-    border-radius: 0px 10px 10px 0px;
-    background-color: @base;
-    color: white;
-    padding: 5px 14px 5px 5px;
+    background-color: @mauve;
 }
 
 #clock {
@@ -195,8 +255,7 @@ window#waybar {
 }
 
 #memory {
-    background-color: #d3869b;
-    color: @base;
+    color: @sky;
 }
 
 #network.disabled {
@@ -204,11 +263,12 @@ window#waybar {
     /* border-bottom: 2px solid #bf616a; */
 }
 
-#network {
-    color: @green;
+#language,
+#custom-niri-keyboard {
     /* border-bottom: 2px solid @green; */
-    border-radius: 10px;
-    margin-right: 5px;
+    color: @flamingo;
+    border-radius: 0 10px 10px 0;
+    margin-right: 10px;
 }
 
 #network.disconnected {
@@ -254,15 +314,16 @@ window#waybar {
 #custom-launcher {
     background-color: @mauve;
     color: @base;
-    border-radius: 0px 15px 0px 0px;
-    padding: 5px 5px 5px 15px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin-left: 15px;
 }
 
 #custom-power {
     color: @base;
     background-color: @red;
     border-radius: 10px;
-    margin-left: 5px;
+    /* margin-left: 5px; */
     margin-right: 15px;
     padding: 5px 10px;
 }
@@ -276,10 +337,6 @@ window#waybar {
     color: #eceff4;
 }
 
-#mode {
-    margin-bottom: 3px;
-}
-
 #custom-keyboard-layout {
     color: @peach;
     /* border-bottom: 2px solid @peach; */
@@ -287,7 +344,9 @@ window#waybar {
     margin-right: 10px;
 }
 
-
+#bluetooth {
+    border-radius: 10px 0 0 10px;
+}
 
 /* window#waybar {
      background: #2d2a2e;
