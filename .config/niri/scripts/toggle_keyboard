@@ -1,35 +1,9 @@
 #!/bin/bash
 
 CONFIG_FILE=$(realpath "$HOME/.config/niri/config.kdl")
-CURRENT_LAYOUT=$(grep -oP ' layout "\K[^"]+' "$CONFIG_FILE")
-# echo "Current layout: "$CURRENT_LAYOUT
+CURRENT_LAYOUT=$(niri msg keyboard-layouts | grep '^\s*\* ' | sed 's/^\s*\* [0-9][0-9]* //g')
 
-# Define the layouts to cycle through
-LAYOUT_1="gb"
-LAYOUT_2="latam"
+niri msg action switch-layout next
+pkill -SIGRTMIN+10 waybar
 
-# Determine the new layout
-if [[ "$CURRENT_LAYOUT" == "$LAYOUT_1" ]]; then
-    NEW_LAYOUT="$LAYOUT_2"
-else
-    NEW_LAYOUT="$LAYOUT_1"
-fi
-
-# 1. Update the config file using sed
-# Note: The sed command below is crucial. It finds the line starting with 'layout'
-# inside the xkb block and replaces the layout value.
-sed -i "/xkb {/,/}/s/layout \".*\"/layout \"$NEW_LAYOUT\"/" "$CONFIG_FILE"
-
-# 2. Tell niri to reload its configuration
-# niri supports live-reloading on config file changes, but running `niri reload`
-# (or the equivalent command if one is exposed) ensures the change is applied.
-# However, the niri documentation states it automatically live-reloads when the file is saved.
-# If you find it doesn't reload, you might need to send a signal or use a specific command.
-# For now, rely on live-reload or test a simple restart command if available.
-
-# echo "Keyboard layout switched to $NEW_LAYOUT. Niri config updated."
-notify-send -h string:x-canonical-private-synchronous:hypr-cfg -u low "Layout changed to $NEW_LAYOUT"
-
-# The config should live-reload automatically, but for complex changes, 
-# you might need to restart. Use this only if live-reload doesn't work:
-# niri reload # (Check niri documentation for the correct reload command)
+notify-send -h string:x-canonical-private-synchronous:hypr-cfg -u low "Layout changed to $(niri msg keyboard-layouts | grep '^\s*\* ' | sed 's/^\s*\* [0-9][0-9]* //g')"
