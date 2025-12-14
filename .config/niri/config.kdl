@@ -374,9 +374,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Control+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
-    
-    // This doesn't work for niri, use Super+Shift+E to exit
-    // Mod+X hotkey-overlay-title="Log out: wlogout" { spawn "wlogout"; }
+    Mod+X hotkey-overlay-title="Log out: wlogout" { spawn "wlogout"; }
 
     Mod+Shift+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
 

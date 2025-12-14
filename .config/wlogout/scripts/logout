@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ "$XDG_SESSION_DESKTOP" = "niri" ]]; then
+  # echo "Closing niri session"
+  niri msg action quit -s
+elif [[ "$XDG_SESSION_DESKTOP" = "Hyprland" ]]; then
+  # echo "Closing hyprland session"
+  hyprctl dispatch exit 0
+fi
+
