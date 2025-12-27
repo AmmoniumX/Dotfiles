@@ -1,9 +1,0 @@
-[Unit]
-Description=Run power profile check every 2 minutes
-
-[Timer]
-OnBootSec=1min
-OnUnitActiveSec=2min
-
-[Install]
-WantedBy=timers.target
