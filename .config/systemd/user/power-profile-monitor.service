@@ -1,6 +1,0 @@
-[Unit]
-Description=Check power profile thresholds
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/power-profile-auto.sh
