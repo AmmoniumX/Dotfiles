@@ -3,5 +3,5 @@
 if pgrep -x "waybar" > /dev/null; then
     pkill -x "waybar"
 else
-    hyprctl dispatch exec waybar -c ~/.config/hypr/waybar/config -s ~/.config/hypr/waybar/style.css
+    hyprctl dispatch exec "waybar -c ~/.config/hypr/waybar/config -s ~/.config/hypr/waybar/style.css"
 fi
