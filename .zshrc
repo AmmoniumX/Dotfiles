@@ -29,7 +29,7 @@ bindkey '\e[1;5C' forward-word   # Ctrl-Right
 
 
 # Append to PATH
-export PATH="$PATH:$HOME/.cargo/bin"
+[ -f "$HOME/.cargo/bin" ] && export PATH="$PATH:$HOME/.cargo/bin"
 
 # Load other scripts
 source ~/.aliases.sh
@@ -44,5 +44,5 @@ command -v fzf &>/dev/null && eval "$(fzf --zsh)"
 command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-[ -f "$HOME/.env" ] && source "$HOME/.env"
+[ -f "$HOME/.env" ] && . "$HOME/.env"
 
