@@ -8,7 +8,7 @@
   "modules-left": [
     "custom/launcher",
     // "sway/workspaces",
-    "tray",
+    // "tray",
     // "sway/mode",
     "custom/cava-internal"
     // "mpd#2",
@@ -246,8 +246,10 @@
     "on-click": "pavucontrol",
     // "on-scroll-up": "pamixer -ui 2 && pamixer --get-volume > $SWAYSOCK.wob",
     // "on-scroll-down": "pamixer -ud 2 && pamixer --get-volume > $SWAYSOCK.wob"
-    "on-scroll-up": "pamixer -ui 2 | awk '{print}' > /tmp/wob.fifo", 
-    "on-scroll-down": "pamixer -ud 2 | awk '{print}' > /tmp/wob.fifo"
+    "on-scroll-up": "pamixer -ui 2 && pamixer --get-volume > /tmp/wob.fifo",
+    "on-scroll-down": "pamixer -ud 2 && pamixer --get-volume > /tmp/wob.fifo"
+    // "on-scroll-up": "pamixer -ui 2 | awk '{print}' > /tmp/wob.fifo", 
+    // "on-scroll-down": "pamixer -ud 2 | awk '{print}' > /tmp/wob.fifo"
   },
   "custom/pacman": {
     "format": " {}",
