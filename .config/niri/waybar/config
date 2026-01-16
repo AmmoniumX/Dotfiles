@@ -8,7 +8,7 @@
   "modules-left": [
     "custom/launcher",
     // "sway/workspaces",
-    // "tray",
+    "tray",
     // "sway/mode",
     "custom/cava-internal"
     // "mpd#2",
