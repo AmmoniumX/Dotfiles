@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if pgrep -x "waybar" > /dev/null; then
+    pkill -x "waybar"
+else
+    nohup waybar -c "$HOME""/.config/niri/waybar/config" -s "$HOME""/.config/niri/waybar/style.css" &> /dev/null &
+fi

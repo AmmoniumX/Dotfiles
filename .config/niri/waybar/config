@@ -6,7 +6,8 @@
   //"width": 1350, // Waybar width
   // Choose the order of the modules idle_inhibitor
   "modules-left": [
-    "custom/launcher",
+    // "custom/launcher",
+    "custom/power",
     // "sway/workspaces",
     "tray",
     // "sway/mode",
@@ -261,7 +262,7 @@
   },
   "custom/power": {
     "format": "⏻",
-    "on-click": "$HOME/.config/hypr/scripts/rofi_powermenu",
+    "on-click": "wlogout",
     "tooltip": false
   },
   "custom/niri-keyboard": {

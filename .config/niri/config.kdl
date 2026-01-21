@@ -381,6 +381,7 @@ binds {
     Mod+X hotkey-overlay-title="Log out: wlogout" { spawn "wlogout"; }
 
     Mod+Shift+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
+    Mod+Shift+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
 
     Mod+V hotkey-overlay-title="Show clipboard history" { spawn-sh "cliphist list | rofi -dmenu | cliphist decode | ifne wl-copy"; }
 
