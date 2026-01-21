@@ -126,7 +126,6 @@ window#waybar {
 #pulseaudio,
 #mode,
 #tray,
-#custom-power,
 #custom-pacman,
 #custom-launcher,
 #bluetooth,
@@ -308,8 +307,19 @@ window#waybar {
     border-radius: 10px;
 }
 
-#custom-launcher,
-#custom-power {}
+#custom-power {
+    /* font-family: "Hack Nerd Font Mono";
+    font-size: 18px;
+    font-weight: bold; */
+
+    color: @base;
+    background-color: @red;
+    border-radius: 10px;
+    padding: 5px 13px 5px 10px;
+    border-style: solid;
+    opacity: 1;
+    margin: 8px 8px;
+}
 
 #custom-launcher {
     background-color: @mauve;
@@ -317,15 +327,6 @@ window#waybar {
     border-radius: 10px;
     padding: 5px 10px;
     margin-left: 15px;
-}
-
-#custom-power {
-    color: @base;
-    background-color: @red;
-    border-radius: 10px;
-    /* margin-left: 5px; */
-    margin-right: 15px;
-    padding: 5px 10px;
 }
 
 #window {
