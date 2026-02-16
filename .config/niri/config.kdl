@@ -276,7 +276,7 @@ spawn-sh-at-startup "swaybg -i $HOME/.config/wallpapers/pexels-philippedonn-1169
 spawn-at-startup "hyprlock"
 spawn-sh-at-startup "waybar -c $HOME/.config/niri/waybar/config -s $HOME/.config/niri/waybar/style.css"
 spawn-at-startup "mako"
-// spawn-sh-at-startup "wl-paste --watch cliphist store"
+spawn-sh-at-startup "wl-paste --watch cliphist store"
 spawn-sh-at-startup "walker --gapplication-service"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
@@ -377,7 +377,7 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    // Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
     Control+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
     Mod+X hotkey-overlay-title="Log out: wlogout" { spawn "wlogout"; }
@@ -385,7 +385,7 @@ binds {
     Mod+Shift+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
     Mod+Shift+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
 
-    // Mod+V hotkey-overlay-title="Show clipboard history" { spawn-sh "cliphist list | rofi -dmenu | cliphist decode | ifne wl-copy"; }
+    Mod+V hotkey-overlay-title="Show clipboard history" { spawn-sh "cliphist list | rofi -dmenu | cliphist decode | ifne wl-copy"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
