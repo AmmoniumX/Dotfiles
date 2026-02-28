@@ -120,3 +120,17 @@ function mysudo() {
   fi
 }
 
+function date-backup() {
+  local d=$(date +"%Y-%m-%d_%H-%M-%S")
+
+  # Check file exists
+  if [[ ! -e "$1" ]]; then
+    echo "Error: File '$1' not found."
+    return 1
+  fi
+
+  local fdir=$(dirname "$1")
+  local fname=$(basename "$1")
+
+  mv "$1" "${fdir}/${fname}.${d}.bak"
+}
