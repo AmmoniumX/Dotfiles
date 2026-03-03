@@ -3,7 +3,7 @@
 
 fzf_args=(
   --multi
-  --preview 'paru -Sii {1}'
+  --preview 'paru -Si {1}'
   --preview-label='alt-p: toggle description, alt-j/k: scroll, tab: multi-select'
   --preview-label-pos='bottom'
   --preview-window 'down:50%:wrap'
@@ -13,9 +13,8 @@ fzf_args=(
   --color 'pointer:green,marker:green'
 )
 
-pkg_names=$(paru -Slq | fzf "${fzf_args[@]}")
+paru -Sy
+pkg_names=$(paru -Slq | fzf "${fzf_args[@]}" | tr '\n' ' ')
 
-if [[ -n "$pkg_names" ]]; then
-  # Convert newline-separated selections to space-separated for yay/paru
-  paru -S $(echo "$pkg_names" | tr '\n' ' ')
-fi
+# Always update, and install extra packages if selected
+paru -Su "$pkg_names"
