@@ -14,7 +14,6 @@ fzf_args=(
 )
 
 paru -Sy
-pkg_names=$(paru -Slq | fzf "${fzf_args[@]}" | tr '\n' ' ')
-
+pkgs=$(paru -Slq | fzf "${fzf_args[@]}" | xargs)
 # Always update, and install extra packages if selected
-paru -Su "$pkg_names"
+paru -Su $pkgs
