@@ -273,7 +273,7 @@ layout {
 // See the binds section below for more spawn examples.
 spawn-at-startup "kwalletd6"
 spawn-sh-at-startup "swaybg -i $HOME/.config/wallpapers/pexels-philippedonn-1169754.jpg"
-spawn-at-startup "hyprlock"
+spawn-at-startup "$HOME/.config/niri/scripts/screenlock"
 spawn-sh-at-startup "waybar -c $HOME/.config/niri/waybar/config -s $HOME/.config/niri/waybar/style.css"
 spawn-at-startup "mako"
 spawn-sh-at-startup "wl-paste --watch cliphist store"
@@ -380,7 +380,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
-    Control+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
+    Control+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
     Mod+X hotkey-overlay-title="Log out: wlogout" { spawn "wlogout"; }
 
     Mod+Shift+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
