@@ -381,7 +381,7 @@ binds {
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
     Control+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
-    Mod+X hotkey-overlay-title="Log out: wlogout" { spawn "wlogout"; }
+    Mod+X hotkey-overlay-title="Log out: wlogout" { spawn-sh "wlogout -l $HOME/.config/niri/wlogout/layout"; }
 
     Mod+Shift+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
     Mod+Shift+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
