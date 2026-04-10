@@ -5,7 +5,7 @@ _root_dir="$(dirname "$(realpath "$0")")"
 DRY_RUN=false
 BACKUP_DIR=${_root_dir}"/.backups/$(date +%Y-%m-%d_%H-%M-%S)"
 EXCLUDE_FILES=(".gitignore" "install.sh" "README.md" "GEMINI.md")
-EXCLUDE_DIRS=(".git" ".backups")
+EXCLUDE_DIRS=(".git" ".backups", "ignore")
 
 usage() {
     echo "Usage: $0 [-d]"
