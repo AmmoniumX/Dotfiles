@@ -1,0 +1,29 @@
+window {
+    background-color: rgba(0, 0, 0, 1);
+    background-size: cover;
+    background-position: center;
+    color: rgba(33, 164, 223, 1); 
+}
+
+label {
+    color: rgba(53, 185, 171, 1);
+}
+
+entry {
+    color: rgba(53, 185, 171, 1); 
+    background: rgba(23, 63, 79, 1);
+
+    border: 1px solid rgba(33, 164, 223, 1);
+    box-shadow: none;
+}
+
+entry:focus {
+    border-color: rgba(53, 185, 171, 1);
+    box-shadow: none;
+}
+
+button {
+    color: rgba(33, 164, 223, 1); 
+    background: rgba(23, 63, 79, 1);
+    border-color: rgba(33, 164, 223, 1);
+}
