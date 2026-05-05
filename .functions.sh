@@ -11,10 +11,10 @@ if [[ -n "$BASH_VERSION" ]]; then
   # bash-preexec hook
   preexec() {
     # Log time, working directory, and command to a custom file
-    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    local working_dir=$(pwd)
-    local command="$1"
-    echo "$timestamp $working_dir $command" >> ~/.bash_full_history
+    # local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    # local working_dir=$(pwd)
+    # local command="$1"
+    # echo "$timestamp $working_dir $command" >> ~/.bash_full_history
 
     # Reset ls-after-cd    
     unset _ls_output
@@ -33,10 +33,10 @@ elif [[ -n "$ZSH_VERSION" ]]; then
   # Zsh-specific setup
   preexec() {
     # Log time, working directory, and command to a custom file
-    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    local working_dir=$(pwd)
-    local command="$1"
-    echo "$timestamp $working_dir $command" >> ~/.zsh_full_history
+    # local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    # local working_dir=$(pwd)
+    # local command="$1"
+    # echo "$timestamp $working_dir $command" >> ~/.zsh_full_history
 
     # Reset ls-after-cd    
     unset _ls_output
