@@ -10,7 +10,7 @@ alias mv='mv -iv'
 alias cp='cp -riv'
 alias grep='grep --color=auto'
 if command -v paru &> /dev/null; then
-    alias sys-upgrade='paru -Syu'
+    alias sys-upgrade='paru -Syu --repo && paru -Syu --aur --upgrademenu'
 fi
 if command -v apt &> /dev/null; then
     alias sys-upgrade='sudo apt update && sudo apt upgrade'
