@@ -16,4 +16,4 @@ fzf_args=(
 paru -Sy
 pkgs=$(paru -Slq | fzf "${fzf_args[@]}" | xargs)
 # Always update, and install extra packages if selected
-paru -Su $pkgs
+paru -Su --repo && paru -S $pkgs && paru -Su --aur --upgrademenu
