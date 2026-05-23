@@ -1,4 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "permission": "ask"
+  "permission": "ask",
+  "plugin": ["@khalilgharbaoui/opencode-claude-code-plugin"]
 }
