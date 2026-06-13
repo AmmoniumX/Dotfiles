@@ -371,6 +371,19 @@ window-rule {
     clip-to-geometry true
 }
 
+
+window-rule {
+    match app-id="org.kde.bluedevilwizard"
+    open-floating true
+}
+
+window-rule {
+    match app-id="blueberry.py"
+    open-floating true
+}
+
+// --- Startup window rules ---
+
 window-rule {
     match app-id="firefox"
     open-on-workspace "1"
@@ -394,6 +407,7 @@ window-rule {
     open-on-workspace "2"
     open-focused false
 }
+
 
 
 binds {
