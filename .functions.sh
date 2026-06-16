@@ -89,36 +89,36 @@ function ipv6-dev() {
 }
 
 # Sudo with custom aliases and functions
-function mysudo() {
-  # Check if a command is provided
-  [[ -z "$1" ]] && { echo "Usage: mysudo <command>"; return 1; }
-
-  # Paths to your shell files
-  local functs="$HOME/.functions.sh"
-  local aliases="$HOME/.aliases.sh"
-
-  # Check if files exist before sourcing
-  [[ ! -f "$functs" || ! -f "$aliases" ]] && { echo "Error: one or multiple shell files not found"; return 1; }
-
-  # Build the command
-  local command="$*"
-
-  # Use sudo to execute the command in a new shell with sourced files
-  if [[ -n "$BASH_VERSION" ]]; then
-    sudo bash -c "
-      shopt -s expand_aliases;
-      source '$functs';
-      source '$aliases';
-      $command
-    "
-  elif [[ -n "$ZSH_VERSION" ]]; then
-    sudo zsh -c "
-      source '$functs';
-      source '$aliases';
-      $command
-    "
-  fi
-}
+# function mysudo() {
+#   # Check if a command is provided
+#   [[ -z "$1" ]] && { echo "Usage: mysudo <command>"; return 1; }
+# 
+#   # Paths to your shell files
+#   local functs="$HOME/.functions.sh"
+#   local aliases="$HOME/.aliases.sh"
+# 
+#   # Check if files exist before sourcing
+#   [[ ! -f "$functs" || ! -f "$aliases" ]] && { echo "Error: one or multiple shell files not found"; return 1; }
+# 
+#   # Build the command
+#   local command="$*"
+# 
+#   # Use sudo to execute the command in a new shell with sourced files
+#   if [[ -n "$BASH_VERSION" ]]; then
+#     sudo bash -c "
+#       shopt -s expand_aliases;
+#       source '$functs';
+#       source '$aliases';
+#       $command
+#     "
+#   elif [[ -n "$ZSH_VERSION" ]]; then
+#     sudo zsh -c "
+#       source '$functs';
+#       source '$aliases';
+#       $command
+#     "
+#   fi
+# }
 
 function date-backup() {
   local d=$(date +"%Y-%m-%d_%H-%M-%S")

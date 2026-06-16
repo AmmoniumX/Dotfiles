@@ -12,6 +12,12 @@ shopt -s histappend checkwinsize
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+#
+# Use bash-completion, if available, and avoid double-sourcing
+[[ $PS1 &&
+  ! ${BASH_COMPLETION_VERSINFO:-} &&
+  -f /usr/share/bash-completion/bash_completion ]] &&
+    . /usr/share/bash-completion/bash_completion
 
 # Append to PATH
 [ -f "$HOME/.cargo/bin" ] && export PATH="$PATH:$HOME/.cargo/bin"
