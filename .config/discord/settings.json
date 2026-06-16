@@ -8,9 +8,13 @@
   "WINDOW_BOUNDS": {
     "x": 0,
     "y": 0,
-    "width": 940,
-    "height": 1048
+    "width": 1888,
+    "height": 1000
   },
   "asyncVideoInputDeviceInit": false,
-  "SKIP_HOST_UPDATE": true
+  "SKIP_HOST_UPDATE": true,
+  "openH264Enabled": true,
+  "enableLibOpenH264Electron": false,
+  "DESKTOP_TTI_UPDATE_BACKOFF_MAX_MS": 30000,
+  "DESKTOP_TTI_REMOVE_V8_CACHE_CLEAR": true
 }
