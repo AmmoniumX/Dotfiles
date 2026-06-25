@@ -425,17 +425,16 @@ binds {
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    // Custom Binds
+    Mod+T hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
+    Mod+D hotkey-overlay-title="Run Application" { spawn "fuzzel"; }
     Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
-    Control+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
-    Mod+X hotkey-overlay-title="Log out: wlogout" { spawn-sh "wlogout -l $HOME/.config/niri/wlogout/layout"; }
-
+    Control+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
+    Mod+X hotkey-overlay-title="Log out" { spawn-sh "wlogout -l $HOME/.config/niri/wlogout/layout"; }
     Mod+Shift+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
     Mod+Shift+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
-
-    Mod+V hotkey-overlay-title="Open clipboard history" { spawn-sh "cliphist list | rofi -dmenu -theme $HOME/.config/rofi/themes/solarized-space.rasi -p Clipboard | cliphist decode | ifne wl-copy"; }
+    Mod+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | rofi -dmenu -theme $HOME/.config/rofi/themes/solarized-space.rasi -p Clipboard | cliphist decode | ifne wl-copy"; }
+    Mod+K hotkey-overlay-title="Color Picker" { spawn-sh "hyprpicker | wl-copy";  }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -475,19 +474,19 @@ binds {
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
     Mod+Right { focus-column-right; }
-    Mod+H     { focus-column-left; }
-    Mod+J     { focus-window-down; }
-    Mod+K     { focus-window-up; }
-    Mod+L     { focus-column-right; }
+    // Mod+H     { focus-column-left; }
+    // Mod+J     { focus-window-down; }
+    // Mod+K     { focus-window-up; }
+    // Mod+L     { focus-column-right; }
 
     Mod+Ctrl+Left  { move-column-left; }
     Mod+Ctrl+Down  { move-window-down; }
     Mod+Ctrl+Up    { move-window-up; }
     Mod+Ctrl+Right { move-column-right; }
-    Mod+Ctrl+H     { move-column-left; }
-    Mod+Ctrl+J     { move-window-down; }
-    Mod+Ctrl+K     { move-window-up; }
-    Mod+Ctrl+L     { move-column-right; }
+    // Mod+Ctrl+H     { move-column-left; }
+    // Mod+Ctrl+J     { move-window-down; }
+    // Mod+Ctrl+K     { move-window-up; }
+    // Mod+Ctrl+L     { move-column-right; }
 
     // Alternative commands that move across workspaces when reaching
     // the first or last window in a column.
@@ -505,19 +504,19 @@ binds {
     Mod+Shift+Down  { focus-monitor-down; }
     Mod+Shift+Up    { focus-monitor-up; }
     Mod+Shift+Right { focus-monitor-right; }
-    Mod+Shift+H     { focus-monitor-left; }
-    Mod+Shift+J     { focus-monitor-down; }
-    Mod+Shift+K     { focus-monitor-up; }
-    Mod+Shift+L     { focus-monitor-right; }
+    // Mod+Shift+H     { focus-monitor-left; }
+    // Mod+Shift+J     { focus-monitor-down; }
+    // Mod+Shift+K     { focus-monitor-up; }
+    // Mod+Shift+L     { focus-monitor-right; }
 
     Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
     Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
     Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
-    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
-    Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
-    Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+    // Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+    // Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
+    // Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
+    // Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
