@@ -274,6 +274,7 @@ layout {
 spawn-at-startup "kwalletd6"
 spawn-sh-at-startup "swaybg -i $HOME/.config/wallpapers/pexels-philippedonn-1169754.jpg"
 spawn-sh-at-startup "waybar -c $HOME/.config/niri/waybar/config -s $HOME/.config/niri/waybar/style.css"
+spawn-sh-at-startup "$HOME/.config/niri/niri-scripts/support-sticky-floating"
 spawn-sh-at-startup "$HOME/.config/niri/scripts/screenlock"
 // spawn-at-startup "mako"
 spawn-sh-at-startup "wl-paste --watch cliphist store"
@@ -441,6 +442,7 @@ binds {
     Mod+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | rofi -dmenu -theme $HOME/.config/rofi/themes/solarized-space.rasi -p Clipboard | cliphist decode | ifne wl-copy"; }
     Mod+K hotkey-overlay-title="Color Picker" { spawn-sh "hyprpicker | wl-copy";  }
     Mod+Period hotkey-overlay-title="Open Emoji Picker" { spawn-sh "flatpak run it.mijorus.smile"; }
+    Mod+Shift+S { spawn-sh "$HOME/.config/niri/niri-scripts/toggle-sticky"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.

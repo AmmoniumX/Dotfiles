@@ -1,3 +1,6 @@
 [submodule ".config/nvim"]
 	path = .config/nvim
 	url = https://github.com/AmmoniumX/nvim.git
+[submodule ".config/niri/niri-scripts"]
+	path = .config/niri/niri-scripts
+	url = https://github.com/0xwal/niri-scripts.git
