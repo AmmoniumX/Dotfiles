@@ -62,4 +62,37 @@ fi
 
 echo "${COLOR_CYAN}Running stow...${COLOR_RESET}"
 stow -v -t "$HOME" .
+
+# greetd's config lives in /etc, not $HOME, so it's excluded from the stow
+# package (see .stow-local-ignore) and deployed here instead via sudo cp.
+# Files are world-readable (644), so reading the current /etc/greetd
+# contents for the backup diff doesn't need sudo - only writing does.
+GREETD_SRC="$_root_dir/ignore/greetd"
+GREETD_DST="/etc/greetd"
+declare -A GREETD_OWNERS=(
+    [config.toml]="root:root"
+    [environments]="root:root"
+    [gtkgreet.css]="greeter:greeter"
+)
+
+if [ -d "$GREETD_SRC" ]; then
+    echo "${COLOR_CYAN}Deploying greetd config to ${GREETD_DST} (requires sudo)...${COLOR_RESET}"
+    for f in "${!GREETD_OWNERS[@]}"; do
+        src="$GREETD_SRC/$f"
+        dst="$GREETD_DST/$f"
+        [ -f "$src" ] || continue
+
+        if [ -e "$dst" ] && ! /usr/bin/cmp -s "$src" "$dst"; then
+            backup_dest="$BACKUP_DIR/etc/greetd/$f"
+            echo "${COLOR_YELLOW}BACKUP:${COLOR_RESET} $dst -> $backup_dest"
+            mkdir -p "$(dirname "$backup_dest")"
+            /usr/bin/cp -p "$dst" "$backup_dest"
+        fi
+
+        sudo /usr/bin/cp "$src" "$dst"
+        sudo chown "${GREETD_OWNERS[$f]}" "$dst"
+        sudo chmod 644 "$dst"
+    done
+fi
+
 echo "Installation complete."
