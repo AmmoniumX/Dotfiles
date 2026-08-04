@@ -1,11 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-_root_dir="$(dirname "$(realpath "$0")")"
+_root_dir="$(cd "$(dirname "$(realpath "$0")")" && pwd)"
 DRY_RUN=false
-BACKUP_DIR=${_root_dir}"/.backups/$(date +%Y-%m-%d_%H-%M-%S)"
-EXCLUDE_FILES=(".gitignore" "install.sh" "README.md" "GEMINI.md")
-EXCLUDE_DIRS=(".git" ".backups", "ignore")
+BACKUP_DIR="${_root_dir}/.backups/$(date +%Y-%m-%d_%H-%M-%S)"
 
 usage() {
     echo "Usage: $0 [-d]"
@@ -24,61 +22,44 @@ while getopts ":d" opt; do
   esac
 done
 
+if ! command -v stow >/dev/null 2>&1; then
+    echo "Error: GNU Stow is required but not installed (e.g. 'sudo pacman -S stow')." >&2
+    exit 1
+fi
+
 # Colors
 COLOR_RESET=$(tput sgr0)
-COLOR_GREEN=$(tput setaf 2)
 COLOR_YELLOW=$(tput setaf 3)
 COLOR_CYAN=$(tput setaf 6)
 
-_install() {
-    local src_path
-    src_path="$(realpath "$1")"
-    if [ "$src_path" == "$_root_dir" ]; then
-        return
-    fi
-    local relative_path="${src_path#$_root_dir}"
-    local target_path="$HOME$relative_path"
+cd "$_root_dir"
 
-    if [ -L "$target_path" ] && [ "$(readlink "$target_path")" == "$src_path" ]; then
-        echo "${COLOR_GREEN}EXISTING LINK:${COLOR_RESET} $target_path"
-    else
-        if [ -e "$target_path" ]; then
-            echo "${COLOR_YELLOW}BACKUP:${COLOR_RESET} $target_path -> $BACKUP_DIR"
-            if ! $DRY_RUN; then
-                mkdir -p "$BACKUP_DIR"
-                mv "$target_path" "$BACKUP_DIR" || { echo "Error: Failed to back up $target_path" >&2; exit 1; }
-            fi
-        fi
-        local target_dir="$(dirname "$target_path")"
-        if [ ! -d "$target_dir" ]; then
-          echo "${COLOR_CYAN}CREATE DIRECTORY:${COLOR_RESET} $target_dir"
-          if ! $DRY_RUN; then
-            mkdir -p "$target_dir" || { echo "Error: Failed to create directory for $target_path" >&2; exit 1; }
-          fi
-        fi
-        echo "${COLOR_CYAN}LINK:${COLOR_RESET} $src_path -> $target_path"
+# Ask stow what it would do first. Anything it would refuse to overwrite -
+# a real file/dir in the way, or a foreign symlink stow doesn't recognize
+# as its own (e.g. one left by the old install.sh) - gets moved into a
+# timestamped backup so the real run can proceed without prompts.
+conflicts=()
+while IFS= read -r rel; do
+    conflicts+=("$rel")
+done < <(stow -n -v -t "$HOME" . 2>&1 | grep -oP '(?:over existing target \K[^ ]+(?= since neither a link nor a directory)|existing target is not owned by stow: \K.+)' || true)
+
+if [ "${#conflicts[@]}" -gt 0 ]; then
+    for rel in "${conflicts[@]}"; do
+        target_path="$HOME/$rel"
+        echo "${COLOR_YELLOW}BACKUP:${COLOR_RESET} $target_path -> $BACKUP_DIR/$rel"
         if ! $DRY_RUN; then
-            ln -sf "$src_path" "$target_path" || { echo "Error: Failed to create symlink $target_path" >&2; exit 1; }
+            backup_dest="$BACKUP_DIR/$rel"
+            mkdir -p "$(dirname "$backup_dest")"
+            mv "$target_path" "$backup_dest" || { echo "Error: Failed to back up $target_path" >&2; exit 1; }
         fi
-    fi
-}
+    done
+fi
 
-find_excludes_dirs=()
-for item in "${EXCLUDE_DIRS[@]}"; do
-    find_excludes_dirs+=(-path "$_root_dir/$item/*" -o)
-done
-
-find_excludes_files=()
-for item in "${EXCLUDE_FILES[@]}"; do
-    find_excludes_files+=(-name "$item" -o)
-done
-
-find "$_root_dir" \( "${find_excludes_dirs[@]:0:${#find_excludes_dirs[@]}-1}" \) -prune -o \( "${find_excludes_files[@]:0:${#find_excludes_files[@]}-1}" \) -prune -o -type f -print | while read -r f; do
-    _install "$f"
-done
-
-
-echo "Installation complete."
 if $DRY_RUN; then
     echo "This was a dry run. No changes were made."
+    exit 0
 fi
+
+echo "${COLOR_CYAN}Running stow...${COLOR_RESET}"
+stow -v -t "$HOME" .
+echo "Installation complete."

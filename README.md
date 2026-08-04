@@ -15,10 +15,11 @@ git clone https://github.com/AmmoniumX/Dotfiles.git && cd ./Dotfiles
 ```
 (Note: this installs *all* official repository and AUR packages, including apps and NVIDIA drives. TODO: Create a separate list of required dependencies only)
 
-3. Install dotfiles
+3. Install dotfiles (requires [GNU Stow](https://www.gnu.org/software/stow/), e.g. `sudo pacman -S stow`)
 ```bash
 ./install.sh
 ```
+This backs up any conflicting existing files under `.backups/<timestamp>` and then symlinks everything into `$HOME` via `stow`. Pass `-d` to preview the changes first (dry run).
 
 Then, restart your shell or source the appropriate file (`.bashrc` or `.zshrc`).
 
