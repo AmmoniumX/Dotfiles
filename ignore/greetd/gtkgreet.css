@@ -2,7 +2,7 @@ window {
     background-color: rgba(0, 0, 0, 1);
     background-size: cover;
     background-position: center;
-    color: rgba(33, 164, 223, 1); 
+    color: rgba(33, 164, 223, 1);
 }
 
 label {
@@ -10,7 +10,7 @@ label {
 }
 
 entry {
-    color: rgba(53, 185, 171, 1); 
+    color: rgba(53, 185, 171, 1);
     background: rgba(23, 63, 79, 1);
 
     border: 1px solid rgba(33, 164, 223, 1);
@@ -23,7 +23,49 @@ entry:focus {
 }
 
 button {
-    color: rgba(33, 164, 223, 1); 
+    color: rgba(33, 164, 223, 1);
     background: rgba(23, 63, 79, 1);
     border-color: rgba(33, 164, 223, 1);
+}
+
+.default-decoration {
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+window.csd decoration {
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.default-decoration button.titlebutton {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    opacity: 0;
+}
+
+.default-decoration button.titlebutton > image {
+    min-width: 0;
+    min-height: 0;
+    opacity: 0;
+}
+
+.default-decoration label {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
 }
