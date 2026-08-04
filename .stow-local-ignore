@@ -1,0 +1,19 @@
+# Ignore list for GNU Stow.
+#
+# NOTE: supplying this file replaces Stow's built-in ignore list entirely,
+# so common VCS patterns are re-added below explicitly. They're anchored to
+# the package root (leading ^/) so nested copies - e.g. the .git file inside
+# the .config/nvim submodule - are left alone and still get stowed, since
+# git needs them in place under $HOME to resolve the submodule.
+
+^/\.git$
+^/\.gitignore$
+^/\.gitmodules$
+^/\.backups$
+^/\.stow-local-ignore$
+^/install\.sh$
+^/README\.md$
+^/GEMINI\.md$
+
+# Not dotfiles for $HOME: greetd config belongs in /etc, not the user's home.
+^/ignore$
