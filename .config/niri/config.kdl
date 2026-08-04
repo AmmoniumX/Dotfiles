@@ -388,6 +388,14 @@ window-rule {
     open-floating true
 }
 
+// Anchor Steam notification toasts to the bottom-right corner.
+// The number in the title increments per toast instance, so match any of them.
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    open-floating true
+    default-floating-position x=0 y=0 relative-to="bottom-right"
+}
+
 // --- Startup window rules ---
 
 window-rule {
