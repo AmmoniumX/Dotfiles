@@ -276,9 +276,9 @@ spawn-sh-at-startup "swaybg -i $HOME/.config/wallpapers/pexels-philippedonn-1169
 spawn-sh-at-startup "waybar -c $HOME/.config/niri/waybar/config -s $HOME/.config/niri/waybar/style.css"
 spawn-sh-at-startup "$HOME/.config/niri/scripts/screenlock"
 // spawn-at-startup "mako"
-spawn-sh-at-startup "wl-paste --watch cliphist store"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
-spawn-at-startup "niri-float-sticky -app-id firefox"
+spawn-at-startup "niri-float-sticky" "-app-id" "firefox"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
