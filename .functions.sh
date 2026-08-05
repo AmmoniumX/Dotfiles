@@ -88,6 +88,19 @@ function ipv6-dev() {
     ip addr show "$1" | grep 'inet6 ' | cut -d' ' -f6 | sed -n '1p' | cut -d/ -f1;
 }
 
+function notify-me() {
+  local title="notify-me"
+  local message="done"
+  if [[ "$#" -eq 1 ]]; then
+    message="$1"
+  elif [[ "$#" -eq 2 ]]; then
+    title="$1"
+    message="$2"
+  fi
+  notify-send "$title" "$message" && \
+    paplay /usr/share/sounds/freedesktop/stereo/bell.oga
+}
+
 # Sudo with custom aliases and functions
 # function mysudo() {
 #   # Check if a command is provided
