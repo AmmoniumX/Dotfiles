@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+"""Generate .desktop launchers for Steam's non-Steam game shortcuts.
+
+Reads every userdata/*/config/shortcuts.vdf and writes one .desktop
+file per shortcut into ~/.local/share/applications, so the games show
+up in your regular app launcher and launch straight into Steam/Proton
+with whatever LaunchOptions (gamescope, etc.) were configured.
+
+Safe to re-run any time you add/remove non-Steam games in Steam.
+"""
+import glob
+import os
+
+import vdf
+
+APPLICATIONS_DIR = os.path.expanduser("~/.local/share/applications")
+SHORTCUTS_GLOB = os.path.expanduser("~/.local/share/Steam/userdata/*/config/shortcuts.vdf")
+
+
+def unsigned32(appid):
+    return appid & 0xFFFFFFFF
+
+
+def main():
+    os.makedirs(APPLICATIONS_DIR, exist_ok=True)
+    written = 0
+    for path in glob.glob(SHORTCUTS_GLOB):
+        with open(path, "rb") as f:
+            data = vdf.binary_load(f)
+        for shortcut in data.get("shortcuts", {}).values():
+            name = shortcut["AppName"]
+            appid = unsigned32(shortcut["appid"])
+            icon = shortcut.get("icon") or ""
+
+            lines = [
+                "[Desktop Entry]",
+                f"Name={name}",
+                "Comment=Play this game on Steam",
+                f"Exec=steam steam://rungameid/{appid}",
+            ]
+            if icon:
+                lines.append(f"Icon={icon}")
+            lines += ["Terminal=false", "Type=Application", "Categories=Game;"]
+
+            desktop_path = os.path.join(APPLICATIONS_DIR, f"{name}.desktop")
+            with open(desktop_path, "w") as f:
+                f.write("\n".join(lines) + "\n")
+            os.chmod(desktop_path, 0o755)
+            print(f"Wrote {desktop_path} (appid {appid})")
+            written += 1
+
+    if written == 0:
+        print("No non-Steam shortcuts found.")
+
+
+if __name__ == "__main__":
+    main()
