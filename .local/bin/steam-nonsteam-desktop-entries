@@ -21,6 +21,14 @@ def unsigned32(appid):
     return appid & 0xFFFFFFFF
 
 
+def shortcut_gameid(appid32):
+    # Steam's internal 64-bit GameID for shortcuts: appid in the high
+    # 32 bits, 0x02000000 "shortcut" type flag in the low 32 bits.
+    # Confirmed against a live gameID seen in Steam's own logs while
+    # a non-Steam game was running.
+    return (appid32 << 32) | 0x02000000
+
+
 def main():
     os.makedirs(APPLICATIONS_DIR, exist_ok=True)
     written = 0
@@ -29,14 +37,14 @@ def main():
             data = vdf.binary_load(f)
         for shortcut in data.get("shortcuts", {}).values():
             name = shortcut["AppName"]
-            appid = unsigned32(shortcut["appid"])
+            gameid = shortcut_gameid(unsigned32(shortcut["appid"]))
             icon = shortcut.get("icon") or ""
 
             lines = [
                 "[Desktop Entry]",
                 f"Name={name}",
                 "Comment=Play this game on Steam",
-                f"Exec=steam steam://rungameid/{appid}",
+                f"Exec=steam steam://rungameid/{gameid}",
             ]
             if icon:
                 lines.append(f"Icon={icon}")
@@ -46,7 +54,7 @@ def main():
             with open(desktop_path, "w") as f:
                 f.write("\n".join(lines) + "\n")
             os.chmod(desktop_path, 0o755)
-            print(f"Wrote {desktop_path} (appid {appid})")
+            print(f"Wrote {desktop_path} (gameid {gameid})")
             written += 1
 
     if written == 0:
