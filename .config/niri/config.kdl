@@ -271,7 +271,6 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "kwalletd6"
 spawn-sh-at-startup "swaybg -i $HOME/.config/wallpapers/pexels-philippedonn-1169754.jpg"
 spawn-sh-at-startup "waybar -c $HOME/.config/niri/waybar/config -s $HOME/.config/niri/waybar/style.css"
 spawn-sh-at-startup "$HOME/.config/niri/scripts/screenlock"
