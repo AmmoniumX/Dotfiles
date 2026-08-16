@@ -22,6 +22,7 @@ shopt -s histappend checkwinsize
 # Append to PATH
 [ -f "$HOME/.cargo/bin" ] && export PATH="$PATH:$HOME/.cargo/bin"
 [ -f "$HOME/.local/bin" ] && export PATH="$PATH:$HOME/.local/bin"
+[ -f "$HOME/Scripts" ] && export PATH="$PATH:$HOME/Scripts"
 
 # Load other scripts
 source ~/.aliases.sh
