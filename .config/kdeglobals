@@ -139,7 +139,7 @@ Splitter State=\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\xa5\
 
 [General]
 BrowserApplication=firefox.desktop
-ColorSchemeHash=2c3f86428c11011a7c64ee1e7f47c274d498ff10
+ColorSchemeHash=9d38eb71ded8ff549da26d57d7cbab9164da243a
 TerminalApplication=kitty
 UseSystemBell=true
 XftHintStyle=hintslight
@@ -152,6 +152,8 @@ Theme=breeze-dark
 
 [KDE]
 LookAndFeelPackage=org.kde.breezedark.desktop
+contrast=4
+frameContrast=0.2
 widgetStyle=qt6ct-style
 
 [KFileDialog Settings]
@@ -159,8 +161,6 @@ Allow Expansion=false
 Automatically select filename extension=true
 Breadcrumb Navigation=true
 Decoration position=2
-LocationCombo Completionmode=5
-PathCombo Completionmode=5
 Show Full Path=false
 Show Inline Previews=true
 Show Preview=false
