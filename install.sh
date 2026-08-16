@@ -96,3 +96,22 @@ if [ -d "$GREETD_SRC" ]; then
 fi
 
 echo "Installation complete."
+
+read -rp "Do you want to configure git globals for delta pager? [y/N]: " response
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    set -x
+    git config --global core.pager delta
+    git config --global interactive.diffFilter 'delta --color-only'
+    git config --global delta.navigate true
+    git config --global delta.dark true
+    git config --global delta.line-numbers true
+    git config --global delta.line-numbers-left-format ''
+    git config --global delta.file-decoration-style 'gray ol ul'
+    git config --global delta.hunk-header-decoration-style 'omit'
+    git config --global merge.conflictStyle zdiff3
+    { set +x; } 2>/dev/null
+else
+    echo "Skipped."
+fi
+
+echo "Done."
