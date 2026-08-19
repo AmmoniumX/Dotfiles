@@ -1,0 +1,1 @@
+/home/ammonium/.config/niri/global-shaders/window/adaptive-text-v4.frag

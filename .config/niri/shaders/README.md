@@ -1,0 +1,1 @@
+/home/ammonium/.config/niri/global-shaders/README.md
