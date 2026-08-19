@@ -1,3 +1,6 @@
+include "global-shaders/current.kdl"   // -> cursor/*.kdl | screen/*.kdl | off.kdl
+include "shaders/current.kdl"          // -> close-*.kdl
+
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
@@ -276,7 +279,7 @@ spawn-sh-at-startup "swaybg -i $HOME/.config/wallpapers/pexels-philippedonn-1169
 spawn-sh-at-startup "$HOME/.config/niri/scripts/screenlock"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
-spawn-at-startup "niri-float-sticky" "-app-id" "firefox"
+// spawn-at-startup "niri-float-sticky" "-app-id" "firefox"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -313,15 +316,9 @@ animations {
 }
 
 // Declare workspaces
-workspace "1"
-workspace "2"
-workspace "3"
-workspace "4"
-workspace "5"
-workspace "6"
-workspace "7"
-workspace "8"
-workspace "9"
+workspace "stash" {
+  hidden true
+}
 
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
@@ -349,6 +346,8 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
+    open-sticky true
+    float-above-fullscreen true
 }
 
 // Example: block out two password managers from screen capture.
@@ -602,24 +601,26 @@ binds {
     //
     // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
     // will all refer to the 3rd workspace.
-    Mod+1 { focus-workspace "1"; }
-    Mod+2 { focus-workspace "2"; }
-    Mod+3 { focus-workspace "3"; }
-    Mod+4 { focus-workspace "4"; }
-    Mod+5 { focus-workspace "5"; }
-    Mod+6 { focus-workspace "6"; }
-    Mod+7 { focus-workspace "7"; }
-    Mod+8 { focus-workspace "8"; }
-    Mod+9 { focus-workspace "9"; }
-    Mod+Ctrl+1 { move-column-to-workspace "1"; }
-    Mod+Ctrl+2 { move-column-to-workspace "2"; }
-    Mod+Ctrl+3 { move-column-to-workspace "3"; }
-    Mod+Ctrl+4 { move-column-to-workspace "4"; }
-    Mod+Ctrl+5 { move-column-to-workspace "5"; }
-    Mod+Ctrl+6 { move-column-to-workspace "6"; }
-    Mod+Ctrl+7 { move-column-to-workspace "7"; }
-    Mod+Ctrl+8 { move-column-to-workspace "8"; }
-    Mod+Ctrl+9 { move-column-to-workspace "9"; }
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace "stash"; }
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    Mod+Ctrl+0 { move-column-to-workspace "stash"; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
@@ -677,7 +678,7 @@ binds {
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
+    // Mod+W { toggle-column-tabbed-display; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
@@ -708,6 +709,10 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+
+    Mod+Ctrl+S         { spawn "~/.config/niri/scripts/global-shader-cycle" "cursor"; }
+    Mod+Shift+S         { spawn "~/.config/niri/scripts/global-shader-cycle" "screen"; }
+    Mod+Ctrl+W         { spawn "~/.config/niri/scripts/shader-cycle"; }
 }
 
 clipboard {
