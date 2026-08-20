@@ -38,4 +38,4 @@ printf '%s\n' "$idx" > "$state"
 
 name=$(basename "$target" .kdl)
 command -v notify-send >/dev/null 2>&1 \
-  && notify-send -t 1500 "niri window shader" "${name}" || true
+  && notify-send -t 1500 "niri window shader" "${name#close-}" || true
