@@ -1,28 +1,41 @@
 #!/usr/bin/env bash
-# shader-cycle — round-robin the active niri close-window shader.
+# global-shader-cycle [GROUP] — round-robin the active niri global shader within a group.
 #
-# config.kdl has a single stable `include "shaders/current.kdl"`, where
-# current.kdl is a SYMLINK to one of the close-*.kdl shaders. Switching is an
-# atomic relink + a live reload via niri's IPC (`niri msg action
-# load-config-file`) — no hand-editing of config.kdl, no `touch` needed.
+# GROUP is a subdir of global-shaders/ — "cursor" (effects that follow the mouse)
+# or "screen" (full-output colour grades). Defaults to "cursor".
+#
+# global-shaders/current.kdl is a SYMLINK that config.kdl includes; switching is an
+# atomic relink + a live reload via niri IPC. Each group keeps its own index in
+# $XDG_RUNTIME_DIR, so cursor and screen cycle independently.
 #
 # Bind in niri:
-#   Mod+Shift+S { spawn "/home/barrulus/.config/biri/shader-cycle"; }
-#
-# State (next index) persists in $XDG_RUNTIME_DIR, so it survives across presses
-# but resets on reboot.
+#   Mod+4        { spawn ".../global-shader-cycle" "cursor"; }
+#   Mod+Shift+4  { spawn ".../global-shader-cycle" "screen"; }
 set -euo pipefail
 
-dir="$HOME/.config/niri/shaders"
-link="$dir/current.kdl"
-state="${XDG_RUNTIME_DIR:-/tmp}/niri-shader.idx"
+group="${1:-cursor}"
+base="$HOME/.config/niri/shaders"
+dir="$base/$group"
+declare linkname;
+case "$group" in
+  cursor|screen)  linkname="current.kdl" ;;
+  close)          linkname="current-close.kdl"  ;;
+  *) echo "global-shader-cycle: unknown group: $group" >&2; exit 1 ;;
+esac
+link="$base/$linkname"
+state="${XDG_RUNTIME_DIR:-/tmp}/niri-global-shader-$group.idx"
 
-# Available shaders, sorted for a stable cycle order.
+[ -d "$dir" ] || { echo "global-shader-cycle: no such group: $dir" >&2; exit 1; }
+
+# Available shaders in this group, sorted for a stable cycle order.
 shaders=("off.kdl")
-while IFS= read -r f; do shaders+=("close/$(basename "$f")"); done \
-  < <(find "$dir/close" -maxdepth 1 -name 'close-*.kdl' | sort)
+while IFS= read -r f; do 
+  rel="$(realpath --relative-to="$base" "$f")"
+  shaders+=("${rel}"); 
+done \
+  < <(find "$dir" -maxdepth 1 -name '*.kdl' | sort)
 n=${#shaders[@]}
-[ "$n" -gt 0 ] || { echo "shader-cycle: no close-*.kdl in $dir" >&2; exit 1; }
+[ "$n" -gt 0 ] || { echo "global-shader-cycle: no *.kdl in $dir" >&2; exit 1; }
 
 # Current index from state (sanitised), then ADVANCE so a press always moves on.
 idx=0
@@ -31,11 +44,11 @@ case "$idx" in '' | *[!0-9]*) idx=0 ;; esac
 idx=$(( (idx + 1) % n ))
 
 target="${shaders[idx]}"
-ln -sfn "$target" "$link"                 # relative link within shaders/
+ln -sfn "$base/$target" "$link"          # relative link within global-shaders/
 printf '%s\n' "$idx" > "$state"
 
-"${NIRI:-niri}" msg action load-config-file >/dev/null 2>&1 || true
+niri msg action load-config-file >/dev/null 2>&1 || true
 
-name=$(basename "$target" .kdl)
+name="$(basename "$target")"
 command -v notify-send >/dev/null 2>&1 \
-  && notify-send -t 1500 "niri window shader" "${name#close-}" || true
+  && notify-send -t 1500 "niri $group shader" "${name%.kdl}" || true
