@@ -1,5 +1,5 @@
-include "global-shaders/current.kdl"   // -> cursor/*.kdl | screen/*.kdl | off.kdl
-include "shaders/current.kdl"          // -> close-*.kdl
+include "shaders/current.kdl"   // -> cursor/*.kdl | screen/*.kdl | off.kdl
+include "shaders/current-close.kdl"          // -> close-*.kdl
 
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
@@ -710,9 +710,9 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 
-    Mod+Ctrl+S         { spawn "~/.config/niri/scripts/global-shader-cycle" "cursor"; }
-    Mod+Shift+S         { spawn "~/.config/niri/scripts/global-shader-cycle" "screen"; }
-    Mod+Ctrl+W         { spawn "~/.config/niri/scripts/shader-cycle"; }
+    Mod+Ctrl+S         { spawn "~/.config/niri/scripts/shader-cycle" "cursor"; }
+    Mod+Shift+S        { spawn "~/.config/niri/scripts/shader-cycle" "screen"; }
+    Mod+Ctrl+W         { spawn "~/.config/niri/scripts/shader-cycle" "close" ; }
 }
 
 clipboard {
