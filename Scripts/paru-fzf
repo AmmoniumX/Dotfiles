@@ -1,5 +1,41 @@
-#!/bin/bash
-# Fuzzy package search and install (source: https://github.com/basecamp/omarchy/blob/master/bin/omarchy-pkg-install)
+#!/usr/bin/env bash
+# Fuzzy package search and install (original based on: https://github.com/basecamp/omarchy/blob/ddef52c192f502c6dff7a02860c46d295eba0d93/bin/omarchy-pkg-install)
+
+## USAGE:
+##  paru-fzf [OPTIONS...]
+##
+## OPTIONS:
+##  --repo: Only search in the official repositories (default: false)
+##  --no-sync: Do not sync the package database before searching (default: false)
+##  --no-update: Do not update the system before installing packages (default: false)
+
+REPO_ONLY=false
+NO_SYNC=false
+NO_UPDATE=false
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --repo)
+      REPO_ONLY=true
+      shift
+      ;;
+    --no-sync)
+      NO_SYNC=true
+      shift
+      ;;
+    --no-update)
+      NO_UPDATE=true
+      shift
+      ;;
+    -*)
+      echo "Error: Unknown option: $1" >&2
+      exit 1
+      ;;
+    *)
+      echo "Error: Unexpected argument: $1" >&2
+      exit 1
+      ;;
+  esac
+done
 
 fzf_args=(
   --multi
@@ -13,7 +49,25 @@ fzf_args=(
   --color 'pointer:green,marker:green'
 )
 
-paru -Sy
-pkgs=$(paru -Slq | fzf "${fzf_args[@]}" | xargs)
-# Always update, and install extra packages if selected
-paru -Su --repo && paru -S $pkgs && paru -Su --aur --upgrademenu
+paru_args=()
+if $REPO_ONLY; then
+  paru_args+=('--repo')
+fi
+
+if ! $NO_SYNC; then
+  sudo pacman -Sy
+fi
+pkgs=$(paru -Slq "${paru_args[@]}" | fzf "${fzf_args[@]}" | xargs)
+
+paru_install_pkgs() {
+  # Quietly do nothing if no packages were selected
+  if [ -n "$pkgs" ]; then
+    paru -S $pkgs
+  fi
+}
+
+if $NO_UPDATE; then
+  paru_install_pkgs
+else
+  paru -Su --repo && paru_install_pkgs && paru -Su --aur --upgrademenu
+fi
