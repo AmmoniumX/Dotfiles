@@ -228,7 +228,7 @@
     "format-disconnected": "⚠  Disconnected",
     // "on-click": "kitty nmtui"
     "max-length": 15,
-    "on-click": "nm-connection-editor"
+    "on-click": "nm-wifi-gui"
   },
   "pulseaudio": {
     "scroll-step": 1,
