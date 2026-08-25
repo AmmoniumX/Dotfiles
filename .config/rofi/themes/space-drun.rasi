@@ -1,0 +1,92 @@
+// Original by:
+
+/******************************************************************************
+ * ROFI Color theme
+ * User: Rasi
+ * Copyright: Rasmus Steinke
+ ******************************************************************************/
+
+* {
+    selected-normal-foreground:  rgba ( 129, 147, 150, 100 % );
+    foreground:                  rgba ( 129, 147, 150, 100 % );
+    normal-foreground:           @foreground;
+    alternate-normal-background: rgba ( 7, 8, 13, 100 % );
+    alternate-normal-foreground: @foreground;
+    background:                  #07080D;
+    normal-background:           #07080D;
+    selected-normal-background:  rgba ( 0, 54, 66, 100 % );
+    bordercolor:                 rgba ( 0, 9, 12, 100 % );
+    border-color:                rgba ( 0, 43, 54, 100 % );
+    spacing:                     2;
+    separatorcolor:              rgba ( 0, 128, 128, 100 % );
+    background-color:            rgba ( 0, 0, 0, 0 % );
+}
+configuration {
+    font: "JetBrains Mono 14";
+    display-drun: ">";
+}
+window {
+    background-color: @background;
+    border:           1;
+    padding:          5;
+    width:            26%;
+    height:           55%;
+    border-radius:    12px;
+}
+mainbox {
+    border:  0;
+    padding: 0;
+}
+message {
+    border:       1px dash 0px 0px ;
+    border-color: @separatorcolor;
+    padding:      1px ;
+}
+textbox {
+    text-color: @foreground;
+}
+listview {
+    fixed-height: 0;
+    border-color: @separatorcolor;
+    spacing:      2px ;
+    scrollbar:    true;
+    padding:      2px 0px 0px ;
+}
+element {
+    border:  0;
+    padding: 1px ;
+}
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
+element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+    size:             1.2em;
+}
+element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+inputbar {
+    spacing:    0;
+    text-color: @normal-foreground;
+    padding:    1px ;
+}
+entry {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+prompt {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
