@@ -8,15 +8,21 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+### Export PATH variable ###
 
-# set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+if [ -d "$HOME/.cargo/bin" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+if [ -d "$HOME/Scripts" ] ; then
+    PATH="$HOME/Scripts:$PATH"
+fi
+
+### Source shell init scripts ###
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
@@ -34,7 +40,8 @@ if [ -n "$ZSH_VERSION" ]; then
     fi
 fi
 
+### Finalize initialization ###
+
 # . "$HOME/.local/bin/env"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-export EDITOR=nvim
-export QT_QPA_PLATFORMTHEME=qt6ct
+[ -f "$HOME/.env" ] && . "$HOME/.env"

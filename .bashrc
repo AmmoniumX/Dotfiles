@@ -19,11 +19,6 @@ shopt -s histappend checkwinsize
   -f /usr/share/bash-completion/bash_completion ]] &&
     . /usr/share/bash-completion/bash_completion
 
-# Append to PATH
-[ -f "$HOME/.cargo/bin" ] && export PATH="$PATH:$HOME/.cargo/bin"
-[ -f "$HOME/.local/bin" ] && export PATH="$PATH:$HOME/.local/bin"
-[ -f "$HOME/Scripts" ] && export PATH="$PATH:$HOME/Scripts"
-
 # Load other scripts
 source ~/.aliases.sh
 source ~/.functions.sh
@@ -36,5 +31,3 @@ command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
 command -v direnv &>/dev/null && eval "$(direnv hook bash)"
 command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-[ -f "$HOME/.env" ] && . "$HOME/.env"
