@@ -318,7 +318,10 @@ animations {
     // slowdown 3.0
 }
 
-// Declare workspaces
+// Declare workspaces.
+// We use named workspaces instead of the default numbered ones.
+// This is so that workspace order is always preserved.
+// I.e, workspace "3" will always be the third workspace, even if "1" and "2" are empty.
 workspace "1"
 workspace "2"
 workspace "3"
@@ -446,9 +449,9 @@ binds {
     // Custom Binds
     Mod+T hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Run Application" { spawn "fuzzel"; }
-    Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
+    // Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
     Control+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
-    Mod+X hotkey-overlay-title="Log out" { spawn-sh "wlogout -l $HOME/.config/niri/wlogout/layout"; }
+    Mod+X hotkey-overlay-title="Power Options" { spawn-sh "wlogout -l $HOME/.config/niri/wlogout/layout"; }
     Mod+Control+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
     Mod+Control+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
     Mod+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | rofi -dmenu -theme $HOME/.config/rofi/themes/solarized-space.rasi -p Clipboard | cliphist decode | ifne wl-copy"; }
@@ -487,12 +490,12 @@ binds {
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
 
-    Mod+Q repeat=false { close-window; }
+    Mod+Q hotkey-overlay-title="Close Window" repeat=false { close-window; }
 
-    Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
-    Mod+Right { focus-column-right; }
+    Mod+Left  hotkey-overlay-title="Focus Left" { focus-column-left; }
+    Mod+Right hotkey-overlay-title="Focus Right" { focus-column-right; }
+    Mod+Up    hotkey-overlay-title="Focus Up" { focus-window-up; }
+    Mod+Down  hotkey-overlay-title="Focus Down" { focus-window-down; }
     // Mod+H     { focus-column-left; }
     // Mod+J     { focus-window-down; }
     // Mod+K     { focus-window-up; }
@@ -545,14 +548,15 @@ binds {
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
 
+    // Positional workspace switching. Unused for named workspaces.
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
+    // Mod+U              { focus-workspace-down; }
+    // Mod+I              { focus-workspace-up; }
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-    Mod+Ctrl+U         { move-column-to-workspace-down; }
-    Mod+Ctrl+I         { move-column-to-workspace-up; }
+    // Mod+Ctrl+U         { move-column-to-workspace-down; }
+    // Mod+Ctrl+I         { move-column-to-workspace-up; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
@@ -560,8 +564,8 @@ binds {
 
     Mod+Shift+Page_Down { move-workspace-down; }
     Mod+Shift+Page_Up   { move-workspace-up; }
-    Mod+Shift+U         { move-workspace-down; }
-    Mod+Shift+I         { move-workspace-up; }
+    // Mod+Shift+U         { move-workspace-down; }
+    // Mod+Shift+I         { move-workspace-up; }
 
     // You can bind mouse wheel scroll ticks using the following syntax.
     // These binds will change direction based on the natural-scroll setting.
@@ -569,22 +573,22 @@ binds {
     // To avoid scrolling through workspaces really fast, you can use
     // the cooldown-ms property. The bind will be rate-limited to this value.
     // You can set a cooldown on any bind, but it's most useful for the wheel.
-    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+    // Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    // Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    // Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    // Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
-    Mod+WheelScrollRight      { focus-column-right; }
-    Mod+WheelScrollLeft       { focus-column-left; }
-    Mod+Ctrl+WheelScrollRight { move-column-right; }
-    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+    // Mod+WheelScrollRight      { focus-column-right; }
+    // Mod+WheelScrollLeft       { focus-column-left; }
+    // Mod+Ctrl+WheelScrollRight { move-column-right; }
+    // Mod+Ctrl+WheelScrollLeft  { move-column-left; }
 
     // Usually scrolling up and down with Shift in applications results in
     // horizontal scrolling; these binds replicate that.
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    // Mod+Shift+WheelScrollDown      { focus-column-right; }
+    // Mod+Shift+WheelScrollUp        { focus-column-left; }
+    // Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    // Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
     // Similarly, you can bind touchpad scroll "ticks".
     // Touchpad scrolling is continuous, so for these binds it is split into
@@ -603,6 +607,7 @@ binds {
     //
     // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
     // will all refer to the 3rd workspace.
+
     Mod+1 { focus-workspace "1"; }
     Mod+2 { focus-workspace "2"; }
     Mod+3 { focus-workspace "3"; }
@@ -690,9 +695,9 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Print hotkey-overlay-title="Screenshot Area" { screenshot; }
+    Ctrl+Print hotkey-overlay-title="Screenshot Screen" { screenshot-screen; }
+    Alt+Print hotkey-overlay-title="Screenshot Window" { screenshot-window; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
@@ -712,9 +717,9 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 
-    Mod+Ctrl+S         { spawn "~/.config/niri/scripts/shader-cycle" "cursor"; }
-    Mod+Shift+S        { spawn "~/.config/niri/scripts/shader-cycle" "screen"; }
-    Mod+Ctrl+W         { spawn "~/.config/niri/scripts/shader-cycle" "close" ; }
+    Mod+Ctrl+S  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "cursor"; }
+    Mod+Shift+S hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "screen"; }
+    Mod+Ctrl+W  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "close" ; }
 }
 
 clipboard {
