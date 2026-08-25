@@ -379,9 +379,10 @@ window-rule {
     open-floating true
 }
 
-// Emoji picker
+// Emoji picker(s)
 window-rule {
     match app-id="it.mijorus.smile"
+    match app-id="lt.yiin.smirk"
     open-floating true
 }
 
@@ -456,7 +457,7 @@ binds {
     Mod+Control+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
     Mod+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | rofi -dmenu -theme $HOME/.config/rofi/themes/solarized-space.rasi -p Clipboard | cliphist decode | ifne wl-copy"; }
     Mod+K hotkey-overlay-title="Color Picker" { spawn-sh "hyprpicker | wl-copy";  }
-    Mod+Period hotkey-overlay-title="Open Emoji Picker" { spawn "smile"; }
+    Mod+Period hotkey-overlay-title="Open Emoji Picker" { spawn "smirk-toggle"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
