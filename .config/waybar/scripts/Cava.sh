@@ -29,6 +29,9 @@ max_title=40
 marquee_width=15
 advance_every=15
 
+icon_play=$''
+icon_pause=$''
+
 marquee_pos=0
 frame=0
 prev_title=""
@@ -87,17 +90,17 @@ while IFS= read -r bars; do
       left="${bars:0:$half}"
       right="${bars:$half}"
       if [ -n "$title" ]; then
-        echo "▶ ${left} $(marquee_text "$title") ${right}"
+        echo "$icon_play ${left} $(marquee_text "$title") ${right}"
       else
-        echo "▶ $bars"
+        echo "$icon_play $bars"
       fi
       ;;
     Paused)
       width=$(( ${#bars} + marquee_width + 2 ))
       if [ -n "$title" ]; then
-        echo "⏸ $(fixed_text "$title" "$width")"
+        echo "$icon_pause $(fixed_text "$title" "$width")"
       else
-        echo "⏸"
+        echo "$icon_pause"
       fi
       ;;
     *)
