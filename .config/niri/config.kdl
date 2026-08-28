@@ -452,7 +452,7 @@ binds {
     Mod+T hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Run Application" { spawn "fuzzel"; }
     // Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
-    Control+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
+    Control+Alt+L hotkey-overlay-title="Lock the Screen" allow-when-locked=true { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
     Mod+X hotkey-overlay-title="Power Options" { spawn-sh "wlogout -l $HOME/.config/niri/wlogout/layout"; }
     Mod+Control+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
     Mod+Control+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
