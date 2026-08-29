@@ -9,6 +9,9 @@ bindkey -e
 # # The following lines were added by compinstall
 # zstyle :compinstall filename '/home/ammonium/.zshrc'
 
+# Exit early if non-interactive session
+[[ -o interactive ]] || return
+
 autoload -Uz compinit
 compinit
 # # End of lines added by compinstall
