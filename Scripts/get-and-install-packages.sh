@@ -25,6 +25,10 @@ check_package() {
   pacman -Qq "$1" > /dev/null 2>&1
 }
 
+has_cachyos_repos() {
+  pacman-conf --repo-list | grep -q '^cachyos'
+}
+
 # Cannot run as root
 [[ $EUID -ne 0 ]] || (echo "ERROR: Cannot run as root" >2; exit)
 
@@ -44,6 +48,14 @@ if ! check_package git; then
   sudo pacman -S git --needed
 fi
 check_command paru || install_paru
+
+# Enable CachyOS repositories
+if ! has_cachyos_repos; then
+  echo "Adding CachyOS repositories..."
+  curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
+  tar xvf cachyos-repo.tar.xz && cd cachyos-repo
+  sudo ./cachyos-repo.sh
+fi
 
 # Download files
 echo "Downloading package lists..."
