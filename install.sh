@@ -75,8 +75,9 @@ declare -A GREETD_OWNERS=(
     [gtkgreet.css]="greeter:greeter"
 )
 
-if [ -d "$GREETD_SRC" ]; then
-    echo "${COLOR_CYAN}Deploying greetd config to ${GREETD_DST} (requires sudo)...${COLOR_RESET}"
+read -rp "Do you want to deploy the greetd config to ${GREETD_DST}? (requires sudo) [y/N]: " response
+if [[ ( "$response" =~ ^[Yy]$ ) && ( -d "$GREETD_SRC" ) ]]; then
+    echo "${COLOR_CYAN}Deploying greetd config to ${GREETD_DST}...${COLOR_RESET}"
     for f in "${!GREETD_OWNERS[@]}"; do
         src="$GREETD_SRC/$f"
         dst="$GREETD_DST/$f"
