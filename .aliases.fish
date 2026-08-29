@@ -29,7 +29,6 @@ alias pkill='pkill -e'
 alias make='make -j(nproc)'
 abbr -a gcam git commit -am
 abbr -a gs git status
-alias paru-fzf="$HOME/Scripts/paru-fzf"
 
 # Get public IP address
 alias ipv4='curl -4 ip.me'
