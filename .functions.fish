@@ -19,6 +19,9 @@ function cd
         builtin cd $argv
     end
 end
+# Tell fish's highlighter/completions to treat cd's arguments like z's,
+# instead of hard-validating them as literal child paths (fish >= 4.0)
+complete -c cd --wraps z
 
 function mkcd
     mkdir -p "$argv[1]" && cd "$argv[1]"
