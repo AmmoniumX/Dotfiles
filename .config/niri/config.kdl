@@ -449,7 +449,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Custom Binds
-    Mod+T hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
+    Mod+T hotkey-overlay-title="Open Terminal" { spawn "gtk-launch" "kitty"; }
     Mod+D hotkey-overlay-title="Run Application" { spawn "fuzzel"; }
     // Mod+Space hotkey-overlay-title="Open Walker" { spawn "walker"; }
     Control+Alt+L hotkey-overlay-title="Lock the Screen" allow-when-locked=true { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
