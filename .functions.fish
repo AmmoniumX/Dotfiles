@@ -8,12 +8,12 @@ end
 # Capture ls output whenever the working directory changes (cd, z, pushd, ...)
 function __capture_ls_output --on-variable PWD
     status --is-command-substitution; and return
-    set -gx _ls_output (eza --color=always --grid)
+    set -gx _ls_output (eza --color=always --grid --width $COLUMNS | string collect)
 end
 
 # Print ls after cd
 function cd
-    if command -v z &>/dev/null
+    if type -q z
         z $argv
     else
         builtin cd $argv
@@ -66,6 +66,19 @@ end
 #       $command
 #     "
 # end
+
+function notify-me
+    set -l title "notify-me"
+    set -l message "done"
+    switch (count $argv)
+        case 1
+            set message $argv[1]
+        case 2
+            set title $argv[1]
+            set message $argv[2]
+    end
+    notify-send "$title" "$message"; and paplay /usr/share/sounds/freedesktop/stereo/bell.oga
+end
 
 function date-backup
     set -l d (date +"%Y-%m-%d_%H-%M-%S")
