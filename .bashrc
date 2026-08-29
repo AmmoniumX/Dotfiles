@@ -2,6 +2,9 @@
 # ~/.bashrc
 #
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # ~/.bash-history settings
 export HISTFILE=~/.bash_history
 export HISTSIZE=10000
@@ -10,9 +13,7 @@ export HISTCONTROL=ignoredups:erasedups
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 shopt -s histappend checkwinsize
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-#
+
 # Use bash-completion, if available, and avoid double-sourcing
 [[ $PS1 &&
   ! ${BASH_COMPLETION_VERSINFO:-} &&

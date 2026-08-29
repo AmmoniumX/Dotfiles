@@ -1,3 +1,8 @@
+# Early exit if non-interactive
+if not status is-interactive
+  return
+end
+
 # Load aliases and functions
 source ~/.aliases.fish
 source ~/.functions.fish
@@ -6,7 +11,7 @@ function cmd_exists
     type -q $argv[1]
 end
 
-export _ls_output=(eza --color=always --grid --width $COLUMNS | string collect) # Works since eza v0.23.0
+set -gx _ls_output (eza --color=always --grid --width $COLUMNS | string collect) # Works since eza v0.23.0
 
 if cmd_exists starship
     starship init fish | source
