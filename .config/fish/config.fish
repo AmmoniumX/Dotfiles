@@ -6,7 +6,7 @@ function cmd_exists
     type -q $argv[1]
 end
 
-export _ls_output=(eza --color=always --grid) # Works since eza v0.23.0
+export _ls_output=(eza --color=always --grid --width $COLUMNS | string collect) # Works since eza v0.23.0
 
 if cmd_exists starship
     starship init fish | source

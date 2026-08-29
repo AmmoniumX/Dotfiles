@@ -44,7 +44,7 @@ elif [[ -n "$ZSH_VERSION" ]]; then
 
   chpwd() {
     # Capture ls output
-    export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
+    export _ls_output=$(eza --color=always --grid --width "$COLUMNS") # Works since eza v0.23.0
   }
 
   # precmd() {
@@ -61,12 +61,12 @@ function cd() {
   if command -v z &> /dev/null; then
     if z "$@"; then
       # Capture ls output only if z was successful (returned 0)
-      export _ls_output=$(eza --color=always --grid)
+      export _ls_output=$(eza --color=always --grid --width "$COLUMNS")
     fi
   else
     if builtin cd "$@"; then
       # Capture ls output only if z was successful (returned 0)
-      export _ls_output=$(eza --color=always --grid)
+      export _ls_output=$(eza --color=always --grid --width "$COLUMNS")
     fi
   fi
 }

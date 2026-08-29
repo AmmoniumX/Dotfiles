@@ -32,7 +32,7 @@ source ~/.aliases.sh
 source ~/.functions.sh
 
 # Show current working directory on login
-export _ls_output=$(eza --color=always --grid) # Works since eza v0.23.0
+export _ls_output=$(eza --color=always --grid --width "$COLUMNS") # Works since eza v0.23.0
 
 # Finish tty init
 command -v starship &>/dev/null && eval "$(starship init zsh)"
