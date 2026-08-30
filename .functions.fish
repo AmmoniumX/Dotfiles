@@ -12,11 +12,9 @@ function __capture_ls_output --on-variable PWD
 end
 
 # Print ls after cd
-function cd --wraps z
-    if type -q z
-        z $argv
-    else
-        builtin cd $argv
+if type -q __zoxide_z
+    function cd --wraps=__zoxide_z
+        __zoxide_z $argv
     end
 end
 
