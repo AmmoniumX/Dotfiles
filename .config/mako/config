@@ -56,3 +56,6 @@ default-timeout=0
 border-color=#E49186
 default-timeout=2000
 group-by=category
+
+[mode=do-not-disturb]
+invisible=1
