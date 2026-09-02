@@ -58,7 +58,7 @@ if ! $NO_SYNC; then
   sudo pacman -Sy
 fi
 
-pkgs=$(paru -Slq "${paru_args[@]}" | fzf "${fzf_args[@]}" | xargs)
+pkgs=$(paru -Slq "${paru_args[@]}" | sort -u | fzf "${fzf_args[@]}" | xargs)
 
 paru_install_pkgs() {
   # Quietly do nothing if no packages were selected
