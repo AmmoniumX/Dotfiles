@@ -39,7 +39,7 @@ done
 
 fzf_args=(
   --multi
-  --preview 'paru -Si {1}'
+  --preview 'paru -Si {1} | awk "/^Repository/{n++} n>1{exit} 1"'
   --preview-label='alt-p: toggle description, alt-j/k: scroll, tab: multi-select'
   --preview-label-pos='bottom'
   --preview-window 'down:50%:wrap'
