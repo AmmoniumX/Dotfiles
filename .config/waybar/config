@@ -4,9 +4,8 @@
   "height": 30,
   "margin": "0 0 0 0",
   //"width": 1350, // Waybar width
-  // Choose the order of the modules idle_inhibitor
+  // Choose the order of the modules
   "modules-left": [
-    // "custom/launcher",
     // "custom/power",
     "tray",
     "custom/cava-internal"
@@ -33,13 +32,6 @@
     "on-click": "playerctl play-pause",
     "layer": "below",
     "output": "all"
-  },
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-      "activated": "",
-      "deactivated": ""
-    }
   },
   "tray": {
     "icon-size": 14,
@@ -77,33 +69,6 @@
     // //"max-length": 200
     "interval": 1
   },
-  // "clock": {
-  //     "format": "  {:%H:%M:%S}",
-  //     "format-alt": "  {:%A, %B %d, %Y (%R)}",
-  //     "tooltip-format": "<tt><small>{calendar}</small></tt>",
-  //     "calendar": {
-  //         "mode"          : "month",
-  //         "mode-mon-col"  : 3,
-  //         "weeks-pos"     : "right",
-  //         "on-scroll"     : 1,
-  //         "on-click-right": "mode",
-  //         "format": {
-  //             "months":     "<span color='#ffead3'><b>{}</b></span>",
-  //             "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-  //             "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-  //             "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-  //             "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-  //         }
-  //     },
-  //     "actions": {
-  //         "on-click-right": "mode",
-  //         "on-click-forward": "tz_up",
-  //         "on-click-backward": "tz_down",
-  //         "on-scroll-up": "shift_up",
-  //         "on-scroll-down": "shift_down"
-  //     },
-  //     "interval": 1
-  // },
   "cpu": {
     "format": " {usage: >3}%",
     "on-click": "kitty htop"
@@ -173,14 +138,6 @@
     // "on-scroll-up": "pamixer -ui 2 | awk '{print}' > /tmp/wob.fifo", 
     // "on-scroll-down": "pamixer -ud 2 | awk '{print}' > /tmp/wob.fifo"
   },
-  "custom/pacman": {
-    "format": " {}",
-    "interval": 7200, // every two hours
-    "exec": "i=$(checkupdates); echo \"$i\" |wc -l; echo \"$i\" |column -t |tr '\n' '\r'", // # of updates and tooltip details
-    "exec-if": "exit 0", // always run; consider advanced run conditions
-    "on-click": "kitty sudo pacman -Syu", // update system
-    "signal": 8
-  },
   "custom/power": {
     "format": "⏻",
     "on-click": "wlogout",
@@ -206,8 +163,4 @@
   	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
     "on-click": "blueberry"
   }
-  // "hyprland/language": {
-  //   "format": " {short}",
-  //   "keyboard-name": "at-translated-set-2-keyboard"
-  // }
 }
