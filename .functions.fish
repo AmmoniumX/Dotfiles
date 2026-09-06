@@ -3,8 +3,11 @@
 # Print ls after cd
 if type -q __zoxide_z
     function cd --wraps=__zoxide_z
-        __zoxide_z $argv
-        ls
+        __zoxide_z $argv; and ls
+    end
+else
+    function cd
+        builtin cd $argv; and ls
     end
 end
 
