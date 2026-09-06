@@ -34,11 +34,11 @@ bindkey '\e[1;5C' forward-word   # Ctrl-Right
 source ~/.aliases.sh
 source ~/.functions.sh
 
-# Show current working directory on login
-export _ls_output=$(eza --color=always --grid --width "$COLUMNS") # Works since eza v0.23.0
-
 # Finish tty init
 command -v starship &>/dev/null && eval "$(starship init zsh)"
 command -v fzf &>/dev/null && eval "$(fzf --zsh)"
 command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
+
+# ls on shell open
+echo && ls

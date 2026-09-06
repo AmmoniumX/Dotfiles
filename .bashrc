@@ -24,11 +24,11 @@ shopt -s histappend checkwinsize
 source ~/.aliases.sh
 source ~/.functions.sh
 
-# Show current working directory on login
-export _ls_output=$(eza --color=always --grid --width "$COLUMNS") # Works since eza v0.23.0
-
 # Finish tty init
 command -v starship &>/dev/null && eval "$(starship init bash)"
 command -v fzf &>/dev/null && eval "$(fzf --bash)"
 command -v direnv &>/dev/null && eval "$(direnv hook bash)"
 command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
+
+# ls on shell open
+echo && ls
