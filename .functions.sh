@@ -1,73 +1,12 @@
 # Shell Functions
 
-if [[ -n "$BASH_VERSION" ]]; then
-  # Bash-specific setup
-  if [[ ! -f ~/.bash-preexec.sh ]]; then
-      echo ".bash-preexec.sh not found, installing"
-      curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o ~/.bash-preexec.sh
-  fi
-  source ~/.bash-preexec.sh
-
-  # bash-preexec hook
-  preexec() {
-    # Log time, working directory, and command to a custom file
-    # local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    # local working_dir=$(pwd)
-    # local command="$1"
-    # echo "$timestamp $working_dir $command" >> ~/.bash_full_history
-
-    # Reset ls-after-cd    
-    unset _ls_output
-  }
-
-  # bash-precmd hook
-  # precmd() {
-  #   if [[ -n "$_ls_output" ]]; then
-  #     echo "$_ls_output"
-  #     unset _ls_output
-  #   fi
-  # }
-  # precmd_functions+=(precmd)
-
-elif [[ -n "$ZSH_VERSION" ]]; then
-  # Zsh-specific setup
-  preexec() {
-    # Log time, working directory, and command to a custom file
-    # local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    # local working_dir=$(pwd)
-    # local command="$1"
-    # echo "$timestamp $working_dir $command" >> ~/.zsh_full_history
-
-    # Reset ls-after-cd    
-    unset _ls_output
-  }
-
-  chpwd() {
-    # Capture ls output
-    export _ls_output=$(eza --color=always --grid --width "$COLUMNS") # Works since eza v0.23.0
-  }
-
-  # precmd() {
-  #   if [[ -n "$_ls_output" ]]; then
-  #     print -P "%{%}"$_ls_output
-  #     unset _ls_output
-  #   fi
-  # }
-fi
-
 # Print ls after cd
 function cd() {
   # Check if the 'z' command is available/exists
   if command -v z &> /dev/null; then
-    if z "$@"; then
-      # Capture ls output only if z was successful (returned 0)
-      export _ls_output=$(eza --color=always --grid --width "$COLUMNS")
-    fi
+    z "$@" && ls
   else
-    if builtin cd "$@"; then
-      # Capture ls output only if z was successful (returned 0)
-      export _ls_output=$(eza --color=always --grid --width "$COLUMNS")
-    fi
+    builtin cd "$@" && ls
   fi
 }
 

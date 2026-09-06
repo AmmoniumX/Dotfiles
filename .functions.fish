@@ -1,20 +1,10 @@
 # Shell Functions
 
-# fish_preexec hook: reset ls-after-cd before each typed command
-function __reset_ls_output --on-event fish_preexec
-    set -e _ls_output
-end
-
-# Capture ls output whenever the working directory changes (cd, z, pushd, ...)
-function __capture_ls_output --on-variable PWD
-    status --is-command-substitution; and return
-    set -gx _ls_output (eza --color=always --grid --width $COLUMNS | string collect)
-end
-
 # Print ls after cd
 if type -q __zoxide_z
     function cd --wraps=__zoxide_z
         __zoxide_z $argv
+        ls
     end
 end
 
