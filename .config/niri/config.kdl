@@ -455,7 +455,7 @@ binds {
     Control+Alt+L hotkey-overlay-title="Lock the Screen" allow-when-locked=true { spawn-sh "$HOME/.config/niri/scripts/screenlock"; }
     Mod+X hotkey-overlay-title="Power Options" { spawn-sh "wlogout -l $HOME/.config/niri/wlogout/layout"; }
     Mod+Control+Comma hotkey-overlay-title="Toggle keyboard layout" { spawn-sh "$HOME/.config/niri/scripts/toggle_keyboard"; }
-    Mod+Control+Period hotkey-overlay-title="Toggle waybar" { spawn-sh "$HOME/.config/niri/scripts/toggle_waybar"; }
+    Mod+Control+Period hotkey-overlay-title="Toggle quickshell" { spawn-sh "$HOME/.config/niri/scripts/toggle_quickshell"; }
     Mod+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | rofi -dmenu -theme $HOME/.config/rofi/themes/solarized-space.rasi -p Clipboard | cliphist decode | ifne wl-copy"; }
     Mod+K hotkey-overlay-title="Color Picker" { spawn-sh "hyprpicker | wl-copy";  }
     Mod+Period hotkey-overlay-title="Open Emoji Picker" { spawn "smirk-toggle"; }

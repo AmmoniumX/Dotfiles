@@ -1,0 +1,13 @@
+[Unit]
+Description=QuickShell status bar
+Documentation=https://quickshell.outfoxxed.me/
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/qs -p %h/.config/quickshell/shell.qml
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

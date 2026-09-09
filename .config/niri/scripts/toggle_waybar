@@ -1,8 +1,0 @@
-#!/bin/bash
-
-is_active=$(systemctl --user is-active waybar.service)
-if [ "$is_active" = "active" ]; then
-    systemctl --user stop waybar.service
-else
-    systemctl --user start waybar.service
-fi
