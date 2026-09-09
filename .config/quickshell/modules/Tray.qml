@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import "../"
@@ -27,11 +28,18 @@ Rectangle {
                 source: modelData.icon
 
                 MouseArea {
+                    id: iconMouse
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     onClicked: (mouse) => {
-                        if (mouse.button === Qt.LeftButton) modelData.activate();
-                        else modelData.secondaryActivate();
+                        if (mouse.button === Qt.LeftButton) {
+                            modelData.activate();
+                        } else if (modelData.hasMenu) {
+                            const pos = iconMouse.mapToItem(null, mouse.x, mouse.y);
+                            modelData.display(QsWindow.window, pos.x, pos.y);
+                        } else {
+                            modelData.secondaryActivate();
+                        }
                     }
                 }
             }
