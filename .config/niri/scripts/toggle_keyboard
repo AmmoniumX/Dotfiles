@@ -5,4 +5,4 @@ CURRENT_LAYOUT=$(niri msg keyboard-layouts | grep '^\s*\* ' | sed 's/^\s*\* [0-9
 
 niri msg action switch-layout next
 
-notify-send -h string:x-canonical-private-synchronous:hypr-cfg -u low "Layout changed to $(niri msg keyboard-layouts | grep '^\s*\* ' | sed 's/^\s*\* [0-9][0-9]* //g')"
+notify-send -h string:x-canonical-private-synchronous:niri-cfg -u low "Layout changed to $(niri msg keyboard-layouts | grep '^\s*\* ' | sed 's/^\s*\* [0-9][0-9]* //g')"
