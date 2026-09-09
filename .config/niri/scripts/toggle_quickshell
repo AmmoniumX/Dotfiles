@@ -1,0 +1,8 @@
+#!/bin/bash
+
+is_active=$(systemctl --user is-active quickshell.service)
+if [ "$is_active" = "active" ]; then
+    systemctl --user stop quickshell.service
+else
+    systemctl --user start quickshell.service
+fi
