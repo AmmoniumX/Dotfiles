@@ -19,13 +19,9 @@ Rectangle {
     }
     readonly property bool active: player !== null && player.playbackState !== MprisPlaybackState.Stopped
 
-    function truncate(s) {
-        return s.length > 30 ? s.substring(0, 30) + "…" : s;
-    }
-
-    readonly property string infoText: active
-        ? icons.mediaNote + " " + truncate(player.trackTitle || "Unknown")
-        : icons.mediaNote + " Nothing playing"
+    readonly property string titleText: active
+        ? (player.trackTitle || "Unknown")
+        : "Nothing playing"
 
     radius: theme.pillRadius
     color: theme.base
@@ -39,8 +35,14 @@ Rectangle {
 
         ModuleItem {
             fg: theme.mauve
-            text: root.infoText
+            text: icons.mediaNote
             interactive: false
+        }
+
+        MarqueeText {
+            fg: theme.mauve
+            text: root.titleText
+            maxWidth: 200
         }
 
         ModuleItem {
