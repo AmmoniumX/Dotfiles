@@ -32,4 +32,7 @@ source ~/.aliases.fish
 [ -f "$HOME/.env" ] && . "$HOME/.env"
 
 # ls on shell open
-echo && ls
+if not set -q NO_STARTUP_LS
+    echo
+    ls
+end

@@ -31,4 +31,7 @@ command -v direnv &>/dev/null && eval "$(direnv hook bash)"
 command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
 
 # ls on shell open
-echo && ls
+if [[ -z $NO_STARTUP_LS ]]; then
+  echo
+  ls
+fi
