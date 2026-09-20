@@ -349,9 +349,18 @@ workspace "stash" {
     default-column-width {}
 }
 
+// Terminal rules
 window-rule {
   match app-id="kitty"
+  match app-id="foot"
   draw-border-with-background false
+}
+
+// Foot floating rules
+window-rule {
+  match app-id=r#"^foot\..+$"#
+  draw-border-with-background false
+  open-floating true
 }
 
 // Open the Firefox picture-in-picture player as floating by default.

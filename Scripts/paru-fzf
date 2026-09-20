@@ -72,3 +72,5 @@ if $NO_UPDATE; then
 else
   paru -Su --repo && paru_install_pkgs && paru -Su --aur --upgrademenu
 fi
+
+echo "Installation complete. This terminal can now be closed"
