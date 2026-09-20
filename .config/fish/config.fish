@@ -21,7 +21,7 @@ if cmd_exists direnv
 end
 
 if cmd_exists zoxide
-    zoxide init fish | source
+    zoxide init fish --cmd cd | source
 end
 
 # Load functions and aliases
