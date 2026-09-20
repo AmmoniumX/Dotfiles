@@ -1,14 +1,8 @@
 # Shell Functions
 
-# Print ls after cd
-if type -q __zoxide_z
-    function cd --wraps=__zoxide_z
-        __zoxide_z $argv; and ls
-    end
-else
-    function cd
-        builtin cd $argv; and ls
-    end
+# Print ls after cd on interactive shells
+function ls_on_cd --on-variable PWD
+    status is-interactive; and ls
 end
 
 function mkcd
