@@ -2,7 +2,7 @@
 Name=Paru Package Search
 Comment=Browse repository and AUR packages inside a terminal
 GenericName=Package Search
-Exec=foot --app-id foot.paru-package-search --title "Paru Package Search" sh -c "\\$HOME/Scripts/paru-fzf; read -sp 'Installation complete. Press ENTER to quit'"
+Exec=foot --app-id foot.paru-package-search --title "Paru Package Search" sh -c "\\$HOME/Scripts/paru-fzf; exec env NO_STARTUP_LS=1 \\$SHELL"
 Icon=foot
 Type=Application
 Categories=Utility;PackageManager;
