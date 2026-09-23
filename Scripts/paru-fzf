@@ -37,10 +37,32 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+repo_list='paru -Slq --repo | sort -u'
+all_list='paru -Slq | sort -u'
+repo_prompt='r> '
+all_prompt='ra> '
+
+if $REPO_ONLY; then
+  start_list=$repo_list
+  start_prompt=$repo_prompt
+else
+  start_list=$all_list
+  start_prompt=$all_prompt
+fi
+
+# alt-a switches between the two lists, using the prompt to tell which one is active
+toggle_aur="[ \"\$FZF_PROMPT\" = '$repo_prompt' ] \
+  && echo 'change-prompt($all_prompt)+reload($all_list)' \
+  || echo 'change-prompt($repo_prompt)+reload($repo_list)'"
+
 fzf_args=(
   --multi
+  --with-shell 'bash -c'
+  --prompt "$start_prompt"
+  --bind "start:reload($start_list)"
+  --bind "alt-a:transform:$toggle_aur"
   --preview 'paru -Si {1} | awk "/^Repository/{n++} n>1{exit} 1"'
-  --preview-label='alt-p: toggle description, alt-j/k: scroll, tab: multi-select'
+  --preview-label='alt-a: toggle AUR, alt-p: toggle description, alt-j/k: scroll, tab: multi-select'
   --preview-label-pos='bottom'
   --preview-window 'down:50%:wrap'
   --bind 'alt-p:toggle-preview'
@@ -49,16 +71,11 @@ fzf_args=(
   --color 'pointer:green,marker:green'
 )
 
-paru_args=()
-if $REPO_ONLY; then
-  paru_args+=('--repo')
-fi
-
 if ! $NO_SYNC; then
   sudo pacman -Sy
 fi
 
-pkgs=$(paru -Sl "${paru_args[@]}" | awk '{print $1"/"$2}' | fzf "${fzf_args[@]}" | xargs)
+pkgs=$(fzf "${fzf_args[@]}" | xargs)
 
 paru_install_pkgs() {
   # Quietly do nothing if no packages were selected
