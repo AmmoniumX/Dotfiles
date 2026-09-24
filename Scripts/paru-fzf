@@ -39,7 +39,7 @@ done
 
 repo_list='paru -Slq --repo | sort -u'
 all_list='paru -Slq | sort -u'
-repo_prompt='r> '
+repo_prompt='r>  '
 all_prompt='ra> '
 
 if $REPO_ONLY; then
