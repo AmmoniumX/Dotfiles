@@ -410,6 +410,7 @@ window-rule {
 window-rule {
     match app-id="steam_proton" title="UIPlatform"
     open-focused false
+    on-xdg-activate "ignore"
 }
 
 // --- Startup window rules ---
