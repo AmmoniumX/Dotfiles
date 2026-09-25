@@ -41,7 +41,7 @@ cd "$_root_dir"
 conflicts=()
 while IFS= read -r rel; do
     conflicts+=("$rel")
-done < <(stow -n -v -t "$HOME" . 2>&1 | grep -oP '(?:over existing target \K[^ ]+(?= since neither a link nor a directory)|existing target is not owned by stow: \K.+)' || true)
+done < <(stow -n -v --no-folding -t "$HOME" . 2>&1 | grep -oP '(?:over existing target \K[^ ]+(?= since neither a link nor a directory)|existing target is not owned by stow: \K.+)' || true)
 
 if [ "${#conflicts[@]}" -gt 0 ]; then
     for rel in "${conflicts[@]}"; do
@@ -61,7 +61,7 @@ if $DRY_RUN; then
 fi
 
 echo "${COLOR_CYAN}Running stow...${COLOR_RESET}"
-stow -v -t "$HOME" .
+stow -v --no-folding -t "$HOME" .
 
 # greetd's config lives in /etc, not $HOME, so it's excluded from the stow
 # package (see .stow-local-ignore) and deployed here instead via sudo cp.

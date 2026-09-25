@@ -17,6 +17,6 @@ command = "cage -s -- gtkgreet -s /etc/greetd/gtkgreet.css"
 # in the `video` group.
 user = "greeter"
 
-[initial_session]
-command = "niri-session"
-user = "ammonium"
+# [initial_session]
+# command = "niri-session"
+# user = "ammonium"

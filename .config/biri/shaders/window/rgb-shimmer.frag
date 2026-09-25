@@ -1,0 +1,1 @@
+../../../niri/shaders/window/rgb-shimmer.frag

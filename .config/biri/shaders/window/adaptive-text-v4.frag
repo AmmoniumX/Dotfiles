@@ -1,0 +1,1 @@
+../../../niri/shaders/window/adaptive-text-v4.frag
