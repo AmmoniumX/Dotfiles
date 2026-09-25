@@ -1,6 +1,3 @@
-include "shaders/current.kdl"   // -> cursor/*.kdl | screen/*.kdl | off.kdl
-include "shaders/current-close.kdl"          // -> close-*.kdl
-
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
@@ -410,13 +407,8 @@ window-rule {
 window-rule {
     match app-id="steam_proton" title="UIPlatform"
     open-focused false
+    on-xdg-activate "ignore"
 }
-
-// testing
-// window-rule {
-//     match app-id="foot-hidden"
-//     open-focused false
-// }
 
 // --- Startup window rules ---
 window-rule {
