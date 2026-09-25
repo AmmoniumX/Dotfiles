@@ -1,0 +1,1 @@
+../../../niri/shaders/window/ripple-drops.frag

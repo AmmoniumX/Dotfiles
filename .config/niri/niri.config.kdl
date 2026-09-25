@@ -274,9 +274,8 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "kwalletd6"
 spawn-sh-at-startup "swaybg -i $HOME/.config/wallpapers/pexels-philippedonn-1169754.jpg"
-spawn-sh-at-startup "$HOME/.config/niri/scripts/screenlock"
+// spawn-sh-at-startup "$HOME/.config/niri/scripts/screenlock"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 // spawn-at-startup "niri-float-sticky" "-app-id" "firefox"

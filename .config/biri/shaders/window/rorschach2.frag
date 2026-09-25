@@ -1,0 +1,1 @@
+../../../niri/shaders/window/rorschach2.frag

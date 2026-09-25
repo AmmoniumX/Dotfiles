@@ -1,0 +1,1 @@
+../../../niri/shaders/window/parchment-dark.frag
