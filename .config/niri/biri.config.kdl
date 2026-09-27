@@ -512,16 +512,16 @@ binds {
 
     Mod+Left  hotkey-overlay-title="Focus Left" { focus-column-left; }
     Mod+Right hotkey-overlay-title="Focus Right" { focus-column-right; }
-    Mod+Up    hotkey-overlay-title="Focus Up" { focus-window-up; }
-    Mod+Down  hotkey-overlay-title="Focus Down" { focus-window-down; }
+    Mod+Page_Up    hotkey-overlay-title="Focus Up" { focus-window-up; }
+    Mod+Page_Down  hotkey-overlay-title="Focus Down" { focus-window-down; }
     // Mod+H     { focus-column-left; }
     // Mod+J     { focus-window-down; }
     // Mod+K     { focus-window-up; }
     // Mod+L     { focus-column-right; }
 
     Mod+Ctrl+Left  { move-column-left; }
-    Mod+Ctrl+Down  { move-window-down; }
-    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Page_Down  { move-window-down; }
+    Mod+Ctrl+Page_Up    { move-window-up; }
     Mod+Ctrl+Right { move-column-right; }
     // Mod+Ctrl+H     { move-column-left; }
     // Mod+Ctrl+J     { move-window-down; }
@@ -566,13 +566,13 @@ binds {
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
 
-    // Positional workspace switching. Unused for named workspaces.
-    Mod+Page_Down      { focus-workspace-down; }
-    Mod+Page_Up        { focus-workspace-up; }
+    // Positional workspace switching.
+    Mod+Down      { focus-workspace-down; }
+    Mod+Up        { focus-workspace-up; }
     // Mod+U              { focus-workspace-down; }
     // Mod+I              { focus-workspace-up; }
-    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
-    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+    Mod+Ctrl+Down { move-column-to-workspace-down; }
+    Mod+Ctrl+Up   { move-column-to-workspace-up; }
     // Mod+Ctrl+U         { move-column-to-workspace-down; }
     // Mod+Ctrl+I         { move-column-to-workspace-up; }
 
