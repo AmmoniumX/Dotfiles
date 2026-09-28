@@ -28,7 +28,7 @@ end
 source ~/.functions.fish
 source ~/.aliases.fish
 
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env.fish" ] && source "$HOME/.cargo/env.fish"
 [ -f "$HOME/.env" ] && . "$HOME/.env"
 
 # ls on shell open
