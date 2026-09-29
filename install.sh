@@ -96,6 +96,21 @@ if [[ ( "$response" =~ ^[Yy]$ ) && ( -d "$GREETD_SRC" ) ]]; then
     done
 fi
 
+# Arch's default polkit rule only treats "wheel" as admin, so this adds
+# "sudo" too, letting polkit agents ask for the user's password instead of
+# root's.
+POLKIT_RULE="/etc/polkit-1/rules.d/49-sudo-group.rules"
+
+read -rp "Do you want to add a polkit rule so wheel and sudo members can authenticate? (requires sudo) [y/N]: " response
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    echo "${COLOR_CYAN}Writing ${POLKIT_RULE}...${COLOR_RESET}"
+    sudo tee "$POLKIT_RULE" >/dev/null <<'EOF'
+polkit.addAdminRule(function(action, subject) {
+    return ["unix-group:wheel", "unix-group:sudo"];
+});
+EOF
+fi
+
 echo "Installation complete."
 
 read -rp "Do you want to configure git globals for delta pager? [y/N]: " response
