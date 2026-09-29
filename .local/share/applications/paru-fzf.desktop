@@ -2,7 +2,7 @@
 Name=Paru Package Search
 Comment=Browse Arch Linux packages inside a terminal
 GenericName=Package Search
-Exec=foot --app-id foot.paru-package-search --title "Paru Package Search" sh -c "\\$HOME/Scripts/paru-fzf --repo; exec env NO_STARTUP_LS=1 \\$SHELL"
+Exec=foot --app-id foot.floating.paru-interactive --title "Paru Package Search" sh -c "\\$HOME/Scripts/paru-fzf --repo; exec env NO_STARTUP_LS=1 \\$SHELL"
 Icon=foot
 Type=Application
 Categories=Utility;PackageManager;

@@ -72,7 +72,7 @@ fzf_args=(
 )
 
 if ! $NO_SYNC; then
-  sudo pacman -Sy
+  sudo pacman -Sy || exit
 fi
 
 pkgs=$(fzf "${fzf_args[@]}" | xargs)
@@ -85,7 +85,9 @@ paru_install_pkgs() {
 }
 
 if $NO_UPDATE; then
-  paru_install_pkgs
+  paru_install_pkgs || exit
 else
-  paru -Su --repo && paru_install_pkgs && paru -Su --aur --upgrademenu
+  paru -Su --repo || exit
+  paru_install_pkgs || exit
+  paru -Su --aur --upgrademenu || exit
 fi
