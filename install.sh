@@ -111,6 +111,23 @@ polkit.addAdminRule(function(action, subject) {
 EOF
 fi
 
+# NetworkManager only runs dispatcher scripts that are root-owned, executable
+# and not writable by group/others, so this is installed with explicit modes.
+NM_DISPATCHER_SRC="$_root_dir/ignore/NetworkManager/dispatcher.d/99-wifi-ethernet.sh"
+NM_DISPATCHER_DST="/etc/NetworkManager/dispatcher.d/99-wifi-ethernet.sh"
+
+read -rp "Do you want to install the NetworkManager dispatcher that disables Wi-Fi while ethernet is up? (requires sudo) [y/N]: " response
+if [[ ( "$response" =~ ^[Yy]$ ) && ( -f "$NM_DISPATCHER_SRC" ) ]]; then
+    echo "${COLOR_CYAN}Installing ${NM_DISPATCHER_DST}...${COLOR_RESET}"
+    if [ -e "$NM_DISPATCHER_DST" ] && ! /usr/bin/cmp -s "$NM_DISPATCHER_SRC" "$NM_DISPATCHER_DST"; then
+        backup_dest="$BACKUP_DIR/etc/NetworkManager/dispatcher.d/$(basename "$NM_DISPATCHER_DST")"
+        echo "${COLOR_YELLOW}BACKUP:${COLOR_RESET} $NM_DISPATCHER_DST -> $backup_dest"
+        mkdir -p "$(dirname "$backup_dest")"
+        /usr/bin/cp -p "$NM_DISPATCHER_DST" "$backup_dest"
+    fi
+    sudo /usr/bin/install -D -m 755 -o root -g root "$NM_DISPATCHER_SRC" "$NM_DISPATCHER_DST"
+fi
+
 echo "Installation complete."
 
 read -rp "Do you want to configure git globals for delta pager? [y/N]: " response
