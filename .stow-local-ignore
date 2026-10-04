@@ -15,5 +15,6 @@
 ^/README\.md$
 ^/GEMINI\.md$
 
-# Not dotfiles for $HOME: greetd config belongs in /etc, not the user's home.
+# Not dotfiles for $HOME: system configs (greetd, NetworkManager) belong in
+# /etc and are deployed by install.sh instead.
 ^/ignore$
