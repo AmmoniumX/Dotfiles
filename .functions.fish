@@ -17,6 +17,10 @@ function lfcd
     cd (lf --print-last-dir $argv)
 end
 
+function cats
+  bat --no-pager --style=grid,header-filename $argv
+end
+
 # Get local IP address, given interface name
 function ipv4-dev
     test -z "$argv[1]"; and echo "Usage: ipv4-dev <interface>"; and return 1
