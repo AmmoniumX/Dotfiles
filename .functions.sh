@@ -18,6 +18,21 @@ function lfcd() {
 function cats() {
     bat --no-pager --style=grid,header-filename "$@"
 }
+function quick-launch() {
+    local app="$1"
+    
+    if ! command -v "$app" &> /dev/null; then
+        echo "Error: '$app' not found in PATH"
+        return 1
+    fi
+
+    # 1. setsid launches the app in a completely detached system session
+    # 2. </dev/null disconnects standard input
+    # 3. kill $$ instantly terminates the current bash process
+    setsid "$@" </dev/null &>/dev/null &
+    
+    kill $$
+}
 
 # Get local IP address, given interface name
 function ipv4-dev() {

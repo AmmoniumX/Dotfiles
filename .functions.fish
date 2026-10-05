@@ -18,8 +18,29 @@ function lfcd
 end
 
 function cats
-  bat --no-pager --style=grid,header-filename $argv
+    bat --no-pager --style=grid,header-filename $argv
 end
+
+function quick-launch
+    set -l app $argv[1]
+    if not type -q $app
+        echo "Error: '$app' not found in PATH"
+        return 1
+    end
+
+    # setsid completely detaches the process into a brand new session group
+    # </dev/null breaks the standard input connection
+    if test (count $argv) -gt 1
+        setsid $argv[1] $argv[2..-1] </dev/null &>/dev/null &
+    else
+        setsid $argv[1] </dev/null &>/dev/null &
+    end
+
+    # close the terminal instance running this shell
+    kill $fish_pid
+end
+complete -c quick-launch -f
+complete -c quick-launch -a "(__fish_complete_command)"
 
 # Get local IP address, given interface name
 function ipv4-dev
