@@ -12,8 +12,11 @@ function cd() {
 
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
-function lfcd () {
+function lfcd() {
     cd "$(lf --print-last-dir "$@")"
+}
+function cats() {
+    bat --no-pager --style=grid,header-filename "$@"
 }
 
 # Get local IP address, given interface name
