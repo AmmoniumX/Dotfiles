@@ -4,6 +4,7 @@ set -euo pipefail
 _root_dir="$(cd "$(dirname "$(realpath "$0")")" && pwd)"
 DRY_RUN=false
 BACKUP_DIR="${_root_dir}/.backups/$(date +%Y-%m-%d_%H-%M-%S)"
+FORCED_CONFIRM=-1 # -1: not set, 0: always no, 1: always yes
 
 usage() {
     echo "Usage: $0 [-d]"
@@ -11,16 +12,59 @@ usage() {
     exit 1
 }
 
-while getopts ":d" opt; do
-  case ${opt} in
-    d )
-      DRY_RUN=true
-      ;;
-    ? )
-      usage
-      ;;
-  esac
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -d|--dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --yes-all)
+            FORCED_CONFIRM=1
+            shift
+            ;;
+        --no-all)
+            FORCED_CONFIRM=0
+            shift
+            ;;
+        -*)
+            usage
+            ;;
+        *)
+            break
+            ;;
+    esac
 done
+
+## =============================================================================
+## Function: ask_confirm
+## Description:
+##   Asks the user for confirmation with a prompt, then reads input.
+##   Returns true if inputs matches 'y' or 'Y', and false otherwise.
+##   If FORCED_CONFIRM is set to 0 or 1, it will return that without reading
+##   Always prints the prompt, even if FORCED_CONFIRM is set or input is piped
+## Parameters:
+##   $1 - The prompt message to display
+## Returns:
+##   0 if confirmed, 1 if not confirmed
+## =============================================================================
+ask_confirm() {
+    echo -n "$1 [y/N]: "
+    if (( FORCED_CONFIRM == 1 )); then
+        echo
+        return 0
+    elif (( FORCED_CONFIRM == 0 )); then
+        echo
+        return 1
+    fi
+    local response
+    read -r response
+    # print the response if not from stdin
+    if not [ -t 0 ]; then
+        echo "$response"
+    fi
+
+    [[ "$response" =~ ^[Yy]$ ]]
+}
 
 if ! command -v stow >/dev/null 2>&1; then
     echo "Error: GNU Stow is required but not installed (e.g. 'sudo pacman -S stow')." >&2
@@ -75,8 +119,7 @@ declare -A GREETD_OWNERS=(
     [gtkgreet.css]="greeter:greeter"
 )
 
-read -rp "Do you want to deploy the greetd config to ${GREETD_DST}? (requires sudo) [y/N]: " response
-if [[ ( "$response" =~ ^[Yy]$ ) && ( -d "$GREETD_SRC" ) ]]; then
+if ask_confirm "Do you want to deploy the greetd config to ${GREETD_DST}? (requires sudo)" && [ -d "$GREETD_SRC" ]; then
     echo "${COLOR_CYAN}Deploying greetd config to ${GREETD_DST}...${COLOR_RESET}"
     for f in "${!GREETD_OWNERS[@]}"; do
         src="$GREETD_SRC/$f"
@@ -101,8 +144,7 @@ fi
 # root's.
 POLKIT_RULE="/etc/polkit-1/rules.d/49-sudo-group.rules"
 
-read -rp "Do you want to add a polkit rule so wheel and sudo members can authenticate? (requires sudo) [y/N]: " response
-if [[ "$response" =~ ^[Yy]$ ]]; then
+if ask_confirm "Do you want to add a polkit rule so wheel and sudo members can authenticate? (requires sudo)"; then
     echo "${COLOR_CYAN}Writing ${POLKIT_RULE}...${COLOR_RESET}"
     sudo tee "$POLKIT_RULE" >/dev/null <<'EOF'
 polkit.addAdminRule(function(action, subject) {
@@ -116,8 +158,7 @@ fi
 NM_DISPATCHER_SRC="$_root_dir/ignore/NetworkManager/dispatcher.d/99-wifi-ethernet.sh"
 NM_DISPATCHER_DST="/etc/NetworkManager/dispatcher.d/99-wifi-ethernet.sh"
 
-read -rp "Do you want to install the NetworkManager dispatcher that disables Wi-Fi while ethernet is up? (requires sudo) [y/N]: " response
-if [[ ( "$response" =~ ^[Yy]$ ) && ( -f "$NM_DISPATCHER_SRC" ) ]]; then
+if ask_confirm "Do you want to install the NetworkManager dispatcher that disables Wi-Fi while ethernet is up? (requires sudo)" && [ -f "$NM_DISPATCHER_SRC" ]; then
     echo "${COLOR_CYAN}Installing ${NM_DISPATCHER_DST}...${COLOR_RESET}"
     if [ -e "$NM_DISPATCHER_DST" ] && ! /usr/bin/cmp -s "$NM_DISPATCHER_SRC" "$NM_DISPATCHER_DST"; then
         backup_dest="$BACKUP_DIR/etc/NetworkManager/dispatcher.d/$(basename "$NM_DISPATCHER_DST")"
@@ -128,10 +169,7 @@ if [[ ( "$response" =~ ^[Yy]$ ) && ( -f "$NM_DISPATCHER_SRC" ) ]]; then
     sudo /usr/bin/install -D -m 755 -o root -g root "$NM_DISPATCHER_SRC" "$NM_DISPATCHER_DST"
 fi
 
-echo "Installation complete."
-
-read -rp "Do you want to configure git globals for delta pager? [y/N]: " response
-if [[ "$response" =~ ^[Yy]$ ]]; then
+if ask_confirm "Do you want to configure git globals for delta pager?"; then
     set -x
     git config --global core.pager delta
     git config --global interactive.diffFilter 'delta --color-only'
@@ -147,4 +185,4 @@ else
     echo "Skipped."
 fi
 
-echo "Done."
+echo "Installation complete."
