@@ -15,6 +15,20 @@ function cp-mkdir() { mkdir -p "$(dirname "$2")" && cp "$1" "$2"; }
 function lfcd() {
     cd "$(lf --print-last-dir "$@")"
 }
+function catj() {
+    local file="$1"
+    if [[ ! -f "$file" ]]; then
+        echo "Error: File '$file' not found."
+        return 1
+    fi
+
+    # Extra arguments are passed as bat flags
+    if [[ "$#" -gt 1 ]]; then
+        python -m json.tool "$file" | bat -l json "${@:2}"
+    else
+        python -m json.tool "$file" | bat -l json
+    fi
+}
 function cats() {
     bat --no-pager --style=grid,header-filename "$@"
 }

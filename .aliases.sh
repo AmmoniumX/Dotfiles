@@ -30,5 +30,3 @@ alias gs='git status'
 alias ipv4='curl -4 ip.me'
 alias ipv6='curl -6 ip.me'
 
-# Pretty print json
-alias catj='python -m json.tool'

@@ -5,22 +5,44 @@ function ls_on_cd --on-variable PWD
     status is-interactive; and ls
 end
 
+# Create a directory, and cd into it
 function mkcd
     mkdir -p "$argv[1]" && cd "$argv[1]"
 end
 
+# Copy a file to a directory, creating the directory if it doesn't exist
 function cp-mkdir
     mkdir -p (dirname "$argv[2]") && cp "$argv[1]" "$argv[2]"
 end
 
+# Browse directories with lf and cd into the last visited one
 function lfcd
     cd (lf --print-last-dir $argv)
 end
 
+# Format json file with python, and print it with bat
+function catj
+    set -l file $argv[1]
+    if not test -f $file
+        echo "Error: File '$file' not found."
+        return 1
+    end
+
+    # Extra arguments are passed as bat flags
+    if test (count $argv) -gt 1
+        python -m json.tool $file | bat -l json $argv[2..-1]
+    else
+        python -m json.tool $file | bat -l json
+    end
+
+end
+
+# Print multiple files at once, with filename headers
 function cats
     bat --no-pager --style=grid,header-filename $argv
 end
 
+# Launch an application from the terminal, then detach and close the terminal
 function quick-launch
     set -l app $argv[1]
     if not type -q $app
