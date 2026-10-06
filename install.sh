@@ -5,10 +5,18 @@ _root_dir="$(cd "$(dirname "$(realpath "$0")")" && pwd)"
 DRY_RUN=false
 BACKUP_DIR="${_root_dir}/.backups/$(date +%Y-%m-%d_%H-%M-%S)"
 FORCED_CONFIRM=-1 # -1: not set, 0: always no, 1: always yes
+EARLY_SUDO=false # if set, sudo is run at the start to cache credentials
+CONFIRMATION_STACK="" # set from args to force yes/no for a sequence of arguments, e.g "nnyn"
 
 usage() {
-    echo "Usage: $0 [-d]"
-    echo "  -d: Dry run - print what would be done without actually making changes."
+    echo "Usage: $0 [-d] [--yes-all | --no-all] [--ask-sudo] [STACK]"
+    echo "  -d, --dry-run: Dry run - print what would be done without actually making changes."
+    echo "  --yes-all:     Answer yes to every confirmation prompt."
+    echo "  --no-all:      Answer no to every confirmation prompt."
+    echo "  --ask-sudo:    Run 'sudo -v' at the start to cache credentials."
+    echo "  STACK:         Answers for the confirmation prompts in order, one character"
+    echo "                 per prompt (e.g. 'nnyn'). Remaining prompts are asked interactively."
+    echo "                 Cannot be combined with --yes-all or --no-all."
     exit 1
 }
 
@@ -26,14 +34,35 @@ while [ $# -gt 0 ]; do
             FORCED_CONFIRM=0
             shift
             ;;
+        --ask-sudo)
+            EARLY_SUDO=true
+            shift
+            ;;
         -*)
             usage
+            exit 1
             ;;
         *)
-            break
+            if [ -n "$CONFIRMATION_STACK" ]; then
+                echo "Error: Multiple confirmation stacks provided." >&2
+                usage
+                exit 1
+            fi
+            CONFIRMATION_STACK="$1"
+            shift
             ;;
     esac
 done
+
+if [[ -n "$CONFIRMATION_STACK" && "$FORCED_CONFIRM" -ne -1 ]]; then
+    echo "Error: Cannot use both confirmation stack and yes-all/no-all." >&2
+    usage
+    exit 1
+fi
+
+if $EARLY_SUDO; then
+    sudo -v
+fi
 
 ## =============================================================================
 ## Function: ask_confirm
@@ -41,7 +70,8 @@ done
 ##   Asks the user for confirmation with a prompt, then reads input.
 ##   Returns true if inputs matches 'y' or 'Y', and false otherwise.
 ##   If FORCED_CONFIRM is set to 0 or 1, it will return that without reading
-##   Always prints the prompt, even if FORCED_CONFIRM is set or input is piped
+##   If CONFIRMATION_STACK is not empty, it will read the next character from it and return that as the response.
+##   Always prints the prompt, even if not reading from input
 ## Parameters:
 ##   $1 - The prompt message to display
 ## Returns:
@@ -49,6 +79,8 @@ done
 ## =============================================================================
 ask_confirm() {
     echo -n "$1 [y/N]: "
+
+    # Check FORCED_CONFIRM
     if (( FORCED_CONFIRM == 1 )); then
         echo
         return 0
@@ -56,10 +88,19 @@ ask_confirm() {
         echo
         return 1
     fi
-    local response
-    read -r response
-    # print the response if not from stdin
-    if not [ -t 0 ]; then
+
+    local response from_input=false
+    # Check CONFIRMATION_STACK
+    if [[ -n "$CONFIRMATION_STACK" ]]; then
+        response="${CONFIRMATION_STACK:0:1}"
+        CONFIRMATION_STACK="${CONFIRMATION_STACK:1}"
+    else
+        read -r response
+        from_input=true
+    fi
+
+    # print the response unless it was typed into a terminal
+    if ! $from_input || ! [ -t 0 ]; then
         echo "$response"
     fi
 
