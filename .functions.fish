@@ -22,24 +22,37 @@ end
 
 # Format json file with python, and print it with bat
 function catj
+    # Default to no paging unless the caller passes their own --paging
+    set -l paging --paging=never
+    if string match -q -- '--paging*' $argv
+        set paging
+    end
+
+    # Read from stdin when it's piped and no file is given (bat flags may still follow)
+    if not isatty stdin; and begin; test (count $argv) -eq 0; or string match -q -- '-*' $argv[1]; end
+        python -m json.tool | bat $paging -l json $argv
+        return
+    end
+
     set -l file $argv[1]
-    if not test -f $file
-        echo "Error: File '$file' not found."
+    if not test -f "$file"
+        echo "Error: File '$file' not found." >&2
         return 1
     end
 
     # Extra arguments are passed as bat flags
-    if test (count $argv) -gt 1
-        python -m json.tool $file | bat -l json $argv[2..-1]
-    else
-        python -m json.tool $file | bat -l json
-    end
-
+    python -m json.tool $file | bat $paging -l json $argv[2..-1]
 end
 
 # Print multiple files at once, with filename headers
 function cats
-    bat --no-pager --style=grid,header-filename $argv
+    # Default to no paging unless the caller passes their own --paging
+    set -l paging --paging=never
+    if string match -q -- '--paging*' $argv
+        set paging
+    end
+
+    bat $paging --style=grid,header-filename $argv
 end
 
 # Launch an application from the terminal, then detach and close the terminal
