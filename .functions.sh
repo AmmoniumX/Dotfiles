@@ -16,21 +16,37 @@ function lfcd() {
     cd "$(lf --print-last-dir "$@")"
 }
 function catj() {
+    # Default to no paging unless the caller passes their own --paging
+    local paging=(--paging=never)
+    local arg
+    for arg in "$@"; do
+        [[ "$arg" == --paging* ]] && paging=()
+    done
+
+    # Read from stdin when it's piped and no file is given (bat flags may still follow)
+    if [[ ! -t 0 && ( "$#" -eq 0 || "$1" == -* ) ]]; then
+        python -m json.tool | bat "${paging[@]}" -l json "$@"
+        return
+    fi
+
     local file="$1"
     if [[ ! -f "$file" ]]; then
-        echo "Error: File '$file' not found."
+        echo "Error: File '$file' not found." >&2
         return 1
     fi
 
     # Extra arguments are passed as bat flags
-    if [[ "$#" -gt 1 ]]; then
-        python -m json.tool "$file" | bat -l json "${@:2}"
-    else
-        python -m json.tool "$file" | bat -l json
-    fi
+    python -m json.tool "$file" | bat "${paging[@]}" -l json "${@:2}"
 }
 function cats() {
-    bat --no-pager --style=grid,header-filename "$@"
+    # Default to no paging unless the caller passes their own --paging
+    local paging=(--paging=never)
+    local arg
+    for arg in "$@"; do
+        [[ "$arg" == --paging* ]] && paging=()
+    done
+
+    bat "${paging[@]}" --style=grid,header-filename "$@"
 }
 function quick-launch() {
     local app="$1"
