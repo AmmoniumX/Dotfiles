@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# pip-cycle: point picture-in-picture.kdl at the next preset (pip-1 -> pip-2 -> pip-3 -> pip-1).
+set -euo pipefail
+
+dir="$(dirname "$(realpath "$0")")/../include"
+link="$dir/picture-in-picture.kdl"
+presets=(pip-1 pip-2 pip-3)
+
+current="$(basename "$(readlink "$link" 2>/dev/null || true)" .kdl)"
+
+next="${presets[0]}"
+for i in "${!presets[@]}"; do
+  if [ "${presets[i]}" = "$current" ]; then
+    next="${presets[(i + 1) % ${#presets[@]}]}"
+    break
+  fi
+done
+
+ln -sfn "./presets/$next.kdl" "$link"
+
+niri msg action load-config-file >/dev/null 2>&1 || true
