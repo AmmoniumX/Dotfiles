@@ -1,5 +1,6 @@
 include "shaders/current.kdl"   // -> cursor/*.kdl | screen/*.kdl | off.kdl
 include "shaders/current-close.kdl"          // -> close-*.kdl
+include "include/picture-in-picture.kdl"
 
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
@@ -363,18 +364,6 @@ window-rule {
   open-floating true
   default-column-width { proportion 0.4; }
   default-window-height { proportion 0.5; }
-}
-
-// Open the Firefox picture-in-picture player as floating by default.
-window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
-    open-sticky true
-    float-above-fullscreen true
-    opacity 0.8
 }
 
 // Bluetooth manager(s)
@@ -742,6 +731,8 @@ binds {
     Mod+Ctrl+S  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "cursor"; }
     Mod+Shift+S hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "screen"; }
     Mod+Ctrl+W  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "close" ; }
+
+    Mod+P hotkey-overlay-title="Cycle picture-in-picture preset" { spawn "~/.config/biri/scripts/pip-cycle"; }
 }
 
 clipboard {
