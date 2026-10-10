@@ -1,9 +1,8 @@
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+    // Match Picture-in-Picture window in Firefox and Helium browser
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="" title="^Picture-in-picture$"
     open-floating true
     opacity 1.0
 }
