@@ -409,6 +409,7 @@ window-rule {
     match app-id="helium"
     open-on-workspace "1"
     open-focused true
+    open-maximized-to-edges true
 }
 
 window-rule {
