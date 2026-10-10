@@ -406,6 +406,7 @@ window-rule {
 // --- Startup window rules ---
 window-rule {
     match app-id="firefox"
+    match app-id="helium"
     open-on-workspace "1"
     open-focused true
 }
