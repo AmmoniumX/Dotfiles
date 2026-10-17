@@ -30,3 +30,5 @@ alias gs='git status'
 alias ipv4='curl -4 ip.me'
 alias ipv6='curl -6 ip.me'
 
+# "Shortcuts" env vars
+export STEAM_PREFIX_DIR="$HOME/.steam/steam/steamapps/compatdata/"
