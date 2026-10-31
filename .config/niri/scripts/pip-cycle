@@ -4,7 +4,7 @@ set -euo pipefail
 
 dir="$(dirname "$(realpath "$0")")/../include"
 link="$dir/picture-in-picture.kdl"
-presets=(pip-1 pip-2 pip-3)
+presets=(pip-on pip-off)
 
 current="$(basename "$(readlink "$link" 2>/dev/null || true)" .kdl)"
 
