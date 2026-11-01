@@ -4,5 +4,5 @@ window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id="" title="^Picture-in-picture$"
     open-floating true
-    opacity 0.0
+    opacity 0.6
 }
