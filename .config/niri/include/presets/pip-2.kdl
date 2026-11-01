@@ -1,0 +1,8 @@
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+    // Match Picture-in-Picture window in Firefox and Helium browser
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="" title="^Picture-in-picture$"
+    open-floating true
+    opacity 0.8
+}
