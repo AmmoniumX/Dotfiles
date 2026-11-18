@@ -9,11 +9,11 @@ A collection of Arch Linux dotfiles, packages, and scripts. For personal use. In
 git clone https://github.com/AmmoniumX/Dotfiles.git && cd ./Dotfiles
 ```
 
-2. Download and installed packages:
+2. Download and install packages:
 ```bash
 ./Scripts/get-and-install-packages.sh
 ```
-(Note: this installs *all* official repository and AUR packages, including apps and NVIDIA drives. TODO: Create a separate list of required dependencies only)
+(Note: this installs *all* official repository and AUR packages, including apps and NVIDIA drivers. TODO: Create a separate list of required dependencies only)
 
 3. Install dotfiles (requires [GNU Stow](https://www.gnu.org/software/stow/), e.g. `sudo pacman -S stow`)
 ```bash
