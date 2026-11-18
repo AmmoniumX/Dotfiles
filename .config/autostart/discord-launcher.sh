@@ -1,9 +1,5 @@
 #!/bin/bash
-# /usr/bin/discord always re-runs updater_bootstrap on launch, which needs
-# network access and gets stuck (zenity "downloading" dialog) if DNS isn't
-# up yet, e.g. at session autostart. Skip it: exec the newest already
-# installed app-<version>/Discord binary directly, falling back to the
-# stock bootstrap path only if none is found.
+# Launch the newest installed Discord app directly, falling back to /usr/bin/discord if none is installed.
 
 DISCORD_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/discord"
 
