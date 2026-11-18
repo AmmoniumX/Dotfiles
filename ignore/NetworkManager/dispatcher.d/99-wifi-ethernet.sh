@@ -1,26 +1,21 @@
 #!/bin/bash
-# NetworkManager dispatcher: disable Wi-Fi radio while a wired connection is up,
-# re-enable it once ethernet disconnects.
+# NetworkManager dispatcher: turn the Wi-Fi radio off while ethernet is connected, and back on once it isn't.
 
-INTERFACE=$1
-STATUS=$2
+MARKER=/var/lib/NetworkManager/wifi-off-for-ethernet
 
-is_ethernet() {
-    [[ "$(nmcli -g GENERAL.TYPE device show "$INTERFACE" 2>/dev/null)" == "ethernet" ]]
+ethernet_connected() {
+    nmcli -t -f TYPE,STATE device 2>/dev/null | grep -q '^ethernet:connected'
 }
 
-case "$STATUS" in
+case "$2" in
     up)
-        is_ethernet && nmcli radio wifi off
+        if ethernet_connected && [ "$(nmcli radio wifi)" = enabled ]; then
+            nmcli radio wifi off && touch "$MARKER"
+        fi
         ;;
-    down)
-        if is_ethernet; then
-            # only turn wifi back on if no other ethernet device is still up
-            still_up=0
-            for dev in $(nmcli -t -f DEVICE,TYPE,STATE device | awk -F: '$2=="ethernet" && $3=="connected"{print $1}'); do
-                [[ "$dev" != "$INTERFACE" ]] && still_up=1
-            done
-            [[ "$still_up" -eq 0 ]] && nmcli radio wifi on
+    down|hostname|connectivity-change)
+        if [ -e "$MARKER" ] && ! ethernet_connected; then
+            nmcli radio wifi on && rm -f "$MARKER"
         fi
         ;;
 esac
