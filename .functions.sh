@@ -56,12 +56,9 @@ function quick-launch() {
         return 1
     fi
 
-    # 1. setsid launches the app in a completely detached system session
-    # 2. </dev/null disconnects standard input
-    # 3. kill $$ instantly terminates the current bash process
     setsid "$@" </dev/null &>/dev/null &
-    
-    kill $$
+    disown
+    exit
 }
 
 # Get local IP address, given interface name
