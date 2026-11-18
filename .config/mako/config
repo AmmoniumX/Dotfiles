@@ -59,3 +59,4 @@ group-by=category
 
 [mode=do-not-disturb]
 invisible=1
+on-notify=none
