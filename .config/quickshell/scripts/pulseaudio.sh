@@ -7,6 +7,6 @@ print_state() {
 }
 
 print_state
-pactl subscribe 2>/dev/null | grep --line-buffered "sink" | while read -r _; do
+pactl subscribe 2>/dev/null | grep --line-buffered -E "on (sink|server) " | while read -r _; do
     print_state
 done

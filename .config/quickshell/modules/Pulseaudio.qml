@@ -30,11 +30,11 @@ ModuleItem {
     }
     Process {
         id: upProc
-        command: ["bash", "-c", "pamixer -ui 2 && pamixer --get-volume > /tmp/wob.fifo"]
+        command: ["pamixer", "-ui", "2"]
     }
     Process {
         id: downProc
-        command: ["bash", "-c", "pamixer -ud 2 && pamixer --get-volume > /tmp/wob.fifo"]
+        command: ["pamixer", "-ud", "2"]
     }
 
     onClicked: pavucontrolProc.startDetached()
