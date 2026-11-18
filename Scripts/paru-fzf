@@ -7,7 +7,7 @@
 ## OPTIONS:
 ##  --repo: Only search in the official repositories (default: false)
 ##  --no-sync: Do not sync the package database before searching (default: false)
-##  --no-update: Do not update the system before installing packages (default: false)
+##  --no-update: Do not update the system before installing packages, implies --no-sync (default: false)
 
 REPO_ONLY=false
 NO_SYNC=false
@@ -24,6 +24,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --no-update)
       NO_UPDATE=true
+      NO_SYNC=true
       shift
       ;;
     -*)
