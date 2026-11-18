@@ -14,6 +14,7 @@
 ^/install\.sh$
 ^/README\.md$
 ^/GEMINI\.md$
+^/\.claude/settings\.local\.json$
 
 # Not dotfiles for $HOME: system configs (greetd, NetworkManager) belong in
 # /etc and are deployed by install.sh instead.
