@@ -15,6 +15,7 @@ import vdf
 
 APPLICATIONS_DIR = os.path.expanduser("~/.local/share/applications")
 SHORTCUTS_GLOB = os.path.expanduser("~/.local/share/Steam/userdata/*/config/shortcuts.vdf")
+MARKER = "X-Steam-Shortcut=true"
 
 
 def unsigned32(appid):
@@ -31,12 +32,14 @@ def shortcut_gameid(appid32):
 
 def main():
     os.makedirs(APPLICATIONS_DIR, exist_ok=True)
-    written = 0
+    written = set()
     for path in glob.glob(SHORTCUTS_GLOB):
         with open(path, "rb") as f:
             data = vdf.binary_load(f)
         for shortcut in data.get("shortcuts", {}).values():
-            name = shortcut["AppName"]
+            name = shortcut.get("AppName") or shortcut.get("appname")
+            if not name:
+                continue
             gameid = shortcut_gameid(unsigned32(shortcut["appid"]))
             icon = shortcut.get("icon") or ""
 
@@ -48,17 +51,27 @@ def main():
             ]
             if icon:
                 lines.append(f"Icon={icon}")
-            lines += ["Terminal=false", "Type=Application", "Categories=Game;"]
+            lines += ["Terminal=false", "Type=Application", "Categories=Game;", MARKER]
 
-            desktop_path = os.path.join(APPLICATIONS_DIR, f"{name}.desktop")
+            filename = name.replace("/", "-")
+            desktop_path = os.path.join(APPLICATIONS_DIR, f"{filename}.desktop")
             with open(desktop_path, "w") as f:
                 f.write("\n".join(lines) + "\n")
             os.chmod(desktop_path, 0o755)
             print(f"Wrote {desktop_path} (gameid {gameid})")
-            written += 1
+            written.add(desktop_path)
 
-    if written == 0:
+    if not written:
         print("No non-Steam shortcuts found.")
+
+    for path in glob.glob(os.path.join(APPLICATIONS_DIR, "*.desktop")):
+        if path in written:
+            continue
+        with open(path, encoding="utf-8", errors="replace") as f:
+            if MARKER not in f.read().splitlines():
+                continue
+        os.remove(path)
+        print(f"Removed stale {path}")
 
 
 if __name__ == "__main__":
