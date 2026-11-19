@@ -743,10 +743,6 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 
-    Mod+Ctrl+S  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "cursor"; }
-    Mod+Shift+S hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "screen"; }
-    Mod+Ctrl+W  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "close" ; }
-
     Mod+P hotkey-overlay-title="Cycle picture-in-picture preset" { spawn "~/.config/niri/scripts/pip-cycle"; }
 }
 
