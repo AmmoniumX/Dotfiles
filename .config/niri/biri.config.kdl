@@ -1,5 +1,4 @@
-include "shaders/current.kdl"   // -> cursor/*.kdl | screen/*.kdl | off.kdl
-include "shaders/current-close.kdl"          // -> close-*.kdl
+include "shaders/close/close-fade.kdl"
 include "include/picture-in-picture.kdl"
 
 // This config is in the KDL format: https://kdl.dev
@@ -744,10 +743,6 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
-
-    Mod+Ctrl+S  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "cursor"; }
-    Mod+Shift+S hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "screen"; }
-    Mod+Ctrl+W  hotkey-overlay-title=null { spawn "~/.config/niri/scripts/shader-cycle" "close" ; }
 
     Mod+P hotkey-overlay-title="Cycle picture-in-picture preset" { spawn "~/.config/biri/scripts/pip-cycle"; }
 }
