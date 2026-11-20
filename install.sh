@@ -218,6 +218,7 @@ if ask_confirm "Do you want to configure git globals for delta pager?"; then
     git config --global delta.dark true
     git config --global delta.line-numbers true
     git config --global delta.line-numbers-left-format ''
+    git config --global delta.keep-plus-minus-markers true
     git config --global delta.file-decoration-style 'gray ol ul'
     git config --global delta.hunk-header-decoration-style 'omit'
     git config --global merge.conflictStyle zdiff3
