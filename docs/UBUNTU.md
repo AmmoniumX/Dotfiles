@@ -71,16 +71,17 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ## Phase 4: Desktop components
 
 ```bash
-sudo apt install mako-notifier fuzzel rofi swaybg wlogout wl-clipboard moreutils \
+sudo apt install mako-notifier fuzzel rofi swaybg swaylock wlogout wl-clipboard moreutils \
   brightnessctl playerctl pamixer libnotify-bin mpv sound-theme-freedesktop \
   gammastep wob wtype wev imv nm-connection-editor blueman bluez
 ```
+
+`niri/scripts/screenlock` works with plain `swaylock`: it shows `~/.config/wallpapers/lockscreen.png` with the same ring colors. The blurred-screenshot look and clock appear only when swaylock-effects is installed, as on Arch.
 
 Not well covered by apt:
 
 | Tool | Used by | How to get it |
 |---|---|---|
-| swaylock-effects | `niri/scripts/screenlock` (`--screenshots`, `--clock`, `--effect-blur`; plain swaylock lacks these) | Build from source (meson): `jirutka/swaylock-effects` |
 | hyprpicker | Mod+K color picker | `apt policy hyprpicker`, else build from source (cmake; needs hyprutils, hyprwayland-scanner) |
 | rofi >= 2.0 | Mod+V clipboard (native Wayland) | If apt's is older, change the bind to `cliphist list \| fuzzel --dmenu \| cliphist decode \| ifne wl-copy` |
 | smirk | Mod+Period emoji picker | Build from upstream (AUR-only on Arch) |
@@ -162,4 +163,4 @@ sudo apt install qt6ct qt5ct breeze-icon-theme breeze nwg-look adwaita-icon-them
 - A polkit prompt appears: `pkexec true`.
 - An X11 app (Steam) opens through xwayland-satellite.
 
-**Highest-risk items** are whatever ends up built from source (likely swaylock-effects, smirk, the OpenRazer fork, and Quickshell if the PPA lacks it): they're the ones that break on dependency updates.
+**Highest-risk items** are whatever ends up built from source (likely smirk, the OpenRazer fork, and Quickshell if the PPA lacks it): they're the ones that break on dependency updates.

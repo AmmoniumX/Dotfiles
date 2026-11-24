@@ -1,15 +1,26 @@
 #!/bin/bash
-swaylock \
-	--screenshots \
-	--clock \
-	--indicator \
-	--indicator-radius 100 \
-	--indicator-thickness 3 \
-	--effect-blur 7x5 \
-	--effect-vignette 0.5:0.5 \
-	--ring-color bb00cc \
-	--key-hl-color 880033 \
-	--line-color 00000000 \
-	--inside-color 00000088 \
-	--separator-color 00000000 \
-	--fade-in 0.2
+# Lock the screen with swaylock, using swaylock-effects' blurred-screenshot look when available.
+
+common=(
+	--indicator-radius 100
+	--indicator-thickness 3
+	--ring-color bb00cc
+	--key-hl-color 880033
+	--line-color 00000000
+	--inside-color 00000088
+	--separator-color 00000000
+)
+
+if swaylock --help 2>&1 | grep -q -- '--screenshots'; then
+	exec swaylock "${common[@]}" \
+		--screenshots \
+		--clock \
+		--indicator \
+		--effect-blur 7x5 \
+		--effect-vignette 0.5:0.5 \
+		--fade-in 0.2
+else
+	exec swaylock "${common[@]}" \
+		--image "$HOME/.config/wallpapers/lockscreen.png" \
+		--scaling fill
+fi
