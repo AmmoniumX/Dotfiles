@@ -13,6 +13,7 @@
 ^/\.stow-local-ignore$
 ^/install\.sh$
 ^/README\.md$
+^/docs$
 ^/GEMINI\.md$
 ^/\.claude/settings\.local\.json$
 

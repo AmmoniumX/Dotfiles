@@ -108,7 +108,7 @@ ask_confirm() {
 }
 
 if ! command -v stow >/dev/null 2>&1; then
-    echo "Error: GNU Stow is required but not installed (e.g. 'sudo pacman -S stow')." >&2
+    echo "Error: GNU Stow is required but not installed (e.g. 'sudo pacman -S stow' or 'sudo apt install stow')." >&2
     exit 1
 fi
 
@@ -119,6 +119,15 @@ COLOR_CYAN=$(tput setaf 6)
 
 cd "$_root_dir"
 
+# Stow's command-line --ignore matches path suffixes, not package-anchored paths.
+STOW_ARGS=(--no-folding -t "$HOME")
+INCLUDE_BIRI=false
+if ask_confirm "Do you want to include the biri (niri fork) configs?"; then
+    INCLUDE_BIRI=true
+else
+    STOW_ARGS+=(--ignore='/biri' --ignore='/biri\.config\.kdl' --ignore='/biri\.service\.d')
+fi
+
 # Ask stow what it would do first. Anything it would refuse to overwrite -
 # a real file/dir in the way, or a foreign symlink stow doesn't recognize
 # as its own (e.g. one left by the old install.sh) - gets moved into a
@@ -126,7 +135,7 @@ cd "$_root_dir"
 conflicts=()
 while IFS= read -r rel; do
     conflicts+=("$rel")
-done < <(stow -n -v --no-folding -t "$HOME" . 2>&1 | grep -oP '(?:over existing target \K[^ ]+(?= since neither a link nor a directory)|existing target is not owned by stow: \K.+)' || true)
+done < <(stow -n -v "${STOW_ARGS[@]}" . 2>&1 | grep -oP '(?:over existing target \K[^ ]+(?= since neither a link nor a directory)|existing target is not owned by stow: \K.+)' || true)
 
 if [ "${#conflicts[@]}" -gt 0 ]; then
     for rel in "${conflicts[@]}"; do
@@ -146,7 +155,7 @@ if $DRY_RUN; then
 fi
 
 echo "${COLOR_CYAN}Running stow...${COLOR_RESET}"
-stow -v --no-folding -t "$HOME" .
+stow -v "${STOW_ARGS[@]}" .
 
 # greetd's config lives in /etc, not $HOME, so it's excluded from the stow
 # package (see .stow-local-ignore) and deployed here instead via sudo cp.
@@ -154,16 +163,36 @@ stow -v --no-folding -t "$HOME" .
 # contents for the backup diff doesn't need sudo - only writing does.
 GREETD_SRC="$_root_dir/ignore/greetd"
 GREETD_DST="/etc/greetd"
-declare -A GREETD_OWNERS=(
-    [config.toml]="root:root"
-    [environments]="root:root"
-    [gtkgreet.css]="greeter:greeter"
-)
+
+# The greeter account is "greeter" on Arch and "_greetd" on Debian/Ubuntu.
+find_greeter_user() {
+    local u
+    for u in greeter _greetd; do
+        id -u "$u" >/dev/null 2>&1 && { echo "$u"; return 0; }
+    done
+    return 1
+}
 
 if ask_confirm "Do you want to deploy the greetd config to ${GREETD_DST}? (requires sudo)" && [ -d "$GREETD_SRC" ]; then
-    echo "${COLOR_CYAN}Deploying greetd config to ${GREETD_DST}...${COLOR_RESET}"
+    GREETER_USER="$(find_greeter_user)" || { echo "Error: no greetd greeter user found (is greetd installed?)" >&2; exit 1; }
+    declare -A GREETD_OWNERS=(
+        [config.toml]="root:root"
+        [environments]="root:root"
+        [gtkgreet.css]="$GREETER_USER:$GREETER_USER"
+    )
+
+    # Render distro- and choice-specific copies so the backup diff compares what is actually deployed.
+    GREETD_STAGE="$(mktemp -d)"
+    trap 'rm -rf "$GREETD_STAGE"' EXIT
+    cp "$GREETD_SRC"/* "$GREETD_STAGE"/
+    sed -i "s/^user = \"greeter\"$/user = \"$GREETER_USER\"/" "$GREETD_STAGE/config.toml"
+    if ! $INCLUDE_BIRI; then
+        sed -i '/^biri-session$/d' "$GREETD_STAGE/environments"
+    fi
+
+    echo "${COLOR_CYAN}Deploying greetd config to ${GREETD_DST} (greeter user: ${GREETER_USER})...${COLOR_RESET}"
     for f in "${!GREETD_OWNERS[@]}"; do
-        src="$GREETD_SRC/$f"
+        src="$GREETD_STAGE/$f"
         dst="$GREETD_DST/$f"
         [ -f "$src" ] || continue
 

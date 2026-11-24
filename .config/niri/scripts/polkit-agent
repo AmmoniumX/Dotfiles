@@ -1,0 +1,14 @@
+#!/bin/bash
+# Start the first polkit authentication agent found at Arch or Debian/Ubuntu install paths.
+
+for agent in \
+    /usr/lib/polkit-kde-authentication-agent-1 \
+    /usr/lib/x86_64-linux-gnu/libexec/polkit-kde-authentication-agent-1 \
+    /usr/libexec/polkit-kde-authentication-agent-1 \
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 \
+    /usr/libexec/polkit-gnome-authentication-agent-1; do
+    [ -x "$agent" ] && exec "$agent" "$@"
+done
+
+echo "polkit-agent: no polkit authentication agent found" >&2
+exit 1

@@ -10,6 +10,9 @@ abbr -a lla ls -la
 if command -v batcat &>/dev/null
     alias bat='batcat'
 end
+if command -v fdfind &>/dev/null; and not command -v fd &>/dev/null
+    alias fd='fdfind'
+end
 if command -v bat &>/dev/null
     alias cat='bat --style=plain --paging=never'
     alias less='bat --style=plain --paging=always'
