@@ -103,7 +103,9 @@ sudo apt install fish zsh bash-completion foot fzf zoxide direnv eza bat ripgrep
   git-delta tealdeer htop btop nvtop fastfetch ncdu trash-cli tmux lf plocate
 curl -sS https://starship.rs/install.sh | sh
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin   # newer than apt's; symlink kitty into ~/.local/bin
-cargo install --locked yazi-fm yazi-cli zellij
+# yazi: prebuilt binaries from its GitHub releases
+curl -fsSLO https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-musl.zip
+unzip yazi-x86_64-unknown-linux-musl.zip && install -m755 yazi-x86_64-unknown-linux-musl/{yazi,ya} ~/.local/bin/
 chsh -s /usr/bin/fish
 ```
 
