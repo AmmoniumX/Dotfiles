@@ -2,7 +2,7 @@
 
 How to get the niri desktop and apps from these dotfiles running on Ubuntu, in install order. The repo works on both Arch and Ubuntu; anything Arch-only (paru, CachyOS, the package-list script) is skipped here.
 
-**Target: Ubuntu 26.04 LTS or newer.** 24.04 is too old for parts of this setup: e.g. its `fzf` (0.44) lacks the `fzf --fish`/`--zsh` integration the shell configs use, and many Wayland tools are missing. Package availability below was not verified for every item; where it says "check `apt policy X`", the repo version may be missing or too old.
+**Target: Ubuntu 26.04 LTS or newer.** 24.04 is too old for parts of this setup: e.g. its `fzf` (0.44) lacks the `fzf --fish`/`--zsh` integration the shell configs use, and many Wayland tools are missing. Phases 1-6 were run end to end on Ubuntu 26.10 with the duxlabs PPA; Phase 7 and the greetd path in Phase 8 were not.
 
 ---
 
@@ -24,42 +24,38 @@ How to get the niri desktop and apps from these dotfiles running on Ubuntu, in i
 ## Phase 2: Build tooling and the dotfiles
 
 ```bash
-sudo apt install git stow build-essential curl wget cmake ninja-build meson pkg-config clang golang
+sudo apt install git stow build-essential curl wget pkg-config cargo
 git clone --recurse-submodules https://github.com/AmmoniumX/Dotfiles.git ~/Projects/Dotfiles
 cd ~/Projects/Dotfiles
-./install.sh -d   # dry run first
-./install.sh
+./install.sh -d n   # dry run first
+./install.sh nnnnn
 ```
 
-At the prompts:
+The `nnnnn` argument answers the prompts in order:
 - **biri configs:** `n` (skips stowing biri files and drops `biri-session` from greetd's environments).
 - **greetd, polkit, NetworkManager, delta:** `n` for now; they're revisited in later phases.
 
-Stowing early means each app finds its config as soon as it's installed.
+The dry run lists stock files (e.g. `.bashrc`, `.profile`, `~/.config/niri/config.kdl`) that get moved to `.backups/<timestamp>/`. Stowing early means each app finds its config as soon as it's installed.
 
-`rustup`/`cargo` is only needed if some tool in Phase 3 step 2 isn't packaged:
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
+Prefer apt, the duxlabs PPA, Flatpak or upstream release binaries over building from source. Apt's `cargo` is recent enough for the one thing that still needs building (smirk, Phase 4); `rustup` isn't needed.
 
 ## Phase 3: Niri and the session plumbing
 
-1. **Niri from the duxlabs PPAs:**
+1. **Niri from the duxlabs PPA:**
    ```bash
    sudo add-apt-repository ppa:duxlabs/dux-repo
-   sudo add-apt-repository ppa:duxlabs/dms
    sudo apt update
    apt policy niri          # must be >= 25.11: the config uses `include`
    sudo apt install niri
    ```
-   The package provides `niri-session`, `niri.desktop`, `niri.service` and a default `niri-portals.conf`. The stowed `~/.config/xdg-desktop-portal/niri-portals.conf` overrides the default.
+   The package provides `niri-session`, `niri.desktop`, `niri.service` and a default `niri-portals.conf`. The stowed `~/.config/xdg-desktop-portal/niri-portals.conf` overrides the default. Check the config with `niri validate`: options that only niri-git supports make it fail to load on the PPA's niri. With niri 26.04, comment out `on-xdg-activate "ignore"` in the steam_proton window rule as a local, untracked change (`git update-index --skip-worktree .config/niri/niri.config.kdl` keeps it out of `git status`).
 
-   These are third-party PPAs: they can run code as root and update on the maintainer's schedule. If niri breaks after an `apt upgrade`, check the PPA first.
-2. **Check the same PPAs for things that would otherwise need building:**
+   This is a third-party PPA: it can run code as root and updates on the maintainer's schedule. If niri breaks after an `apt upgrade`, check the PPA first.
+2. **Session tools from the same PPA (and Ubuntu's repos):**
    ```bash
-   apt policy quickshell xwayland-satellite cliphist matugen
+   sudo apt install quickshell xwayland-satellite cliphist matugen
    ```
-   Anything missing: `cargo install --locked xwayland-satellite`, `cargo install --locked matugen`, `go install go.senan.xyz/cliphist@latest`, and Quickshell per Phase 4.
+   `quickshell`, `xwayland-satellite` and `matugen` come from dux-repo; `cliphist` is in Ubuntu's own repos.
 3. **Portals, polkit, keyring:**
    ```bash
    sudo apt install xdg-desktop-portal-gnome xdg-desktop-portal-gtk xdg-desktop-portal-kde \
@@ -73,19 +69,30 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```bash
 sudo apt install mako-notifier fuzzel rofi swaybg swaylock wlogout wl-clipboard moreutils \
   brightnessctl playerctl pamixer libnotify-bin mpv sound-theme-freedesktop \
-  gammastep wob wtype wev imv nm-connection-editor blueman bluez
+  gammastep wob wtype wev imv nm-connection-editor blueman bluez hyprpicker
 ```
+
+Don't install `waybar`: its package enables `waybar.service` globally for `graphical-session.target`, which shows a second bar next to Quickshell. If it's already installed, `sudo apt purge waybar` (purge also removes the global enable link).
 
 `niri/scripts/screenlock` works with plain `swaylock`: it shows `~/.config/wallpapers/lockscreen.png` with the same ring colors. The blurred-screenshot look and clock appear only when swaylock-effects is installed, as on Arch.
 
-Not well covered by apt:
+apt's `rofi` is 2.0, which Mod+V needs for native Wayland. On an older release, change the bind to `cliphist list | fuzzel --dmenu | cliphist decode | ifne wl-copy`.
 
-| Tool | Used by | How to get it |
-|---|---|---|
-| hyprpicker | Mod+K color picker | `apt policy hyprpicker`, else build from source (cmake; needs hyprutils, hyprwayland-scanner) |
-| rofi >= 2.0 | Mod+V clipboard (native Wayland) | If apt's is older, change the bind to `cliphist list \| fuzzel --dmenu \| cliphist decode \| ifne wl-copy` |
-| smirk | Mod+Period emoji picker | Build from upstream (AUR-only on Arch) |
-| Quickshell | Status bar | From the duxlabs PPA if available, else build per its BUILD.md (`qt6-base-dev qt6-declarative-dev qt6-wayland-dev qt6-shadertools-dev libpipewire-0.3-dev libpam0g-dev` ...) then `cmake -GNinja -B build && cmake --build build && sudo cmake --install build` |
+**smirk** (Mod+Period emoji picker) is the one tool built from source: there are no prebuilt binaries, and on Arch it comes from the AUR (`smirk-git`). The niri bind calls `smirk-toggle`, a small wrapper the AUR package ships, so install that too:
+```bash
+sudo apt install libgtk-4-dev libadwaita-1-dev
+git clone https://github.com/Yiin/smirk.git ~/.local/src/smirk
+cd ~/.local/src/smirk && cargo build --release --locked
+sudo install -Dm755 target/release/smirk /usr/local/bin/smirk
+sudo tee /usr/local/bin/smirk-toggle >/dev/null <<'EOF'
+#!/bin/bash
+gdbus call --session --dest lt.yiin.smirk --object-path /lt/yiin/smirk \
+  --method org.freedesktop.Application.Activate '{}' >/dev/null 2>&1 \
+  || exec smirk
+EOF
+sudo chmod 755 /usr/local/bin/smirk-toggle
+cargo clean   # the build directory is ~400 MB
+```
 
 The bar's scripts need `nmcli`, `bluetoothctl`, `pactl`, `pamixer` and `brightnessctl`, all covered above. The systemd units call `qs`, `smirk` and `gammastep-indicator` by name, so `/usr/bin` and `/usr/local/bin` installs both work.
 
@@ -100,22 +107,26 @@ systemctl --user list-unit-files mako.service   # niri.service.d wants it; write
 
 ```bash
 sudo apt install fish zsh bash-completion foot fzf zoxide direnv eza bat ripgrep fd-find \
-  git-delta tealdeer htop btop nvtop fastfetch ncdu trash-cli tmux lf plocate
-curl -sS https://starship.rs/install.sh | sh
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin   # newer than apt's; symlink kitty into ~/.local/bin
+  git-delta tealdeer htop btop nvtop fastfetch ncdu trash-cli tmux lf plocate starship kitty unzip
 # yazi: prebuilt binaries from its GitHub releases
 curl -fsSLO https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-musl.zip
 unzip yazi-x86_64-unknown-linux-musl.zip && install -m755 yazi-x86_64-unknown-linux-musl/{yazi,ya} ~/.local/bin/
 chsh -s /usr/bin/fish
 ```
 
-- `bat` → `batcat` and `fd` → `fdfind` are aliased automatically.
-- **Fonts:** download JetBrainsMono and Hack Nerd Fonts from the nerd-fonts releases into `~/.local/share/fonts`, then `fc-cache -f`. Also:
+- `bat` → `batcat` and `fd` → `fdfind` are aliased automatically. `~/.local/bin` is added to `PATH` by `.profile`.
+- **Fonts:**
   ```bash
   sudo apt install fonts-noto fonts-noto-cjk fonts-dejavu fonts-font-awesome
+  for f in JetBrainsMono Hack; do
+    mkdir -p ~/.local/share/fonts/NerdFonts/$f
+    curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$f.tar.xz \
+      | tar -xJ -C ~/.local/share/fonts/NerdFonts/$f
+  done
+  fc-cache -f
   ```
-- **Neovim** (the `.config/nvim` submodule): use the official tarball/AppImage if apt's version is too old. LSPs via Mason, or `rustup component add rust-analyzer` and `npm i -g pyright typescript-language-server bash-language-server`.
-- Rerun `./install.sh` and answer `y` only to the delta git config.
+- **Neovim** (the `.config/nvim` submodule): apt's is recent enough. Its tool list is in `.config/nvim/REQUIREMENTS.md`; install LSPs via Mason, or `sudo apt install nodejs npm rust-analyzer` and `sudo npm i -g pyright typescript-language-server bash-language-server`.
+- Rerun `./install.sh nnnny` to apply only the delta git config.
 
 ## Phase 6: Theming
 
@@ -165,4 +176,4 @@ sudo apt install qt6ct qt5ct breeze-icon-theme breeze nwg-look adwaita-icon-them
 - A polkit prompt appears: `pkexec true`.
 - An X11 app (Steam) opens through xwayland-satellite.
 
-**Highest-risk items** are whatever ends up built from source (likely smirk, the OpenRazer fork, and Quickshell if the PPA lacks it): they're the ones that break on dependency updates.
+**Highest-risk items** are whatever ends up built from source (smirk, and the OpenRazer fork if needed) and the PPA packages (niri, Quickshell): they're the ones that break on dependency updates.
