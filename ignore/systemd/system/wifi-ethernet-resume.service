@@ -1,0 +1,10 @@
+[Unit]
+Description=Re-enable Wi-Fi after resume if ethernet is no longer connected
+After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/NetworkManager/dispatcher.d/99-wifi-ethernet.sh none resume
+
+[Install]
+WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target

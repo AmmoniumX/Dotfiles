@@ -227,6 +227,8 @@ fi
 # and not writable by group/others, so this is installed with explicit modes.
 NM_DISPATCHER_SRC="$_root_dir/ignore/NetworkManager/dispatcher.d/99-wifi-ethernet.sh"
 NM_DISPATCHER_DST="/etc/NetworkManager/dispatcher.d/99-wifi-ethernet.sh"
+NM_RESUME_SRC="$_root_dir/ignore/systemd/system/wifi-ethernet-resume.service"
+NM_RESUME_DST="/etc/systemd/system/wifi-ethernet-resume.service"
 
 if ask_confirm "Do you want to install the NetworkManager dispatcher that disables Wi-Fi while ethernet is up? (requires sudo)" && [ -f "$NM_DISPATCHER_SRC" ]; then
     echo "${COLOR_CYAN}Installing ${NM_DISPATCHER_DST}...${COLOR_RESET}"
@@ -237,6 +239,9 @@ if ask_confirm "Do you want to install the NetworkManager dispatcher that disabl
         /usr/bin/cp -p "$NM_DISPATCHER_DST" "$backup_dest"
     fi
     sudo /usr/bin/install -D -m 755 -o root -g root "$NM_DISPATCHER_SRC" "$NM_DISPATCHER_DST"
+    sudo /usr/bin/install -D -m 644 -o root -g root "$NM_RESUME_SRC" "$NM_RESUME_DST"
+    sudo systemctl daemon-reload
+    sudo systemctl enable "$(basename "$NM_RESUME_DST")"
 fi
 
 if ask_confirm "Do you want to configure git globals for delta pager?"; then
